@@ -1,0 +1,30 @@
+# Phase 3B: the REAL VALIDATION split, sampled from VizWiz *train*.
+#
+# This split is used ONLY for development -- threshold selection and probability
+# calibration. It must never touch the Phase 3A evaluation set
+# (configs/real_world_eval.yaml, VizWiz *val*), which stays held out.
+
+version: "phase3b-realval-v1"
+seed: 20260828
+
+model:
+  run_dir: "runs/phase2-baseline-v1_20260828-123813"
+  expected_feature_version: "cvfeat-v1"
+  threshold_strategy: "real_val_f1"
+
+vizwiz:
+  annotations_dir: "data/raw/vizwiz/annotations"
+  eval_split: "train"                       # <-- sampled from TRAIN, not val
+  images_zip_url: "https://vizwiz.cs.colorado.edu/VizWiz_final/images/train.zip"
+  image_cache_dir: "data/raw/vizwiz/images_train"
+  subset_size: 2500
+  download_workers: 12
+
+evaluation:
+  positive_vote_min: 3
+  sensitivity_vote_thresholds: [2, 3, 4]
+
+paths:
+  reports_subdir: "reports/phase3b-realval-v1"
+  failure_examples_subdir: "reports/phase3b-realval-v1/failure_examples"
+  max_failure_examples_per_group: 0

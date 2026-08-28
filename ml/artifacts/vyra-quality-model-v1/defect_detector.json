@@ -1,0 +1,83 @@
+{
+  "version": "phase3c-defect-v1",
+  "a": 4.71499,
+  "b": 17.8462,
+  "threshold": 0.5,
+  "patch_features": [
+    "resid_std",
+    "resid_max",
+    "lap_var",
+    "blockiness",
+    "sat_mean",
+    "hue_std",
+    "luma_std",
+    "edge_density"
+  ],
+  "calibration": {
+    "method": "patch-anomaly raw score -> fixed-slope sigmoid; operating point at highest fit precision with recall >= 0.25",
+    "fitted_on": "phase2-baseline-v1 train+val (synthetic defect set)",
+    "seed": 20260828,
+    "detector_long_edge": 512,
+    "dataset_long_edge": 384,
+    "fit_operating_point": {
+      "precision": 0.4216,
+      "recall": 0.2658
+    },
+    "test_metrics": {
+      "fit_images": 1941,
+      "test_images": 513,
+      "test_defect_support": 105,
+      "roc_auc": 0.6005,
+      "operating_point": {
+        "prob_threshold": 0.5,
+        "f1": 0.3269,
+        "precision": 0.3301,
+        "recall": 0.3238,
+        "confusion": {
+          "tp": 34,
+          "fp": 69,
+          "fn": 71
+        }
+      },
+      "precision_recall_curve": [
+        {
+          "prob_threshold": 0.3,
+          "precision": 0.2908,
+          "recall": 0.3905
+        },
+        {
+          "prob_threshold": 0.4,
+          "precision": 0.3008,
+          "recall": 0.3524
+        },
+        {
+          "prob_threshold": 0.5,
+          "precision": 0.3301,
+          "recall": 0.3238
+        },
+        {
+          "prob_threshold": 0.6,
+          "precision": 0.3176,
+          "recall": 0.2571
+        },
+        {
+          "prob_threshold": 0.7,
+          "precision": 0.3235,
+          "recall": 0.2095
+        },
+        {
+          "prob_threshold": 0.8,
+          "precision": 0.3393,
+          "recall": 0.181
+        },
+        {
+          "prob_threshold": 0.9,
+          "precision": 0.3143,
+          "recall": 0.1048
+        }
+      ],
+      "localisation_hit_rate": 0.3235,
+      "localisation_note": "fraction of correctly-flagged defect images whose top patch centre falls inside the true defect bounding box"
+    }
+  }
+}

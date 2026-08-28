@@ -1,0 +1,16 @@
+# ML / CV experimentation environment. Kept separate from backend/requirements.txt
+# so the API image stays small — only a serialised model crosses that boundary.
+# Pinned for reproducible dataset builds and experiments.
+
+numpy==2.2.6
+opencv-python-headless==4.11.0.86
+scikit-image==0.25.2
+scikit-learn==1.6.1
+pandas==2.2.3
+pyarrow==19.0.1
+PyYAML==6.0.2
+matplotlib==3.10.1
+tqdm==4.67.1
+requests==2.32.3
+joblib==1.4.2
+remotezip==0.12.3   # Phase 3A: pull only the needed images from VizWiz's 3.5 GB val.zip

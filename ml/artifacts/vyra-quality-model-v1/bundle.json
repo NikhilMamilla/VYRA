@@ -1,0 +1,214 @@
+{
+  "model_version": "vyra-quality-model-v1",
+  "created_utc": "2026-08-28T11:33:04Z",
+  "feature_version": "cvfeat-v2",
+  "work_long_edge": 384,
+  "artifacts": {
+    "model": "model.joblib",
+    "calibrators": "calibrators.joblib",
+    "defect_detector": "defect_detector.json"
+  },
+  "training": {
+    "experiment": "phase2-baseline-v1",
+    "run": "phase2-baseline-v1_20260828-142415",
+    "seed": 20260828,
+    "model_type": "RandomForest one-vs-rest, 6 issues, 42 CV features",
+    "dataset": "BSDS500 clean images + calibrated synthetic degradations",
+    "split_counts": {
+      "train": 2574,
+      "val": 513,
+      "test": 513
+    }
+  },
+  "calibration": {
+    "method": "isotonic regression, per issue",
+    "fitted_on": "VizWiz train real-validation sample (n=2489, \u22653/5 votes)",
+    "experiment": "phase3b-calibration-v1",
+    "note": "identity for noise/corruption (no real labels in VizWiz)"
+  },
+  "issues": {
+    "blur": {
+      "threshold": 0.36,
+      "calibrated": true,
+      "validation": "real-world",
+      "real_world_f1": 0.6114,
+      "synthetic_f1": 0.9004,
+      "evidence_features": [
+        "sharp_highfreq_ratio",
+        "sharp_laplacian_var",
+        "texture_spectral_slope"
+      ]
+    },
+    "underexposure": {
+      "threshold": 0.5,
+      "calibrated": true,
+      "validation": "real-world",
+      "real_world_f1": 0.4889,
+      "synthetic_f1": 0.8434,
+      "evidence_features": [
+        "expo_luma_mean",
+        "expo_shadow_ratio",
+        "contrast_p95"
+      ]
+    },
+    "overexposure": {
+      "threshold": 0.1,
+      "calibrated": true,
+      "validation": "real-world",
+      "real_world_f1": 0.1912,
+      "synthetic_f1": 0.7411,
+      "evidence_features": [
+        "expo_bright_clip_ratio",
+        "expo_luma_mean",
+        "contrast_p95"
+      ]
+    },
+    "noise": {
+      "threshold": 0.45,
+      "calibrated": false,
+      "validation": "synthetic-only",
+      "real_world_f1": null,
+      "synthetic_f1": 0.8434,
+      "evidence_features": [
+        "noise_immerkaer_sigma",
+        "noise_median_residual_mad"
+      ]
+    },
+    "corruption": {
+      "threshold": 0.35,
+      "calibrated": false,
+      "validation": "synthetic-only",
+      "real_world_f1": null,
+      "synthetic_f1": 0.973,
+      "evidence_features": [
+        "compress_blockiness",
+        "compress_blockiness_v",
+        "compress_blockiness_h"
+      ]
+    }
+  },
+  "defect": {
+    "exposed_as": "potential_visual_defect",
+    "method": "patch-anomaly, self-referential local outlier",
+    "version": "phase3c-defect-v1",
+    "validation": "synthetic-only, screening signal",
+    "test_metrics": {
+      "fit_images": 1941,
+      "test_images": 513,
+      "test_defect_support": 105,
+      "roc_auc": 0.6005,
+      "operating_point": {
+        "prob_threshold": 0.5,
+        "f1": 0.3269,
+        "precision": 0.3301,
+        "recall": 0.3238,
+        "confusion": {
+          "tp": 34,
+          "fp": 69,
+          "fn": 71
+        }
+      },
+      "precision_recall_curve": [
+        {
+          "prob_threshold": 0.3,
+          "precision": 0.2908,
+          "recall": 0.3905
+        },
+        {
+          "prob_threshold": 0.4,
+          "precision": 0.3008,
+          "recall": 0.3524
+        },
+        {
+          "prob_threshold": 0.5,
+          "precision": 0.3301,
+          "recall": 0.3238
+        },
+        {
+          "prob_threshold": 0.6,
+          "precision": 0.3176,
+          "recall": 0.2571
+        },
+        {
+          "prob_threshold": 0.7,
+          "precision": 0.3235,
+          "recall": 0.2095
+        },
+        {
+          "prob_threshold": 0.8,
+          "precision": 0.3393,
+          "recall": 0.181
+        },
+        {
+          "prob_threshold": 0.9,
+          "precision": 0.3143,
+          "recall": 0.1048
+        }
+      ],
+      "localisation_hit_rate": 0.3235,
+      "localisation_note": "fraction of correctly-flagged defect images whose top patch centre falls inside the true defect bounding box"
+    },
+    "disclaimer": "Flags a region statistically unlike the rest of the image. NOT a confirmed physical defect; VYRA is an image-quality tool, not a diagnostic system."
+  },
+  "quality_score": {
+    "formula": "100 * product_i (1 - w_i * clip((p_i - t_i) / (severe - t_i), 0, 1))",
+    "explanation": "Operational score, not a perceptual/MOS score. Each issue removes at most w_i of the remaining quality, scaled by how far its calibrated probability sits past its decision threshold t_i toward 'severe'. Compounding keeps the score in [0, 100] and models diminishing marginal damage. See docs/quality-score.md.",
+    "severe_probability": 0.9,
+    "weights": {
+      "blur": 0.55,
+      "corruption": 0.45,
+      "underexposure": 0.45,
+      "overexposure": 0.35,
+      "noise": 0.3,
+      "potential_defect": 0.2
+    },
+    "bands": [
+      {
+        "min": 85,
+        "label": "GOOD"
+      },
+      {
+        "min": 68,
+        "label": "ACCEPTABLE"
+      },
+      {
+        "min": 45,
+        "label": "DEGRADED"
+      },
+      {
+        "min": 0,
+        "label": "POOR"
+      }
+    ],
+    "defect_method": "patch-anomaly (self-referential, phase3c-defect-v1)"
+  },
+  "real_world_evaluation": {
+    "dataset": "VizWiz-QualityIssues val sample (n=2496, \u22653/5 votes)",
+    "experiment": "phase3b-calibration-v1 row D",
+    "primary_macro_f1": 0.4305,
+    "per_issue_f1": {
+      "blur": 0.6114,
+      "underexposure": 0.4889,
+      "overexposure": 0.1912
+    },
+    "not_validated": [
+      "noise",
+      "corruption",
+      "potential_visual_defect"
+    ]
+  },
+  "capabilities": {
+    "real_world_validated": [
+      "blur",
+      "underexposure",
+      "overexposure"
+    ],
+    "synthetic_validated_only": [
+      "noise",
+      "corruption"
+    ],
+    "screening_only": [
+      "potential_visual_defect"
+    ]
+  }
+}

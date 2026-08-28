@@ -1,0 +1,91 @@
+{
+  "vizwiz_codes": {
+    "BLR": "blurry / out of focus / motion blur",
+    "BRT": "too bright / overexposed",
+    "DRK": "too dark / underexposed",
+    "OBS": "obstruction - finger or object partly covering the lens",
+    "FRM": "framing - subject cut off / incomplete / bad composition",
+    "ROT": "wrong rotation / orientation",
+    "OTH": "other quality issue (free-text)",
+    "NON": "no quality issue"
+  },
+  "mappings": [
+    {
+      "vizwiz_code": "BLR",
+      "vyra_label": "blur",
+      "category": "A",
+      "confidence": "high",
+      "reasoning": "VizWiz BLR (blurry / out of focus / motion) is the same concept as VYRA 'blur'. Both defocus and motion blur are covered on each side."
+    },
+    {
+      "vizwiz_code": "BRT",
+      "vyra_label": "overexposure",
+      "category": "A",
+      "confidence": "medium",
+      "reasoning": "'Too bright' corresponds to VYRA 'overexposure'. Slight gap: BRT can also be flagged for glare/reflections that are not global overexposure."
+    },
+    {
+      "vizwiz_code": "DRK",
+      "vyra_label": "underexposure",
+      "category": "A",
+      "confidence": "medium",
+      "reasoning": "'Too dark' corresponds to VYRA 'underexposure'. Real dark images also carry heavy sensor noise, which VYRA models as a separate label."
+    },
+    {
+      "vizwiz_code": "OBS",
+      "vyra_label": "defect",
+      "category": "B",
+      "confidence": "low",
+      "reasoning": "OBS (finger/object over the lens) overlaps ONLY the 'occlusion' sub-type of VYRA's synthetic 'defect' (1 of 5 synthetic defect types). VYRA defect also covers dead pixels, banding, block corruption, colour blotches -- none of which VizWiz labels. Treated as a weak proxy, reported with heavy caveats."
+    },
+    {
+      "vizwiz_code": "FRM",
+      "vyra_label": null,
+      "category": "C",
+      "confidence": "n/a",
+      "reasoning": "Framing / subject cut off. VYRA has no framing concept and it is not an image-quality degradation in VYRA's taxonomy. Unmapped."
+    },
+    {
+      "vizwiz_code": "ROT",
+      "vyra_label": null,
+      "category": "C",
+      "confidence": "n/a",
+      "reasoning": "Wrong orientation. Not a VYRA concept and not a degradation. Unmapped."
+    },
+    {
+      "vizwiz_code": "OTH",
+      "vyra_label": null,
+      "category": "D",
+      "confidence": "n/a",
+      "reasoning": "Free-text 'other'. Too heterogeneous to map; kept only as context."
+    },
+    {
+      "vizwiz_code": "NON",
+      "vyra_label": null,
+      "category": "D",
+      "confidence": "n/a",
+      "reasoning": "'No issue' vote count. Auxiliary: high NON is corroborating evidence for a clean image (used in analysis, not as a label)."
+    },
+    {
+      "vizwiz_code": null,
+      "vyra_label": "noise",
+      "category": "C",
+      "confidence": "n/a",
+      "reasoning": "VizWiz has no noise category. Real sensor noise is present in many dark images but is never annotated. Not directly supported by this dataset."
+    },
+    {
+      "vizwiz_code": null,
+      "vyra_label": "corruption",
+      "category": "C",
+      "confidence": "n/a",
+      "reasoning": "VizWiz has no compression / digital-corruption category. 'unrecognizable' is severity, not corruption (see note). Not directly supported by this dataset."
+    }
+  ],
+  "evaluable_vyra_labels": [
+    "blur",
+    "overexposure",
+    "underexposure",
+    "defect"
+  ],
+  "primary_vote_threshold": 3
+}

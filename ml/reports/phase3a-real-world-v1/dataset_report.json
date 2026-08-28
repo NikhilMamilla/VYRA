@@ -1,0 +1,182 @@
+{
+  "requested_subset": 2500,
+  "sampled": 2500,
+  "usable_for_eval": 2496,
+  "load_status_counts": {
+    "ok": 2496,
+    "too_small": 4
+  },
+  "image_dims": {
+    "width": {
+      "min": 50,
+      "max": 1936,
+      "median": 968
+    },
+    "height": {
+      "min": 50,
+      "max": 2592,
+      "median": 1296
+    },
+    "grayscale_content": 0
+  },
+  "vizwiz_vote_histograms": {
+    "BLR": {
+      "0": 971,
+      "1": 465,
+      "2": 328,
+      "3": 258,
+      "4": 261,
+      "5": 213
+    },
+    "BRT": {
+      "0": 2015,
+      "1": 334,
+      "2": 81,
+      "3": 43,
+      "4": 15,
+      "5": 8
+    },
+    "DRK": {
+      "0": 2010,
+      "1": 330,
+      "2": 87,
+      "3": 31,
+      "4": 30,
+      "5": 8
+    },
+    "OBS": {
+      "0": 2141,
+      "1": 270,
+      "2": 41,
+      "3": 30,
+      "4": 9,
+      "5": 5
+    },
+    "FRM": {
+      "0": 593,
+      "1": 530,
+      "2": 495,
+      "3": 458,
+      "4": 298,
+      "5": 122
+    },
+    "ROT": {
+      "0": 1799,
+      "1": 280,
+      "2": 148,
+      "3": 154,
+      "4": 87,
+      "5": 28
+    },
+    "OTH": {
+      "0": 2302,
+      "1": 171,
+      "2": 19,
+      "3": 4,
+      "4": 0,
+      "5": 0
+    },
+    "NON": {
+      "0": 706,
+      "1": 584,
+      "2": 456,
+      "3": 294,
+      "4": 267,
+      "5": 189
+    }
+  },
+  "unrecognizable_vote_histogram": {
+    "0": 1698,
+    "1": 398,
+    "2": 163,
+    "3": 85,
+    "4": 88,
+    "5": 64
+  },
+  "mapped_label_positive_counts": {
+    "blur": {
+      ">= 1 votes": 1525,
+      ">= 2 votes": 1060,
+      ">= 3 votes": 732,
+      ">= 4 votes": 474,
+      ">= 5 votes": 213
+    },
+    "overexposure": {
+      ">= 1 votes": 481,
+      ">= 2 votes": 147,
+      ">= 3 votes": 66,
+      ">= 4 votes": 23,
+      ">= 5 votes": 8
+    },
+    "underexposure": {
+      ">= 1 votes": 486,
+      ">= 2 votes": 156,
+      ">= 3 votes": 69,
+      ">= 4 votes": 38,
+      ">= 5 votes": 8
+    },
+    "defect": {
+      ">= 1 votes": 355,
+      ">= 2 votes": 85,
+      ">= 3 votes": 44,
+      ">= 4 votes": 14,
+      ">= 5 votes": 5
+    }
+  },
+  "mapped_label_co_occurrence_at_3": {
+    "blur": {
+      "blur": 732,
+      "overexposure": 31,
+      "underexposure": 21,
+      "defect": 21
+    },
+    "overexposure": {
+      "blur": 31,
+      "overexposure": 66,
+      "underexposure": 6,
+      "defect": 3
+    },
+    "underexposure": {
+      "blur": 21,
+      "overexposure": 6,
+      "underexposure": 69,
+      "defect": 2
+    },
+    "defect": {
+      "blur": 21,
+      "overexposure": 3,
+      "underexposure": 2,
+      "defect": 44
+    }
+  },
+  "notes_sample": [
+    {
+      "image": "VizWiz_val_00001384.jpg",
+      "status": "too_small",
+      "notes": [
+        "min edge 23px < 32px"
+      ]
+    },
+    {
+      "image": "VizWiz_val_00001989.jpg",
+      "status": "too_small",
+      "notes": [
+        "min edge 29px < 32px"
+      ]
+    },
+    {
+      "image": "VizWiz_val_00002807.jpg",
+      "status": "too_small",
+      "notes": [
+        "min edge 31px < 32px"
+      ]
+    },
+    {
+      "image": "VizWiz_val_00003667.jpg",
+      "status": "too_small",
+      "notes": [
+        "min edge 25px < 32px"
+      ]
+    }
+  ]
+}

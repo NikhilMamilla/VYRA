@@ -1,0 +1,22 @@
+# Runtime dependencies, pinned to exact versions for reproducible builds.
+# Only direct dependencies are listed: transitive versions are resolved by pip so
+# platform-specific extras (uvloop on Linux, colorama on Windows) stay correct.
+
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+pydantic==2.13.4
+pydantic-settings==2.15.0
+sqlalchemy[asyncio]==2.0.52
+asyncpg==0.31.0
+python-multipart==0.0.32
+
+# --- Inference (CV features + calibrated RandomForest) ----------------------
+# The `vyra_ml` package itself is installed separately, without its deps:
+#   pip install --no-deps ../ml          (local dev)
+#   RUN pip install --no-deps ./ml       (Docker; see backend/Dockerfile)
+# These pins match ml/requirements.txt so the model unpickles identically.
+numpy==2.2.6
+opencv-python-headless==4.11.0.86
+scikit-image==0.25.2
+scikit-learn==1.6.1
+joblib==1.4.2

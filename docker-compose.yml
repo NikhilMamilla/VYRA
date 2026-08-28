@@ -1,0 +1,96 @@
+# Local, self-contained deployment of VYRA: `docker compose up --build`.
+#
+# Every value has a working default, so the stack runs with no .env file and no
+# credentials. Copy .env.example to .env to override anything.
+#
+# Supabase is a managed service and is deliberately NOT containerised here: to
+# use it instead of the local database, point DATABASE_URL at your Supabase
+# Postgres instance and remove the `db` service dependency.
+
+name: vyra
+
+services:
+  db:
+    image: postgres:16-alpine
+    # This service has no published port: it is reachable only from `backend`
+    # on the internal compose network. The default password below is a local
+    # placeholder for zero-config `docker compose up`, not a secret -- override
+    # POSTGRES_PASSWORD in .env for anything beyond a local demo.
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vyra}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-local-only}
+      POSTGRES_DB: ${POSTGRES_DB:-vyra}
+    volumes:
+      - vyra-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vyra} -d ${POSTGRES_DB:-vyra}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      # Repo root: the image bundles the vyra_ml inference package (ml/vyra_ml)
+      # and the model artifact (ml/artifacts/...) alongside the API.
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_JSON: ${LOG_JSON:-true}
+      # Leave DATABASE_URL unset to talk to the bundled `db` service; the backend
+      # assembles the URL from DB_* (see backend/app/core/config.py). Set
+      # DATABASE_URL in .env to point at an external Postgres (e.g. Supabase).
+      DATABASE_URL: ${DATABASE_URL:-}
+      DB_HOST: db
+      DB_USER: ${POSTGRES_USER:-vyra}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-change-me-local-only}
+      DB_NAME: ${POSTGRES_DB:-vyra}
+      STORAGE_BACKEND: ${STORAGE_BACKEND:-local}
+      STORAGE_LOCAL_DIR: /app/data/uploads
+      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-10485760}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
+      # The bundle is baked into the image at /app/model (see backend/Dockerfile).
+      MODEL_PATH: ${MODEL_PATH:-/app/model}
+      REQUIRE_ANALYZER: ${REQUIRE_ANALYZER:-true}
+    volumes:
+      - vyra-uploads:/app/data/uploads
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      # python:slim has no curl; use the interpreter that is already present.
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      # Cold start loads scikit-learn + opencv + the model bundle.
+      start_period: 45s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Empty: nginx serves the SPA and proxies /api to the backend, so the
+        # browser talks to a single origin.
+        VITE_API_BASE_URL: ""
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
+    depends_on:
+      backend:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  vyra-db:
+  vyra-uploads:

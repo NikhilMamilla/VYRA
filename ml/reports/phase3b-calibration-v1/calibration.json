@@ -1,0 +1,152 @@
+{
+  "phase3a_v1": {
+    "blur": {
+      "support": 754,
+      "calibrated": true,
+      "before": {
+        "brier": 0.1806,
+        "ece": 0.1283
+      },
+      "after": {
+        "brier": 0.1543,
+        "ece": 0.0
+      }
+    },
+    "overexposure": {
+      "support": 49,
+      "calibrated": true,
+      "before": {
+        "brier": 0.1043,
+        "ece": 0.2462
+      },
+      "after": {
+        "brier": 0.0185,
+        "ece": 0.0
+      }
+    },
+    "underexposure": {
+      "support": 69,
+      "calibrated": true,
+      "before": {
+        "brier": 0.0219,
+        "ece": 0.0474
+      },
+      "after": {
+        "brier": 0.0154,
+        "ece": 0.0
+      }
+    },
+    "defect": {
+      "support": 50,
+      "calibrated": true,
+      "before": {
+        "brier": 0.1029,
+        "ece": 0.2581
+      },
+      "after": {
+        "brier": 0.0197,
+        "ece": 0.0
+      }
+    }
+  },
+  "v2fix": {
+    "blur": {
+      "support": 754,
+      "calibrated": true,
+      "before": {
+        "brier": 0.181,
+        "ece": 0.1281
+      },
+      "after": {
+        "brier": 0.1543,
+        "ece": 0.0
+      }
+    },
+    "overexposure": {
+      "support": 49,
+      "calibrated": true,
+      "before": {
+        "brier": 0.106,
+        "ece": 0.2484
+      },
+      "after": {
+        "brier": 0.0186,
+        "ece": 0.0
+      }
+    },
+    "underexposure": {
+      "support": 69,
+      "calibrated": true,
+      "before": {
+        "brier": 0.0219,
+        "ece": 0.0477
+      },
+      "after": {
+        "brier": 0.0154,
+        "ece": 0.0
+      }
+    },
+    "defect": {
+      "support": 50,
+      "calibrated": true,
+      "before": {
+        "brier": 0.1041,
+        "ece": 0.26
+      },
+      "after": {
+        "brier": 0.0197,
+        "ece": 0.0
+      }
+    }
+  },
+  "v2blur": {
+    "blur": {
+      "support": 754,
+      "calibrated": true,
+      "before": {
+        "brier": 0.2441,
+        "ece": 0.1845
+      },
+      "after": {
+        "brier": 0.1951,
+        "ece": 0.0
+      }
+    },
+    "overexposure": {
+      "support": 49,
+      "calibrated": true,
+      "before": {
+        "brier": 0.0939,
+        "ece": 0.2278
+      },
+      "after": {
+        "brier": 0.0187,
+        "ece": 0.0
+      }
+    },
+    "underexposure": {
+      "support": 69,
+      "calibrated": true,
+      "before": {
+        "brier": 0.0195,
+        "ece": 0.0382
+      },
+      "after": {
+        "brier": 0.0153,
+        "ece": 0.0
+      }
+    },
+    "defect": {
+      "support": 50,
+      "calibrated": true,
+      "before": {
+        "brier": 0.0975,
+        "ece": 0.2531
+      },
+      "after": {
+        "brier": 0.0197,
+        "ece": 0.0
+      }
+    }
+  }
+}

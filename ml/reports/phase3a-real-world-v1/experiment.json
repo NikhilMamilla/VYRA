@@ -1,0 +1,63 @@
+{
+  "version": "phase3a-real-world-v1",
+  "created_utc": "2026-08-28T08:06:55Z",
+  "seed": 20260828,
+  "package_version": "0.2.0",
+  "python": "3.11.4",
+  "opencv": "4.11.0",
+  "model": {
+    "run_dir": "phase2-baseline-v1_20260828-123813",
+    "feature_version": "cvfeat-v1",
+    "n_features": 42,
+    "threshold_strategy": "phase2_val",
+    "thresholds_used": {
+      "blur": 0.45,
+      "underexposure": 0.55,
+      "overexposure": 0.45,
+      "noise": 0.4,
+      "corruption": 0.2,
+      "defect": 0.3
+    },
+    "trained_on": "synthetic (BSDS500 + degradations), phase2-baseline-v1",
+    "retrained_on_real_data": false,
+    "thresholds_tuned_on_real_data": false
+  },
+  "dataset": {
+    "name": "VizWiz-QualityIssues",
+    "split": "val",
+    "requested_subset": 2500,
+    "images_evaluated": 2496,
+    "annotation_file": "val.json"
+  },
+  "leakage_check": {
+    "checked": true,
+    "phase2_manifest": "manifest_phase2-baseline-v1.parquet",
+    "train_images": 3600,
+    "sha1_overlap": 0,
+    "id_overlap": 0
+  },
+  "evaluable_labels": [
+    "blur",
+    "overexposure",
+    "underexposure",
+    "defect"
+  ],
+  "unsupported_labels": [
+    "noise",
+    "corruption"
+  ],
+  "primary_vote_threshold": 3,
+  "headline": {
+    "real_macro_f1": 0.304,
+    "real_micro_f1": 0.3586,
+    "synthetic_macro_f1_evaluable": 0.7436
+  },
+  "artifacts": {
+    "label_mapping": "label_mapping.json / label_mapping.md",
+    "dataset_report": "dataset_report.json",
+    "evaluation_metrics": "evaluation_metrics.json",
+    "synthetic_vs_real": "synthetic_vs_real.json / synthetic_vs_real.md",
+    "failure_analysis": "failure_analysis.json",
+    "domain_shift": "domain_shift.json"
+  }
+}

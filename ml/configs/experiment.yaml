@@ -1,0 +1,69 @@
+# VYRA Phase 2 experiment configuration.
+#
+# This single file drives the whole pipeline: ingest -> split -> degrade ->
+# manifest -> features -> baseline. Given the same source images, the same
+# config and the same seed, the generated dataset and the reported metrics
+# reproduce.
+
+version: "phase2-baseline-v1"
+seed: 20260828
+
+paths:
+  # Large, reproducible artefacts (git-ignored): raw datasets, generated images,
+  # feature caches, manifests.
+  data_root: data
+  raw_subdir: raw
+  processed_subdir: processed
+  manifests_subdir: manifests
+  # Small, committed evidence: dataset stats, feature report, experiment records
+  # and metrics. These live OUTSIDE data/ so they can be version-controlled.
+  reports_subdir: ../reports
+  runs_subdir: ../runs
+
+dataset:
+  # Clean source images that synthetic degradations are generated from.
+  source: bsds500          # bsds500 | skimage  (see vyra_ml/ingest/)
+  # Cap the number of originals used. null = all available. Keeps the 48h
+  # build fast; raise for a fuller run.
+  max_originals: 400
+  # Longest edge of every stored image, in pixels. Downscaling clean originals
+  # first keeps the generated set small and uniform.
+  target_long_edge: 384
+  splits:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+
+degradation:
+  # Per original, how many samples of each kind to emit.
+  clean_per_original: 1
+  single_per_original: 6      # single-degradation samples (type + severity sampled)
+  multi_per_original: 2       # samples combining 2-3 degradations
+  multi_min: 2
+  multi_max: 3
+  severity_levels: [1, 2, 3, 4, 5]
+  # Which degradations are in play and which issue label each raises.
+  enabled: [blur, underexposure, overexposure, noise, corruption, defect]
+
+features:
+  version: "cvfeat-v1"
+  # Working resolution for feature extraction; images are resized to this
+  # longest edge so features are comparable across source resolutions.
+  work_long_edge: 384
+
+baseline:
+  # Independent binary classifier per issue label (multi-label via one-vs-rest).
+  model: random_forest          # random_forest | hist_gradient_boosting
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 2
+    class_weight: balanced
+    n_jobs: -1
+  hist_gradient_boosting:
+    max_iter: 300
+    learning_rate: 0.08
+    max_leaf_nodes: 31
+  # Also fit a provisional quality-score regressor (target is provisional —
+  # see docs/dataset.md).
+  fit_quality_regressor: true

@@ -1,0 +1,269 @@
+{
+  "issue_classification": {
+    "val": {
+      "per_class": {
+        "blur": {
+          "precision": 0.9861,
+          "recall": 0.8554,
+          "f1": 0.9161,
+          "support": 83,
+          "confusion": {
+            "tp": 71,
+            "fp": 1,
+            "fn": 12,
+            "tn": 429
+          },
+          "roc_auc": 0.9791,
+          "pr_auc": 0.944
+        },
+        "underexposure": {
+          "precision": 0.8519,
+          "recall": 0.8288,
+          "f1": 0.8402,
+          "support": 111,
+          "confusion": {
+            "tp": 92,
+            "fp": 16,
+            "fn": 19,
+            "tn": 386
+          },
+          "roc_auc": 0.9644,
+          "pr_auc": 0.9135
+        },
+        "overexposure": {
+          "precision": 0.7381,
+          "recall": 0.6889,
+          "f1": 0.7126,
+          "support": 90,
+          "confusion": {
+            "tp": 62,
+            "fp": 22,
+            "fn": 28,
+            "tn": 401
+          },
+          "roc_auc": 0.8978,
+          "pr_auc": 0.7664
+        },
+        "noise": {
+          "precision": 0.8036,
+          "recall": 0.8333,
+          "f1": 0.8182,
+          "support": 108,
+          "confusion": {
+            "tp": 90,
+            "fp": 22,
+            "fn": 18,
+            "tn": 383
+          },
+          "roc_auc": 0.9664,
+          "pr_auc": 0.9134
+        },
+        "corruption": {
+          "precision": 0.9576,
+          "recall": 0.9826,
+          "f1": 0.97,
+          "support": 115,
+          "confusion": {
+            "tp": 113,
+            "fp": 5,
+            "fn": 2,
+            "tn": 393
+          },
+          "roc_auc": 0.9986,
+          "pr_auc": 0.9958
+        },
+        "defect": {
+          "precision": 0.5615,
+          "recall": 0.6083,
+          "f1": 0.584,
+          "support": 120,
+          "confusion": {
+            "tp": 73,
+            "fp": 57,
+            "fn": 47,
+            "tn": 336
+          },
+          "roc_auc": 0.7898,
+          "pr_auc": 0.6347
+        }
+      },
+      "macro_f1": 0.8068,
+      "micro_f1": 0.801,
+      "samples_f1": 0.7309,
+      "subset_accuracy": 0.6043,
+      "hamming_loss": 0.0809
+    },
+    "test": {
+      "per_class": {
+        "blur": {
+          "precision": 0.9811,
+          "recall": 0.832,
+          "f1": 0.9004,
+          "support": 125,
+          "confusion": {
+            "tp": 104,
+            "fp": 2,
+            "fn": 21,
+            "tn": 386
+          },
+          "roc_auc": 0.9841,
+          "pr_auc": 0.9646
+        },
+        "underexposure": {
+          "precision": 0.9333,
+          "recall": 0.7778,
+          "f1": 0.8485,
+          "support": 90,
+          "confusion": {
+            "tp": 70,
+            "fp": 5,
+            "fn": 20,
+            "tn": 418
+          },
+          "roc_auc": 0.9701,
+          "pr_auc": 0.9166
+        },
+        "overexposure": {
+          "precision": 0.7912,
+          "recall": 0.7423,
+          "f1": 0.766,
+          "support": 97,
+          "confusion": {
+            "tp": 72,
+            "fp": 19,
+            "fn": 25,
+            "tn": 397
+          },
+          "roc_auc": 0.9149,
+          "pr_auc": 0.8229
+        },
+        "noise": {
+          "precision": 0.8875,
+          "recall": 0.7802,
+          "f1": 0.8304,
+          "support": 91,
+          "confusion": {
+            "tp": 71,
+            "fp": 9,
+            "fn": 20,
+            "tn": 413
+          },
+          "roc_auc": 0.9671,
+          "pr_auc": 0.9086
+        },
+        "corruption": {
+          "precision": 0.9076,
+          "recall": 0.9818,
+          "f1": 0.9432,
+          "support": 110,
+          "confusion": {
+            "tp": 108,
+            "fp": 11,
+            "fn": 2,
+            "tn": 392
+          },
+          "roc_auc": 0.9982,
+          "pr_auc": 0.9948
+        },
+        "defect": {
+          "precision": 0.4154,
+          "recall": 0.5143,
+          "f1": 0.4596,
+          "support": 105,
+          "confusion": {
+            "tp": 54,
+            "fp": 76,
+            "fn": 51,
+            "tn": 332
+          },
+          "roc_auc": 0.7545,
+          "pr_auc": 0.5212
+        }
+      },
+      "macro_f1": 0.7913,
+      "micro_f1": 0.7859,
+      "samples_f1": 0.7098,
+      "subset_accuracy": 0.5984,
+      "hamming_loss": 0.0848
+    }
+  },
+  "thresholds": {
+    "blur": 0.45,
+    "underexposure": 0.55,
+    "overexposure": 0.45,
+    "noise": 0.4,
+    "corruption": 0.2,
+    "defect": 0.3
+  },
+  "feature_importances_top8": {
+    "blur": {
+      "sharp_highfreq_ratio": 0.1352,
+      "sharp_laplacian_var": 0.0769,
+      "noise_highfreq_residual_std": 0.0679,
+      "texture_spectral_slope": 0.0627,
+      "noise_immerkaer_sigma": 0.0615,
+      "sharp_modified_laplacian": 0.0583,
+      "sharp_laplacian_var_norm": 0.0572,
+      "sharp_edge_density": 0.0426
+    },
+    "underexposure": {
+      "expo_highlight_ratio": 0.1289,
+      "contrast_p95": 0.0979,
+      "expo_bright_clip_ratio": 0.0978,
+      "expo_luma_mean": 0.0702,
+      "expo_luma_median": 0.0434,
+      "noise_immerkaer_sigma": 0.0419,
+      "noise_median_residual_mad": 0.0385,
+      "expo_shadow_ratio": 0.0383
+    },
+    "overexposure": {
+      "contrast_p95": 0.1038,
+      "expo_luma_mean": 0.103,
+      "expo_bright_clip_ratio": 0.0998,
+      "expo_highlight_ratio": 0.0823,
+      "expo_luma_median": 0.0684,
+      "expo_shadow_ratio": 0.0439,
+      "color_colourfulness": 0.0342,
+      "contrast_p5": 0.0341
+    },
+    "noise": {
+      "noise_immerkaer_sigma": 0.1145,
+      "noise_median_residual_mad": 0.0873,
+      "sharp_modified_laplacian": 0.0655,
+      "sharp_highfreq_ratio": 0.0608,
+      "sharp_laplacian_var": 0.0399,
+      "noise_flat_region_std": 0.0398,
+      "texture_glcm_homogeneity": 0.0379,
+      "expo_highlight_ratio": 0.0335
+    },
+    "corruption": {
+      "compress_blockiness": 0.2859,
+      "compress_blockiness_v": 0.2463,
+      "compress_blockiness_h": 0.2174,
+      "sharp_laplacian_var": 0.0357,
+      "noise_immerkaer_sigma": 0.0347,
+      "sharp_highfreq_ratio": 0.0256,
+      "sharp_modified_laplacian": 0.0207,
+      "noise_highfreq_residual_std": 0.0179
+    },
+    "defect": {
+      "compress_blockiness_v": 0.0347,
+      "contrast_michelson": 0.0337,
+      "expo_dark_clip_ratio": 0.033,
+      "compress_blockiness": 0.0327,
+      "sharp_laplacian_var": 0.032,
+      "compress_blockiness_h": 0.0308,
+      "texture_glcm_homogeneity": 0.0305,
+      "sharp_laplacian_var_norm": 0.0296
+    }
+  },
+  "quality_regression": {
+    "note": "target is the PROVISIONAL synthetic quality score (see docs/dataset.md)",
+    "test": {
+      "mae": 13.336,
+      "rmse": 17.878,
+      "r2": 0.6635,
+      "bias": -0.384
+    }
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "n_samples": 3600,
+  "n_originals": 400,
+  "clean_samples": 400,
+  "split_counts_samples": {
+    "train": 2574,
+    "test": 513,
+    "val": 513
+  },
+  "split_counts_originals": {
+    "test": 57,
+    "train": 286,
+    "val": 57
+  },
+  "source_dataset_counts": {
+    "bsds500": 3600
+  },
+  "issues_per_sample": {
+    "0": 400,
+    "1": 2400,
+    "2": 426,
+    "3": 374
+  },
+  "class_imbalance": {
+    "blur": {
+      "positives": 738,
+      "negatives": 2862,
+      "positive_rate": 0.205,
+      "imbalance_ratio": 3.88
+    },
+    "underexposure": {
+      "positives": 694,
+      "negatives": 2906,
+      "positive_rate": 0.1928,
+      "imbalance_ratio": 4.19
+    },
+    "overexposure": {
+      "positives": 686,
+      "negatives": 2914,
+      "positive_rate": 0.1906,
+      "imbalance_ratio": 4.25
+    },
+    "noise": {
+      "positives": 753,
+      "negatives": 2847,
+      "positive_rate": 0.2092,
+      "imbalance_ratio": 3.78
+    },
+    "corruption": {
+      "positives": 751,
+      "negatives": 2849,
+      "positive_rate": 0.2086,
+      "imbalance_ratio": 3.79
+    },
+    "defect": {
+      "positives": 752,
+      "negatives": 2848,
+      "positive_rate": 0.2089,
+      "imbalance_ratio": 3.79
+    }
+  },
+  "severity_distribution": {
+    "blur": {
+      "1": 150,
+      "2": 138,
+      "3": 137,
+      "4": 164,
+      "5": 149
+    },
+    "underexposure": {
+      "1": 142,
+      "2": 133,
+      "3": 139,
+      "4": 145,
+      "5": 135
+    },
+    "overexposure": {
+      "1": 141,
+      "2": 148,
+      "3": 120,
+      "4": 145,
+      "5": 132
+    },
+    "noise": {
+      "1": 154,
+      "2": 150,
+      "3": 171,
+      "4": 138,
+      "5": 140
+    },
+    "corruption": {
+      "1": 149,
+      "2": 157,
+      "3": 141,
+      "4": 146,
+      "5": 158
+    },
+    "defect": {
+      "1": 171,
+      "2": 139,
+      "3": 128,
+      "4": 173,
+      "5": 141
+    }
+  },
+  "label_cooccurrence": {
+    "labels": [
+      "blur",
+      "underexposure",
+      "overexposure",
+      "noise",
+      "corruption",
+      "defect"
+    ],
+    "matrix": [
+      [
+        738,
+        109,
+        105,
+        113,
+        111,
+        117
+      ],
+      [
+        109,
+        694,
+        0,
+        108,
+        108,
+        103
+      ],
+      [
+        105,
+        0,
+        686,
+        104,
+        118,
+        105
+      ],
+      [
+        113,
+        108,
+        104,
+        753,
+        115,
+        109
+      ],
+      [
+        111,
+        108,
+        118,
+        115,
+        751,
+        123
+      ],
+      [
+        117,
+        103,
+        105,
+        109,
+        123,
+        752
+      ]
+    ]
+  },
+  "image_dims": {
+    "width": {
+      "min": 256,
+      "max": 384,
+      "median": 384
+    },
+    "height": {
+      "min": 256,
+      "max": 384,
+      "median": 256
+    }
+  },
+  "orig_dims": {
+    "width_median": 481,
+    "height_median": 321
+  },
+  "quality_score_provisional": {
+    "min": 1.06,
+    "max": 100.0,
+    "mean": 60.59,
+    "by_label_band": {
+      "GOOD": 1443,
+      "DEFECTIVE": 942,
+      "DEGRADED": 681,
+      "ACCEPTABLE": 534
+    }
+  },
+  "invalid_or_missing": 0,
+  "per_split_positive_rate": {
+    "test": {
+      "blur": 0.244,
+      "underexposure": 0.175,
+      "overexposure": 0.189,
+      "noise": 0.177,
+      "corruption": 0.214,
+      "defect": 0.205
+    },
+    "train": {
+      "blur": 0.206,
+      "underexposure": 0.192,
+      "overexposure": 0.194,
+      "noise": 0.215,
+      "corruption": 0.204,
+      "defect": 0.205
+    },
+    "val": {
+      "blur": 0.162,
+      "underexposure": 0.216,
+      "overexposure": 0.175,
+      "noise": 0.211,
+      "corruption": 0.224,
+      "defect": 0.234
+    }
+  }
+}

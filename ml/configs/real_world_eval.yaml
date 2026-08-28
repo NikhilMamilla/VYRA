@@ -1,0 +1,40 @@
+# Phase 3A: real-world evaluation of the frozen Phase 2 baseline on
+# VizWiz-QualityIssues. No training, no threshold tuning against this data.
+
+version: "phase3a-real-world-v1"
+seed: 20260828
+
+model:
+  # Frozen Phase 2 artifact. Relative to the ml/ directory. The exact run is
+  # recorded into the report so the experiment is reproducible.
+  run_dir: "runs/phase2-baseline-v1_20260828-123813"
+  expected_feature_version: "cvfeat-v1"
+  # "phase2_val" = use the thresholds tuned on the SYNTHETIC val split, unchanged.
+  # This is the honest first transfer measurement (see docs/evaluation-protocol.md).
+  threshold_strategy: "phase2_val"
+
+vizwiz:
+  # Annotation files (small, downloaded by scripts/real_world_eval.py fetch).
+  annotations_dir: "data/raw/vizwiz/annotations"
+  # Official split to evaluate on. 'val' is the largest split that ships labels
+  # ('test' labels are withheld for the challenge).
+  eval_split: "val"
+  images_zip_url: "https://vizwiz.cs.colorado.edu/VizWiz_final/images/val.zip"
+  image_cache_dir: "data/raw/vizwiz/images_val"
+  # Uniform random sample of the official val split (seeded). null = all 7750.
+  # 2500 keeps the rare labels (BRT/DRK/OBS at >=3 votes) to a usable support
+  # while staying a < 700 MB partial download.
+  subset_size: 2500
+  download_workers: 12
+
+evaluation:
+  # Primary vote threshold for calling a mapped VizWiz label "positive".
+  positive_vote_min: 3
+  # Also report metrics at these thresholds as a sensitivity check.
+  sensitivity_vote_thresholds: [2, 3, 4]
+
+paths:
+  reports_subdir: "reports/phase3a-real-world-v1"
+  # Save a few representative failure images for inspection (small, committed).
+  failure_examples_subdir: "reports/phase3a-real-world-v1/failure_examples"
+  max_failure_examples_per_group: 6

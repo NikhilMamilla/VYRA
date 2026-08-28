@@ -1,0 +1,269 @@
+{
+  "issue_classification": {
+    "val": {
+      "per_class": {
+        "blur": {
+          "precision": 0.9722,
+          "recall": 0.8434,
+          "f1": 0.9032,
+          "support": 83,
+          "confusion": {
+            "tp": 70,
+            "fp": 2,
+            "fn": 13,
+            "tn": 428
+          },
+          "roc_auc": 0.9844,
+          "pr_auc": 0.9537
+        },
+        "underexposure": {
+          "precision": 0.8136,
+          "recall": 0.8649,
+          "f1": 0.8384,
+          "support": 111,
+          "confusion": {
+            "tp": 96,
+            "fp": 22,
+            "fn": 15,
+            "tn": 380
+          },
+          "roc_auc": 0.96,
+          "pr_auc": 0.9106
+        },
+        "overexposure": {
+          "precision": 0.7439,
+          "recall": 0.6778,
+          "f1": 0.7093,
+          "support": 90,
+          "confusion": {
+            "tp": 61,
+            "fp": 21,
+            "fn": 29,
+            "tn": 402
+          },
+          "roc_auc": 0.8981,
+          "pr_auc": 0.7691
+        },
+        "noise": {
+          "precision": 0.8165,
+          "recall": 0.8241,
+          "f1": 0.8203,
+          "support": 108,
+          "confusion": {
+            "tp": 89,
+            "fp": 20,
+            "fn": 19,
+            "tn": 385
+          },
+          "roc_auc": 0.9591,
+          "pr_auc": 0.9078
+        },
+        "corruption": {
+          "precision": 0.9576,
+          "recall": 0.9826,
+          "f1": 0.97,
+          "support": 115,
+          "confusion": {
+            "tp": 113,
+            "fp": 5,
+            "fn": 2,
+            "tn": 393
+          },
+          "roc_auc": 0.9988,
+          "pr_auc": 0.9959
+        },
+        "defect": {
+          "precision": 0.5565,
+          "recall": 0.575,
+          "f1": 0.5656,
+          "support": 120,
+          "confusion": {
+            "tp": 69,
+            "fp": 55,
+            "fn": 51,
+            "tn": 338
+          },
+          "roc_auc": 0.7764,
+          "pr_auc": 0.618
+        }
+      },
+      "macro_f1": 0.8011,
+      "micro_f1": 0.7968,
+      "samples_f1": 0.7308,
+      "subset_accuracy": 0.6043,
+      "hamming_loss": 0.0825
+    },
+    "test": {
+      "per_class": {
+        "blur": {
+          "precision": 0.9811,
+          "recall": 0.832,
+          "f1": 0.9004,
+          "support": 125,
+          "confusion": {
+            "tp": 104,
+            "fp": 2,
+            "fn": 21,
+            "tn": 386
+          },
+          "roc_auc": 0.9899,
+          "pr_auc": 0.9771
+        },
+        "underexposure": {
+          "precision": 0.7857,
+          "recall": 0.8556,
+          "f1": 0.8191,
+          "support": 90,
+          "confusion": {
+            "tp": 77,
+            "fp": 21,
+            "fn": 13,
+            "tn": 402
+          },
+          "roc_auc": 0.9624,
+          "pr_auc": 0.9083
+        },
+        "overexposure": {
+          "precision": 0.7667,
+          "recall": 0.7113,
+          "f1": 0.738,
+          "support": 97,
+          "confusion": {
+            "tp": 69,
+            "fp": 21,
+            "fn": 28,
+            "tn": 395
+          },
+          "roc_auc": 0.9151,
+          "pr_auc": 0.8193
+        },
+        "noise": {
+          "precision": 0.8706,
+          "recall": 0.8132,
+          "f1": 0.8409,
+          "support": 91,
+          "confusion": {
+            "tp": 74,
+            "fp": 11,
+            "fn": 17,
+            "tn": 411
+          },
+          "roc_auc": 0.9671,
+          "pr_auc": 0.9108
+        },
+        "corruption": {
+          "precision": 0.906,
+          "recall": 0.9636,
+          "f1": 0.9339,
+          "support": 110,
+          "confusion": {
+            "tp": 106,
+            "fp": 11,
+            "fn": 4,
+            "tn": 392
+          },
+          "roc_auc": 0.9972,
+          "pr_auc": 0.9914
+        },
+        "defect": {
+          "precision": 0.4242,
+          "recall": 0.5333,
+          "f1": 0.4726,
+          "support": 105,
+          "confusion": {
+            "tp": 56,
+            "fp": 76,
+            "fn": 49,
+            "tn": 332
+          },
+          "roc_auc": 0.7539,
+          "pr_auc": 0.5221
+        }
+      },
+      "macro_f1": 0.7842,
+      "micro_f1": 0.7801,
+      "samples_f1": 0.7082,
+      "subset_accuracy": 0.577,
+      "hamming_loss": 0.089
+    }
+  },
+  "thresholds": {
+    "blur": 0.6,
+    "underexposure": 0.4,
+    "overexposure": 0.45,
+    "noise": 0.4,
+    "corruption": 0.2,
+    "defect": 0.3
+  },
+  "feature_importances_top8": {
+    "blur": {
+      "noise_highfreq_residual_std": 0.093,
+      "noise_immerkaer_sigma": 0.0845,
+      "sharp_edge_density": 0.0801,
+      "sharp_tenengrad": 0.0703,
+      "texture_spectral_slope": 0.0648,
+      "sharp_laplacian_var": 0.0583,
+      "noise_median_residual_mad": 0.053,
+      "sharp_grad_mean": 0.0445
+    },
+    "underexposure": {
+      "expo_highlight_ratio": 0.1307,
+      "expo_bright_clip_ratio": 0.1009,
+      "contrast_p95": 0.0916,
+      "expo_luma_mean": 0.0659,
+      "expo_luma_median": 0.0443,
+      "contrast_dynamic_range": 0.0404,
+      "expo_shadow_ratio": 0.0388,
+      "noise_immerkaer_sigma": 0.0355
+    },
+    "overexposure": {
+      "contrast_p95": 0.1053,
+      "expo_luma_mean": 0.1001,
+      "expo_bright_clip_ratio": 0.0961,
+      "expo_highlight_ratio": 0.09,
+      "expo_luma_median": 0.0645,
+      "expo_shadow_ratio": 0.0425,
+      "color_colourfulness": 0.0346,
+      "contrast_p5": 0.0338
+    },
+    "noise": {
+      "noise_immerkaer_sigma": 0.1254,
+      "noise_median_residual_mad": 0.0854,
+      "sharp_modified_laplacian": 0.0665,
+      "sharp_highfreq_ratio": 0.0496,
+      "texture_glcm_homogeneity": 0.0406,
+      "sharp_laplacian_var": 0.04,
+      "sharp_laplacian_var_norm": 0.0382,
+      "expo_highlight_ratio": 0.0366
+    },
+    "corruption": {
+      "compress_blockiness": 0.2922,
+      "compress_blockiness_v": 0.2334,
+      "compress_blockiness_h": 0.2163,
+      "noise_immerkaer_sigma": 0.0469,
+      "texture_lbp_entropy": 0.0278,
+      "sharp_laplacian_var": 0.0273,
+      "sharp_highfreq_ratio": 0.0267,
+      "sharp_modified_laplacian": 0.0162
+    },
+    "defect": {
+      "contrast_michelson": 0.0371,
+      "noise_highfreq_residual_std": 0.0352,
+      "compress_blockiness": 0.0336,
+      "compress_blockiness_v": 0.0314,
+      "compress_blockiness_h": 0.0313,
+      "expo_dark_clip_ratio": 0.0304,
+      "texture_glcm_homogeneity": 0.0297,
+      "noise_flat_region_std": 0.0285
+    }
+  },
+  "quality_regression": {
+    "note": "target is the PROVISIONAL synthetic quality score (see docs/dataset.md)",
+    "test": {
+      "mae": 13.877,
+      "rmse": 18.435,
+      "r2": 0.6422,
+      "bias": -0.389
+    }
+  }
+}

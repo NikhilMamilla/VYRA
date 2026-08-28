@@ -1,0 +1,360 @@
+{
+  "vote_min": 3,
+  "rows": {
+    "A_phase3a_baseline": {
+      "per_class": {
+        "blur": {
+          "precision": 0.5077,
+          "recall": 0.7664,
+          "f1": 0.6108,
+          "support": 732,
+          "confusion": {
+            "tp": 561,
+            "fp": 544,
+            "fn": 171,
+            "tn": 1220
+          },
+          "roc_auc": 0.7898,
+          "pr_auc": 0.5695
+        },
+        "overexposure": {
+          "precision": 0.0583,
+          "recall": 0.303,
+          "f1": 0.0978,
+          "support": 66,
+          "confusion": {
+            "tp": 20,
+            "fp": 323,
+            "fn": 46,
+            "tn": 2107
+          },
+          "roc_auc": 0.6322,
+          "pr_auc": 0.1602
+        },
+        "underexposure": {
+          "precision": 0.4923,
+          "recall": 0.4638,
+          "f1": 0.4776,
+          "support": 69,
+          "confusion": {
+            "tp": 32,
+            "fp": 33,
+            "fn": 37,
+            "tn": 2394
+          },
+          "roc_auc": 0.8863,
+          "pr_auc": 0.3295
+        },
+        "defect": {
+          "precision": 0.0156,
+          "recall": 0.3864,
+          "f1": 0.03,
+          "support": 44,
+          "confusion": {
+            "tp": 17,
+            "fp": 1073,
+            "fn": 27,
+            "tn": 1379
+          },
+          "roc_auc": 0.4243,
+          "pr_auc": 0.016
+        }
+      },
+      "macro_f1": 0.304,
+      "micro_f1": 0.3586,
+      "samples_f1": 0.2081,
+      "subset_accuracy": 0.2929,
+      "hamming_loss": 0.2258,
+      "primary_macro_f1": 0.3954,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    },
+    "B_plus_threshold_calibration": {
+      "per_class": {
+        "blur": {
+          "precision": 0.5045,
+          "recall": 0.7732,
+          "f1": 0.6106,
+          "support": 732,
+          "confusion": {
+            "tp": 566,
+            "fp": 556,
+            "fn": 166,
+            "tn": 1208
+          },
+          "roc_auc": 0.7898,
+          "pr_auc": 0.5695
+        },
+        "overexposure": {
+          "precision": 0.2167,
+          "recall": 0.197,
+          "f1": 0.2063,
+          "support": 66,
+          "confusion": {
+            "tp": 13,
+            "fp": 47,
+            "fn": 53,
+            "tn": 2383
+          },
+          "roc_auc": 0.6322,
+          "pr_auc": 0.1602
+        },
+        "underexposure": {
+          "precision": 0.4928,
+          "recall": 0.4928,
+          "f1": 0.4928,
+          "support": 69,
+          "confusion": {
+            "tp": 34,
+            "fp": 35,
+            "fn": 35,
+            "tn": 2392
+          },
+          "roc_auc": 0.8863,
+          "pr_auc": 0.3295
+        },
+        "defect": {
+          "precision": 0.0177,
+          "recall": 1.0,
+          "f1": 0.0347,
+          "support": 44,
+          "confusion": {
+            "tp": 44,
+            "fp": 2445,
+            "fn": 0,
+            "tn": 7
+          },
+          "roc_auc": 0.4243,
+          "pr_auc": 0.016
+        }
+      },
+      "macro_f1": 0.3361,
+      "micro_f1": 0.2825,
+      "samples_f1": 0.1666,
+      "subset_accuracy": 0.0104,
+      "hamming_loss": 0.3342,
+      "primary_macro_f1": 0.4366,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    },
+    "C_plus_probability_calibration": {
+      "per_class": {
+        "blur": {
+          "precision": 0.4987,
+          "recall": 0.7964,
+          "f1": 0.6134,
+          "support": 732,
+          "confusion": {
+            "tp": 583,
+            "fp": 586,
+            "fn": 149,
+            "tn": 1178
+          },
+          "roc_auc": 0.7873,
+          "pr_auc": 0.5501
+        },
+        "overexposure": {
+          "precision": 0.1912,
+          "recall": 0.197,
+          "f1": 0.194,
+          "support": 66,
+          "confusion": {
+            "tp": 13,
+            "fp": 55,
+            "fn": 53,
+            "tn": 2375
+          },
+          "roc_auc": 0.6245,
+          "pr_auc": 0.1128
+        },
+        "underexposure": {
+          "precision": 0.4925,
+          "recall": 0.4783,
+          "f1": 0.4853,
+          "support": 69,
+          "confusion": {
+            "tp": 33,
+            "fp": 34,
+            "fn": 36,
+            "tn": 2393
+          },
+          "roc_auc": 0.8811,
+          "pr_auc": 0.3238
+        },
+        "defect": {
+          "precision": 0.0179,
+          "recall": 1.0,
+          "f1": 0.0352,
+          "support": 44,
+          "confusion": {
+            "tp": 44,
+            "fp": 2413,
+            "fn": 0,
+            "tn": 39
+          },
+          "roc_auc": 0.5079,
+          "pr_auc": 0.0179
+        }
+      },
+      "macro_f1": 0.332,
+      "micro_f1": 0.2881,
+      "samples_f1": 0.1731,
+      "subset_accuracy": 0.018,
+      "hamming_loss": 0.3331,
+      "primary_macro_f1": 0.4309,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    },
+    "D_plus_feature_fix": {
+      "per_class": {
+        "blur": {
+          "precision": 0.4983,
+          "recall": 0.791,
+          "f1": 0.6114,
+          "support": 732,
+          "confusion": {
+            "tp": 579,
+            "fp": 583,
+            "fn": 153,
+            "tn": 1181
+          },
+          "roc_auc": 0.7872,
+          "pr_auc": 0.5506
+        },
+        "overexposure": {
+          "precision": 0.1857,
+          "recall": 0.197,
+          "f1": 0.1912,
+          "support": 66,
+          "confusion": {
+            "tp": 13,
+            "fp": 57,
+            "fn": 53,
+            "tn": 2373
+          },
+          "roc_auc": 0.653,
+          "pr_auc": 0.1131
+        },
+        "underexposure": {
+          "precision": 0.5,
+          "recall": 0.4783,
+          "f1": 0.4889,
+          "support": 69,
+          "confusion": {
+            "tp": 33,
+            "fp": 33,
+            "fn": 36,
+            "tn": 2394
+          },
+          "roc_auc": 0.8853,
+          "pr_auc": 0.3237
+        },
+        "defect": {
+          "precision": 0.018,
+          "recall": 1.0,
+          "f1": 0.0353,
+          "support": 44,
+          "confusion": {
+            "tp": 44,
+            "fp": 2407,
+            "fn": 0,
+            "tn": 45
+          },
+          "roc_auc": 0.5116,
+          "pr_auc": 0.0181
+        }
+      },
+      "macro_f1": 0.3317,
+      "micro_f1": 0.2871,
+      "samples_f1": 0.1728,
+      "subset_accuracy": 0.0204,
+      "hamming_loss": 0.3327,
+      "primary_macro_f1": 0.4305,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    },
+    "E_plus_blur_realism": {
+      "per_class": {
+        "blur": {
+          "precision": 0.3327,
+          "recall": 0.9221,
+          "f1": 0.489,
+          "support": 732,
+          "confusion": {
+            "tp": 675,
+            "fp": 1354,
+            "fn": 57,
+            "tn": 410
+          },
+          "roc_auc": 0.619,
+          "pr_auc": 0.3839
+        },
+        "overexposure": {
+          "precision": 0.2222,
+          "recall": 0.2121,
+          "f1": 0.2171,
+          "support": 66,
+          "confusion": {
+            "tp": 14,
+            "fp": 49,
+            "fn": 52,
+            "tn": 2381
+          },
+          "roc_auc": 0.6466,
+          "pr_auc": 0.0953
+        },
+        "underexposure": {
+          "precision": 0.5152,
+          "recall": 0.4928,
+          "f1": 0.5037,
+          "support": 69,
+          "confusion": {
+            "tp": 34,
+            "fp": 32,
+            "fn": 35,
+            "tn": 2395
+          },
+          "roc_auc": 0.8789,
+          "pr_auc": 0.345
+        },
+        "defect": {
+          "precision": 0.0178,
+          "recall": 1.0,
+          "f1": 0.0349,
+          "support": 44,
+          "confusion": {
+            "tp": 44,
+            "fp": 2432,
+            "fn": 0,
+            "tn": 20
+          },
+          "roc_auc": 0.5041,
+          "pr_auc": 0.0178
+        }
+      },
+      "macro_f1": 0.3112,
+      "micro_f1": 0.2766,
+      "samples_f1": 0.1948,
+      "subset_accuracy": 0.0104,
+      "hamming_loss": 0.4017,
+      "primary_macro_f1": 0.4033,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    }
+  }
+}

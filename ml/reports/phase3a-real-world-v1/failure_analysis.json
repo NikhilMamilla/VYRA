@@ -1,0 +1,2402 @@
+{
+  "blur": {
+    "counts": {
+      "false_positive": 544,
+      "false_negative": 171
+    },
+    "examples": {
+      "false_positive": [
+        {
+          "image": "VizWiz_val_00005202.jpg",
+          "score": 0.999,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 5,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002828.jpg",
+          "score": 0.993,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004135.jpg",
+          "score": 0.991,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002082.jpg",
+          "score": 0.989,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1936,
+            2592
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001927.jpg",
+          "score": 0.987,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            484,
+            648
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004262.jpg",
+          "score": 0.985,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 4
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005204.jpg",
+          "score": 0.981,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 4,
+            "DRK": 1,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001448.jpg",
+          "score": 0.98,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 3
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000214.jpg",
+          "score": 0.976,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 1,
+            "FRM": 3,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1936,
+            2592
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005132.jpg",
+          "score": 0.975,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006202.jpg",
+          "score": 0.975,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 3
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            320,
+            320
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003672.jpg",
+          "score": 0.973,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002568.jpg",
+          "score": 0.967,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003879.jpg",
+          "score": 0.964,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004497.jpg",
+          "score": 0.956,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            1224,
+            1632
+          ]
+        }
+      ],
+      "false_negative": [
+        {
+          "image": "VizWiz_val_00001138.jpg",
+          "score": 0.0,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005313.jpg",
+          "score": 0.008,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 3,
+            "ROT": 4,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001843.jpg",
+          "score": 0.018,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001232.jpg",
+          "score": 0.021,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003962.jpg",
+          "score": 0.025,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000449.jpg",
+          "score": 0.027,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006079.jpg",
+          "score": 0.031,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007415.jpg",
+          "score": 0.032,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000588.jpg",
+          "score": 0.034,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006575.jpg",
+          "score": 0.034,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000044.jpg",
+          "score": 0.036,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 3,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007416.jpg",
+          "score": 0.041,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 2,
+            "DRK": 1,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 2,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001112.jpg",
+          "score": 0.042,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002983.jpg",
+          "score": 0.042,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 4,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005446.jpg",
+          "score": 0.045,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            360,
+            480
+          ]
+        }
+      ]
+    },
+    "saved_images": {
+      "false_positive": [
+        "blur__false_positive__VizWiz_val_00005202.jpg",
+        "blur__false_positive__VizWiz_val_00002828.jpg",
+        "blur__false_positive__VizWiz_val_00004135.jpg",
+        "blur__false_positive__VizWiz_val_00002082.jpg",
+        "blur__false_positive__VizWiz_val_00001927.jpg",
+        "blur__false_positive__VizWiz_val_00004262.jpg"
+      ],
+      "false_negative": [
+        "blur__false_negative__VizWiz_val_00001138.jpg",
+        "blur__false_negative__VizWiz_val_00005313.jpg",
+        "blur__false_negative__VizWiz_val_00001843.jpg",
+        "blur__false_negative__VizWiz_val_00001232.jpg",
+        "blur__false_negative__VizWiz_val_00003962.jpg",
+        "blur__false_negative__VizWiz_val_00000449.jpg"
+      ]
+    }
+  },
+  "overexposure": {
+    "counts": {
+      "false_positive": 323,
+      "false_negative": 46
+    },
+    "examples": {
+      "false_positive": [
+        {
+          "image": "VizWiz_val_00004654.jpg",
+          "score": 0.936,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 2,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1936,
+            2592
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007149.jpg",
+          "score": 0.928,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 5
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            240,
+            240
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001267.jpg",
+          "score": 0.925,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 2,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 2,
+            "NON": 1
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001161.jpg",
+          "score": 0.923,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 4
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            450,
+            346
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001162.jpg",
+          "score": 0.923,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 5
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            450,
+            346
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001547.jpg",
+          "score": 0.913,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            50,
+            50
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006159.jpg",
+          "score": 0.912,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 2,
+            "FRM": 5,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000646.jpg",
+          "score": 0.904,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007026.jpg",
+          "score": 0.894,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 2,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005503.jpg",
+          "score": 0.889,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 2,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001769.jpg",
+          "score": 0.88,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 2,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006628.jpg",
+          "score": 0.873,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 1,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006645.jpg",
+          "score": 0.869,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000811.jpg",
+          "score": 0.868,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003374.jpg",
+          "score": 0.848,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 5
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            320,
+            480
+          ]
+        }
+      ],
+      "false_negative": [
+        {
+          "image": "VizWiz_val_00006181.jpg",
+          "score": 0.048,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 4,
+            "DRK": 2,
+            "OBS": 2,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003992.jpg",
+          "score": 0.058,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 5,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000594.jpg",
+          "score": 0.074,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 3,
+            "DRK": 2,
+            "OBS": 1,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001745.jpg",
+          "score": 0.135,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 3,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006662.jpg",
+          "score": 0.147,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 4,
+            "DRK": 3,
+            "OBS": 2,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001153.jpg",
+          "score": 0.156,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 4,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001612.jpg",
+          "score": 0.156,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004785.jpg",
+          "score": 0.165,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 3,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003458.jpg",
+          "score": 0.171,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 1,
+            "OBS": 3,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000176.jpg",
+          "score": 0.176,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002481.jpg",
+          "score": 0.18,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 3,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005204.jpg",
+          "score": 0.181,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 4,
+            "DRK": 1,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000094.jpg",
+          "score": 0.188,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 3,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000401.jpg",
+          "score": 0.194,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 2,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005162.jpg",
+          "score": 0.196,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 3,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        }
+      ]
+    },
+    "saved_images": {
+      "false_positive": [
+        "overexposure__false_positive__VizWiz_val_00004654.jpg",
+        "overexposure__false_positive__VizWiz_val_00007149.jpg",
+        "overexposure__false_positive__VizWiz_val_00001267.jpg",
+        "overexposure__false_positive__VizWiz_val_00001161.jpg",
+        "overexposure__false_positive__VizWiz_val_00001162.jpg",
+        "overexposure__false_positive__VizWiz_val_00001547.jpg"
+      ],
+      "false_negative": [
+        "overexposure__false_negative__VizWiz_val_00006181.jpg",
+        "overexposure__false_negative__VizWiz_val_00003992.jpg",
+        "overexposure__false_negative__VizWiz_val_00000594.jpg",
+        "overexposure__false_negative__VizWiz_val_00001745.jpg",
+        "overexposure__false_negative__VizWiz_val_00006662.jpg",
+        "overexposure__false_negative__VizWiz_val_00001153.jpg"
+      ]
+    }
+  },
+  "underexposure": {
+    "counts": {
+      "false_positive": 33,
+      "false_negative": 37
+    },
+    "examples": {
+      "false_positive": [
+        {
+          "image": "VizWiz_val_00005557.jpg",
+          "score": 0.968,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 1,
+            "FRM": 3,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000767.jpg",
+          "score": 0.956,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 3,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006540.jpg",
+          "score": 0.952,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006042.jpg",
+          "score": 0.922,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 1,
+            "FRM": 4,
+            "ROT": 2,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002773.jpg",
+          "score": 0.912,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 2,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007455.jpg",
+          "score": 0.871,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 3,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005740.jpg",
+          "score": 0.851,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 1
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            768,
+            1024
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006699.jpg",
+          "score": 0.819,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007227.jpg",
+          "score": 0.808,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 3,
+            "NON": 1
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006627.jpg",
+          "score": 0.79,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 3
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007230.jpg",
+          "score": 0.764,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 1,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001250.jpg",
+          "score": 0.755,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 3,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            720,
+            960
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005841.jpg",
+          "score": 0.753,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001614.jpg",
+          "score": 0.743,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 4
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003039.jpg",
+          "score": 0.693,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 2,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            968,
+            1296
+          ]
+        }
+      ],
+      "false_negative": [
+        {
+          "image": "VizWiz_val_00001441.jpg",
+          "score": 0.015,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 5,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004953.jpg",
+          "score": 0.033,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 1,
+            "DRK": 4,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001273.jpg",
+          "score": 0.042,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003722.jpg",
+          "score": 0.046,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 1,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006865.jpg",
+          "score": 0.046,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 3,
+            "OBS": 2,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            360,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001612.jpg",
+          "score": 0.049,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001745.jpg",
+          "score": 0.058,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 3,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002523.jpg",
+          "score": 0.062,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 4,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006281.jpg",
+          "score": 0.065,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 1,
+            "DRK": 4,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006205.jpg",
+          "score": 0.081,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 3,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            612,
+            816
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002021.jpg",
+          "score": 0.083,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 4,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005053.jpg",
+          "score": 0.083,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 2,
+            "DRK": 4,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002161.jpg",
+          "score": 0.084,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 4,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006057.jpg",
+          "score": 0.085,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 3,
+            "DRK": 4,
+            "OBS": 2,
+            "FRM": 2,
+            "ROT": 4,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006662.jpg",
+          "score": 0.086,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 4,
+            "DRK": 3,
+            "OBS": 2,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        }
+      ]
+    },
+    "saved_images": {
+      "false_positive": [
+        "underexposure__false_positive__VizWiz_val_00005557.jpg",
+        "underexposure__false_positive__VizWiz_val_00000767.jpg",
+        "underexposure__false_positive__VizWiz_val_00006540.jpg",
+        "underexposure__false_positive__VizWiz_val_00006042.jpg",
+        "underexposure__false_positive__VizWiz_val_00002773.jpg",
+        "underexposure__false_positive__VizWiz_val_00007455.jpg"
+      ],
+      "false_negative": [
+        "underexposure__false_negative__VizWiz_val_00001441.jpg",
+        "underexposure__false_negative__VizWiz_val_00004953.jpg",
+        "underexposure__false_negative__VizWiz_val_00001273.jpg",
+        "underexposure__false_negative__VizWiz_val_00003722.jpg",
+        "underexposure__false_negative__VizWiz_val_00006865.jpg",
+        "underexposure__false_negative__VizWiz_val_00001612.jpg"
+      ]
+    }
+  },
+  "defect": {
+    "counts": {
+      "false_positive": 1073,
+      "false_negative": 27
+    },
+    "examples": {
+      "false_positive": [
+        {
+          "image": "VizWiz_val_00003374.jpg",
+          "score": 0.706,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 5
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            320,
+            480
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000411.jpg",
+          "score": 0.704,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            768,
+            1024
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000689.jpg",
+          "score": 0.669,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 3
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004680.jpg",
+          "score": 0.668,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 5,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            768,
+            1024
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000300.jpg",
+          "score": 0.656,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            484,
+            648
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004700.jpg",
+          "score": 0.652,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 1,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 2,
+          "dims": [
+            1936,
+            2592
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000952.jpg",
+          "score": 0.651,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            768,
+            1024
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001179.jpg",
+          "score": 0.643,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 3
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007477.jpg",
+          "score": 0.639,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 2,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000923.jpg",
+          "score": 0.637,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00002940.jpg",
+          "score": 0.637,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 1,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00006969.jpg",
+          "score": 0.636,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 2,
+            "ROT": 2,
+            "OTH": 0,
+            "NON": 2
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000244.jpg",
+          "score": 0.635,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 1,
+            "DRK": 2,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            484,
+            648
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000245.jpg",
+          "score": 0.632,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 1,
+            "DRK": 0,
+            "OBS": 0,
+            "FRM": 3,
+            "ROT": 3,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            1936,
+            2592
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001045.jpg",
+          "score": 0.63,
+          "vizwiz_votes": {
+            "BLR": 0,
+            "BRT": 0,
+            "DRK": 1,
+            "OBS": 0,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 3
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            768,
+            1024
+          ]
+        }
+      ],
+      "false_negative": [
+        {
+          "image": "VizWiz_val_00006679.jpg",
+          "score": 0.075,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 3,
+            "FRM": 2,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00000540.jpg",
+          "score": 0.077,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 3,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004873.jpg",
+          "score": 0.079,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005526.jpg",
+          "score": 0.085,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 4,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001792.jpg",
+          "score": 0.091,
+          "vizwiz_votes": {
+            "BLR": 1,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 3,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 1
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001288.jpg",
+          "score": 0.095,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 1,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003584.jpg",
+          "score": 0.125,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 3,
+            "FRM": 2,
+            "ROT": 2,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004988.jpg",
+          "score": 0.125,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 3,
+            "DRK": 2,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 1,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00001496.jpg",
+          "score": 0.127,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 4,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 3,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004888.jpg",
+          "score": 0.13,
+          "vizwiz_votes": {
+            "BLR": 5,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 4,
+            "FRM": 2,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00004953.jpg",
+          "score": 0.149,
+          "vizwiz_votes": {
+            "BLR": 4,
+            "BRT": 1,
+            "DRK": 4,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 0,
+          "dims": [
+            968,
+            1296
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005053.jpg",
+          "score": 0.16,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 2,
+            "DRK": 4,
+            "OBS": 3,
+            "FRM": 1,
+            "ROT": 1,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00003458.jpg",
+          "score": 0.161,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 3,
+            "DRK": 1,
+            "OBS": 3,
+            "FRM": 4,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00005929.jpg",
+          "score": 0.161,
+          "vizwiz_votes": {
+            "BLR": 2,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 5,
+            "FRM": 0,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 5,
+          "dims": [
+            1224,
+            1632
+          ]
+        },
+        {
+          "image": "VizWiz_val_00007274.jpg",
+          "score": 0.179,
+          "vizwiz_votes": {
+            "BLR": 3,
+            "BRT": 0,
+            "DRK": 0,
+            "OBS": 5,
+            "FRM": 3,
+            "ROT": 0,
+            "OTH": 0,
+            "NON": 0
+          },
+          "unrecognizable_votes": 4,
+          "dims": [
+            360,
+            480
+          ]
+        }
+      ]
+    },
+    "saved_images": {
+      "false_positive": [
+        "defect__false_positive__VizWiz_val_00003374.jpg",
+        "defect__false_positive__VizWiz_val_00000411.jpg",
+        "defect__false_positive__VizWiz_val_00000689.jpg",
+        "defect__false_positive__VizWiz_val_00004680.jpg",
+        "defect__false_positive__VizWiz_val_00000300.jpg",
+        "defect__false_positive__VizWiz_val_00004700.jpg"
+      ],
+      "false_negative": [
+        "defect__false_negative__VizWiz_val_00006679.jpg",
+        "defect__false_negative__VizWiz_val_00000540.jpg",
+        "defect__false_negative__VizWiz_val_00004873.jpg",
+        "defect__false_negative__VizWiz_val_00005526.jpg",
+        "defect__false_negative__VizWiz_val_00001792.jpg",
+        "defect__false_negative__VizWiz_val_00001288.jpg"
+      ]
+    }
+  }
+}

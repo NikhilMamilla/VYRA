@@ -1,0 +1,53 @@
+{
+  "version": "phase3b-thr-cal-v2fix",
+  "parent": "v2fix",
+  "model_artifact": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase2-baseline-v1_20260828-142415\\model.joblib",
+  "feature_version": "cvfeat-v2",
+  "criterion": "f1 (on calibrated prob)",
+  "fitted_on": "VizWiz train sample",
+  "seed": 20260828,
+  "thresholds": {
+    "blur": 0.36,
+    "overexposure": 0.1,
+    "underexposure": 0.5,
+    "defect": 0.02
+  },
+  "selection_detail": {
+    "blur": {
+      "threshold": 0.36,
+      "precision": 0.5215,
+      "recall": 0.8515,
+      "f1": 0.6469,
+      "tp": 642,
+      "fp": 589,
+      "fn": 112
+    },
+    "overexposure": {
+      "threshold": 0.1,
+      "precision": 0.1507,
+      "recall": 0.2245,
+      "f1": 0.1803,
+      "tp": 11,
+      "fp": 62,
+      "fn": 38
+    },
+    "underexposure": {
+      "threshold": 0.5,
+      "precision": 0.6471,
+      "recall": 0.6377,
+      "f1": 0.6423,
+      "tp": 44,
+      "fp": 24,
+      "fn": 25
+    },
+    "defect": {
+      "threshold": 0.02,
+      "precision": 0.0205,
+      "recall": 1.0,
+      "f1": 0.0401,
+      "tp": 50,
+      "fp": 2394,
+      "fn": 0
+    }
+  }
+}

@@ -1,0 +1,61 @@
+# --- Secrets and local configuration -----------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Python -------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# --- Node ---------------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# --- Runtime data --------------------------------------------------------------
+# Uploaded images and generated datasets are never committed.
+backend/data/
+data/
+*.db
+*.sqlite3
+
+# --- ML data + artifacts ------------------------------------------------------
+# Raw source datasets, generated images, feature caches, manifests: large and
+# reproducible from configs/experiment.yaml + the seed. Never committed.
+# (ml/reports/ and ml/runs/ ARE committed - small stats/metrics evidence.)
+ml/data/
+ml/artifacts/*
+*.pt
+*.pth
+*.joblib
+*.pkl
+*.parquet
+*.npz
+build/
+# Experiment run dirs: the small json/md metadata IS committed as evidence; the
+# heavy regenerable artifacts (models, calibrators, score caches) are not.
+ml/runs/**/model.joblib
+ml/runs/**/*.joblib
+
+# The shipped inference bundle IS committed (~6 MB) — it is the deliverable the
+# backend image copies. Re-negated here, after the *.joblib rule above.
+!ml/artifacts/vyra-quality-model-v1/
+!ml/artifacts/vyra-quality-model-v1/**
+
+# --- Editors and OS ------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Logs ----------------------------------------------------------------------
+logs/
+*.log

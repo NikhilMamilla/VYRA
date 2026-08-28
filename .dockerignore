@@ -1,0 +1,36 @@
+# Repo-root build context for backend/Dockerfile. Keep only what the image
+# needs: backend/app, backend/requirements.txt, ml/vyra_ml, ml/pyproject.toml,
+# ml/README.md and ml/artifacts/. Everything else is excluded.
+
+**/.venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.ruff_cache
+**/.mypy_cache
+.git
+.github
+
+# Frontend (built by its own Dockerfile)
+frontend
+
+# Backend bits the image doesn't need
+backend/tests
+backend/data
+backend/.env
+backend/.env.*
+
+# ML: exclude everything heavy; the bundle in ml/artifacts is copied explicitly
+ml/data
+ml/runs
+ml/reports
+ml/tests
+ml/scripts
+ml/configs
+ml/docs
+ml/requirements*.txt
+
+# Never ship secrets
+.env
+.env.*
+!.env.example

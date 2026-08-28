@@ -1,0 +1,53 @@
+{
+  "version": "phase3b-thr-raw-v2blur",
+  "parent": "v2blur",
+  "model_artifact": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase3b-dataset-blurnoise-v1_20260828-142511\\model.joblib",
+  "feature_version": "cvfeat-v2",
+  "criterion": "f1",
+  "fitted_on": "VizWiz train sample (real validation)",
+  "seed": 20260828,
+  "thresholds": {
+    "blur": 0.06,
+    "overexposure": 0.66,
+    "underexposure": 0.5,
+    "defect": 0.08
+  },
+  "selection_detail": {
+    "blur": {
+      "threshold": 0.06,
+      "precision": 0.3375,
+      "recall": 0.9284,
+      "f1": 0.495,
+      "tp": 700,
+      "fp": 1374,
+      "fn": 54
+    },
+    "overexposure": {
+      "threshold": 0.66,
+      "precision": 0.15,
+      "recall": 0.1837,
+      "f1": 0.1651,
+      "tp": 9,
+      "fp": 51,
+      "fn": 40
+    },
+    "underexposure": {
+      "threshold": 0.5,
+      "precision": 0.6825,
+      "recall": 0.6232,
+      "f1": 0.6515,
+      "tp": 43,
+      "fp": 20,
+      "fn": 26
+    },
+    "defect": {
+      "threshold": 0.08,
+      "precision": 0.0202,
+      "recall": 1.0,
+      "f1": 0.0395,
+      "tp": 50,
+      "fp": 2430,
+      "fn": 0
+    }
+  }
+}

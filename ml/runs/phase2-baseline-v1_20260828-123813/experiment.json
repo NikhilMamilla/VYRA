@@ -1,0 +1,82 @@
+{
+  "experiment": "phase2-baseline-v1",
+  "created_utc": "2026-08-28T07:08:17Z",
+  "seed": 20260828,
+  "package_version": "0.2.0",
+  "python": "3.11.4",
+  "feature_version": "cvfeat-v1",
+  "n_features": 42,
+  "source_dataset": "bsds500",
+  "config_snapshot": {
+    "dataset": {
+      "source": "bsds500",
+      "max_originals": 400,
+      "target_long_edge": 384,
+      "splits": {
+        "train": 0.7,
+        "val": 0.15,
+        "test": 0.15
+      }
+    },
+    "degradation": {
+      "clean_per_original": 1,
+      "single_per_original": 6,
+      "multi_per_original": 2,
+      "multi_min": 2,
+      "multi_max": 3,
+      "severity_levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "enabled": [
+        "blur",
+        "underexposure",
+        "overexposure",
+        "noise",
+        "corruption",
+        "defect"
+      ]
+    },
+    "features": {
+      "version": "cvfeat-v1",
+      "work_long_edge": 384
+    },
+    "baseline": {
+      "model": "random_forest",
+      "random_forest": {
+        "n_estimators": 300,
+        "max_depth": null,
+        "min_samples_leaf": 2,
+        "class_weight": "balanced",
+        "n_jobs": -1
+      },
+      "hist_gradient_boosting": {
+        "max_iter": 300,
+        "learning_rate": 0.08,
+        "max_leaf_nodes": 31
+      },
+      "fit_quality_regressor": true
+    }
+  },
+  "split_counts": {
+    "train": 2574,
+    "val": 513,
+    "test": 513
+  },
+  "split_original_counts": {
+    "train": 286,
+    "val": 57,
+    "test": 57
+  },
+  "model_type": "random_forest",
+  "train_seconds": 43.1,
+  "headline_metrics": {
+    "test_macro_f1": 0.7913,
+    "test_micro_f1": 0.7859,
+    "test_subset_accuracy": 0.5984,
+    "quality_test_mae": 13.336
+  }
+}

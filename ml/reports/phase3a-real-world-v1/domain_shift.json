@@ -1,0 +1,1379 @@
+{
+  "note": "Per-feature [mean, std]. Compare a synthetic condition with its real counterpart to see distribution shift. Large gaps in the features a label depends on explain transfer failure.",
+  "synthetic": {
+    "synthetic_clean": {
+      "sharp_laplacian_var": [
+        1169.1736,
+        882.9888
+      ],
+      "sharp_laplacian_var_norm": [
+        0.1203,
+        0.1243
+      ],
+      "sharp_tenengrad": [
+        0.2162,
+        0.1362
+      ],
+      "sharp_grad_mean": [
+        0.2831,
+        0.1085
+      ],
+      "sharp_grad_p90": [
+        0.6913,
+        0.2715
+      ],
+      "sharp_modified_laplacian": [
+        0.0858,
+        0.0381
+      ],
+      "sharp_highfreq_ratio": [
+        0.4782,
+        0.0619
+      ],
+      "sharp_edge_density": [
+        0.1211,
+        0.0619
+      ],
+      "expo_luma_mean": [
+        0.4255,
+        0.1059
+      ],
+      "expo_luma_median": [
+        0.4071,
+        0.1274
+      ],
+      "expo_dark_clip_ratio": [
+        0.0003,
+        0.0015
+      ],
+      "expo_bright_clip_ratio": [
+        0.0122,
+        0.038
+      ],
+      "expo_shadow_ratio": [
+        0.249,
+        0.1859
+      ],
+      "expo_highlight_ratio": [
+        0.1,
+        0.1127
+      ],
+      "expo_hist_entropy": [
+        7.1561,
+        0.4982
+      ],
+      "expo_skew": [
+        0.3982,
+        0.7778
+      ],
+      "contrast_std": [
+        0.1945,
+        0.0558
+      ],
+      "contrast_dynamic_range": [
+        0.6173,
+        0.1674
+      ],
+      "contrast_michelson": [
+        0.7935,
+        0.1197
+      ],
+      "contrast_rms_coeff_var": [
+        0.481,
+        0.1682
+      ],
+      "contrast_local_std_mean": [
+        0.0814,
+        0.0275
+      ],
+      "contrast_p95": [
+        0.7647,
+        0.1496
+      ],
+      "contrast_p5": [
+        0.1474,
+        0.0862
+      ],
+      "noise_immerkaer_sigma": [
+        3.0727,
+        1.5273
+      ],
+      "noise_highfreq_residual_std": [
+        0.0356,
+        0.0124
+      ],
+      "noise_median_residual_mad": [
+        0.0058,
+        0.0046
+      ],
+      "noise_flat_region_std": [
+        0.0395,
+        0.0306
+      ],
+      "color_saturation_mean": [
+        0.3658,
+        0.1457
+      ],
+      "color_saturation_std": [
+        0.1616,
+        0.0596
+      ],
+      "color_colourfulness": [
+        39.2306,
+        17.0058
+      ],
+      "color_cast": [
+        32.6382,
+        20.6337
+      ],
+      "color_cast_ratio": [
+        0.3397,
+        0.2357
+      ],
+      "color_gray_pixel_ratio": [
+        0.1408,
+        0.1572
+      ],
+      "color_channel_std_mean": [
+        0.1979,
+        0.0545
+      ],
+      "texture_spectral_slope": [
+        -2.4631,
+        0.2564
+      ],
+      "texture_glcm_contrast": [
+        0.3427,
+        0.1755
+      ],
+      "texture_glcm_homogeneity": [
+        0.8791,
+        0.0469
+      ],
+      "texture_glcm_energy": [
+        0.3972,
+        0.0924
+      ],
+      "texture_lbp_entropy": [
+        3.1798,
+        0.0968
+      ],
+      "compress_blockiness": [
+        0.9979,
+        0.0288
+      ],
+      "compress_blockiness_h": [
+        1.0006,
+        0.0375
+      ],
+      "compress_blockiness_v": [
+        0.9952,
+        0.0378
+      ]
+    },
+    "synthetic_blur": {
+      "sharp_laplacian_var": [
+        1674.3221,
+        5980.727
+      ],
+      "sharp_laplacian_var_norm": [
+        0.1942,
+        0.7583
+      ],
+      "sharp_tenengrad": [
+        0.0766,
+        0.1253
+      ],
+      "sharp_grad_mean": [
+        0.1541,
+        0.123
+      ],
+      "sharp_grad_p90": [
+        0.3547,
+        0.2822
+      ],
+      "sharp_modified_laplacian": [
+        0.0508,
+        0.1033
+      ],
+      "sharp_highfreq_ratio": [
+        0.3041,
+        0.1913
+      ],
+      "sharp_edge_density": [
+        0.0445,
+        0.0763
+      ],
+      "expo_luma_mean": [
+        0.4309,
+        0.1459
+      ],
+      "expo_luma_median": [
+        0.4212,
+        0.1683
+      ],
+      "expo_dark_clip_ratio": [
+        0.002,
+        0.0089
+      ],
+      "expo_bright_clip_ratio": [
+        0.02,
+        0.0739
+      ],
+      "expo_shadow_ratio": [
+        0.2502,
+        0.2345
+      ],
+      "expo_highlight_ratio": [
+        0.1126,
+        0.1719
+      ],
+      "expo_hist_entropy": [
+        6.8462,
+        0.804
+      ],
+      "expo_skew": [
+        0.3031,
+        0.9689
+      ],
+      "contrast_std": [
+        0.1711,
+        0.0646
+      ],
+      "contrast_dynamic_range": [
+        0.5371,
+        0.1951
+      ],
+      "contrast_michelson": [
+        0.7282,
+        0.1697
+      ],
+      "contrast_rms_coeff_var": [
+        0.4196,
+        0.1634
+      ],
+      "contrast_local_std_mean": [
+        0.0541,
+        0.0315
+      ],
+      "contrast_p95": [
+        0.7179,
+        0.1937
+      ],
+      "contrast_p5": [
+        0.1808,
+        0.1163
+      ],
+      "noise_immerkaer_sigma": [
+        2.8979,
+        7.1647
+      ],
+      "noise_highfreq_residual_std": [
+        0.0176,
+        0.0274
+      ],
+      "noise_median_residual_mad": [
+        0.0047,
+        0.0149
+      ],
+      "noise_flat_region_std": [
+        0.0305,
+        0.0307
+      ],
+      "color_saturation_mean": [
+        0.3368,
+        0.1428
+      ],
+      "color_saturation_std": [
+        0.1476,
+        0.0621
+      ],
+      "color_colourfulness": [
+        36.176,
+        17.4616
+      ],
+      "color_cast": [
+        31.1499,
+        21.3891
+      ],
+      "color_cast_ratio": [
+        0.3171,
+        0.2226
+      ],
+      "color_gray_pixel_ratio": [
+        0.1757,
+        0.2035
+      ],
+      "color_channel_std_mean": [
+        0.1746,
+        0.0637
+      ],
+      "texture_spectral_slope": [
+        -3.0243,
+        0.5832
+      ],
+      "texture_glcm_contrast": [
+        0.2449,
+        0.5544
+      ],
+      "texture_glcm_homogeneity": [
+        0.9305,
+        0.0888
+      ],
+      "texture_glcm_energy": [
+        0.4696,
+        0.1305
+      ],
+      "texture_lbp_entropy": [
+        2.6072,
+        0.3904
+      ],
+      "compress_blockiness": [
+        800.8335,
+        21718.8824
+      ],
+      "compress_blockiness_h": [
+        780.4574,
+        21163.6886
+      ],
+      "compress_blockiness_v": [
+        821.2096,
+        22274.0761
+      ]
+    },
+    "synthetic_overexposure": {
+      "sharp_laplacian_var": [
+        2453.1892,
+        4800.1432
+      ],
+      "sharp_laplacian_var_norm": [
+        0.1123,
+        0.2405
+      ],
+      "sharp_tenengrad": [
+        0.2548,
+        0.1928
+      ],
+      "sharp_grad_mean": [
+        0.2965,
+        0.1478
+      ],
+      "sharp_grad_p90": [
+        0.7453,
+        0.3506
+      ],
+      "sharp_modified_laplacian": [
+        0.1026,
+        0.0907
+      ],
+      "sharp_highfreq_ratio": [
+        0.4646,
+        0.1331
+      ],
+      "sharp_edge_density": [
+        0.124,
+        0.0817
+      ],
+      "expo_luma_mean": [
+        0.6394,
+        0.1698
+      ],
+      "expo_luma_median": [
+        0.6612,
+        0.2191
+      ],
+      "expo_dark_clip_ratio": [
+        0.0006,
+        0.0035
+      ],
+      "expo_bright_clip_ratio": [
+        0.1473,
+        0.1939
+      ],
+      "expo_shadow_ratio": [
+        0.1052,
+        0.1317
+      ],
+      "expo_highlight_ratio": [
+        0.4058,
+        0.2737
+      ],
+      "expo_hist_entropy": [
+        6.7244,
+        1.0442
+      ],
+      "expo_skew": [
+        -0.4182,
+        1.1427
+      ],
+      "contrast_std": [
+        0.2143,
+        0.0608
+      ],
+      "contrast_dynamic_range": [
+        0.6487,
+        0.1732
+      ],
+      "contrast_michelson": [
+        0.6779,
+        0.1705
+      ],
+      "contrast_rms_coeff_var": [
+        0.3675,
+        0.1546
+      ],
+      "contrast_local_std_mean": [
+        0.0876,
+        0.0352
+      ],
+      "contrast_p95": [
+        0.932,
+        0.1053
+      ],
+      "contrast_p5": [
+        0.2834,
+        0.1722
+      ],
+      "noise_immerkaer_sigma": [
+        4.573,
+        5.9431
+      ],
+      "noise_highfreq_residual_std": [
+        0.0405,
+        0.0242
+      ],
+      "noise_median_residual_mad": [
+        0.0071,
+        0.0128
+      ],
+      "noise_flat_region_std": [
+        0.0383,
+        0.0406
+      ],
+      "color_saturation_mean": [
+        0.2972,
+        0.1504
+      ],
+      "color_saturation_std": [
+        0.1638,
+        0.0622
+      ],
+      "color_colourfulness": [
+        47.1494,
+        21.3748
+      ],
+      "color_cast": [
+        37.8958,
+        26.5551
+      ],
+      "color_cast_ratio": [
+        0.2695,
+        0.2104
+      ],
+      "color_gray_pixel_ratio": [
+        0.2106,
+        0.2147
+      ],
+      "color_channel_std_mean": [
+        0.2221,
+        0.0591
+      ],
+      "texture_spectral_slope": [
+        -2.5103,
+        0.43
+      ],
+      "texture_glcm_contrast": [
+        0.441,
+        0.4784
+      ],
+      "texture_glcm_homogeneity": [
+        0.8766,
+        0.0823
+      ],
+      "texture_glcm_energy": [
+        0.4484,
+        0.1591
+      ],
+      "texture_lbp_entropy": [
+        2.9839,
+        0.3505
+      ],
+      "compress_blockiness": [
+        1.2192,
+        1.4764
+      ],
+      "compress_blockiness_h": [
+        1.2556,
+        1.9875
+      ],
+      "compress_blockiness_v": [
+        1.1827,
+        0.9934
+      ]
+    },
+    "synthetic_underexposure": {
+      "sharp_laplacian_var": [
+        3800.8183,
+        5656.8909
+      ],
+      "sharp_laplacian_var_norm": [
+        1.1507,
+        1.7449
+      ],
+      "sharp_tenengrad": [
+        0.1387,
+        0.1243
+      ],
+      "sharp_grad_mean": [
+        0.2659,
+        0.1223
+      ],
+      "sharp_grad_p90": [
+        0.5281,
+        0.2493
+      ],
+      "sharp_modified_laplacian": [
+        0.166,
+        0.1131
+      ],
+      "sharp_highfreq_ratio": [
+        0.6182,
+        0.1728
+      ],
+      "sharp_edge_density": [
+        0.1245,
+        0.0911
+      ],
+      "expo_luma_mean": [
+        0.2759,
+        0.0925
+      ],
+      "expo_luma_median": [
+        0.265,
+        0.0971
+      ],
+      "expo_dark_clip_ratio": [
+        0.0077,
+        0.0178
+      ],
+      "expo_bright_clip_ratio": [
+        0.0004,
+        0.0024
+      ],
+      "expo_shadow_ratio": [
+        0.5031,
+        0.2511
+      ],
+      "expo_highlight_ratio": [
+        0.0122,
+        0.0386
+      ],
+      "expo_hist_entropy": [
+        6.6051,
+        0.7334
+      ],
+      "expo_skew": [
+        0.4115,
+        0.788
+      ],
+      "contrast_std": [
+        0.1254,
+        0.0489
+      ],
+      "contrast_dynamic_range": [
+        0.3992,
+        0.1508
+      ],
+      "contrast_michelson": [
+        0.8086,
+        0.1444
+      ],
+      "contrast_rms_coeff_var": [
+        0.4675,
+        0.145
+      ],
+      "contrast_local_std_mean": [
+        0.0683,
+        0.0282
+      ],
+      "contrast_p95": [
+        0.4925,
+        0.1572
+      ],
+      "contrast_p5": [
+        0.0932,
+        0.0603
+      ],
+      "noise_immerkaer_sigma": [
+        10.1047,
+        7.8458
+      ],
+      "noise_highfreq_residual_std": [
+        0.0428,
+        0.0254
+      ],
+      "noise_median_residual_mad": [
+        0.0223,
+        0.0178
+      ],
+      "noise_flat_region_std": [
+        0.0564,
+        0.0336
+      ],
+      "color_saturation_mean": [
+        0.3463,
+        0.1189
+      ],
+      "color_saturation_std": [
+        0.1824,
+        0.0549
+      ],
+      "color_colourfulness": [
+        26.1366,
+        11.403
+      ],
+      "color_cast": [
+        18.4128,
+        14.2356
+      ],
+      "color_cast_ratio": [
+        0.2708,
+        0.1883
+      ],
+      "color_gray_pixel_ratio": [
+        0.2776,
+        0.2005
+      ],
+      "color_channel_std_mean": [
+        0.1278,
+        0.0484
+      ],
+      "texture_spectral_slope": [
+        -2.0589,
+        0.6284
+      ],
+      "texture_glcm_contrast": [
+        0.5326,
+        0.5285
+      ],
+      "texture_glcm_homogeneity": [
+        0.813,
+        0.1037
+      ],
+      "texture_glcm_energy": [
+        0.4229,
+        0.1274
+      ],
+      "texture_lbp_entropy": [
+        2.997,
+        0.3377
+      ],
+      "compress_blockiness": [
+        851.4956,
+        22396.7982
+      ],
+      "compress_blockiness_h": [
+        829.8057,
+        21824.2758
+      ],
+      "compress_blockiness_v": [
+        873.1855,
+        22969.3207
+      ]
+    }
+  },
+  "real": {
+    "real_clean_ish": {
+      "n": 677,
+      "features": {
+        "sharp_laplacian_var": [
+          721.4022,
+          926.8192
+        ],
+        "sharp_laplacian_var_norm": [
+          0.0784,
+          0.2697
+        ],
+        "sharp_tenengrad": [
+          0.1626,
+          0.1385
+        ],
+        "sharp_grad_mean": [
+          0.2036,
+          0.101
+        ],
+        "sharp_grad_p90": [
+          0.5284,
+          0.3095
+        ],
+        "sharp_modified_laplacian": [
+          0.0566,
+          0.0345
+        ],
+        "sharp_highfreq_ratio": [
+          0.391,
+          0.0864
+        ],
+        "sharp_edge_density": [
+          0.068,
+          0.0522
+        ],
+        "expo_luma_mean": [
+          0.4521,
+          0.1136
+        ],
+        "expo_luma_median": [
+          0.4343,
+          0.1693
+        ],
+        "expo_dark_clip_ratio": [
+          0.0125,
+          0.0498
+        ],
+        "expo_bright_clip_ratio": [
+          0.0212,
+          0.0609
+        ],
+        "expo_shadow_ratio": [
+          0.273,
+          0.1885
+        ],
+        "expo_highlight_ratio": [
+          0.155,
+          0.1386
+        ],
+        "expo_hist_entropy": [
+          7.1791,
+          0.6323
+        ],
+        "expo_skew": [
+          0.2114,
+          0.8314
+        ],
+        "contrast_std": [
+          0.2309,
+          0.0606
+        ],
+        "contrast_dynamic_range": [
+          0.7129,
+          0.1675
+        ],
+        "contrast_michelson": [
+          0.8481,
+          0.1336
+        ],
+        "contrast_rms_coeff_var": [
+          0.5563,
+          0.2379
+        ],
+        "contrast_local_std_mean": [
+          0.0674,
+          0.0282
+        ],
+        "contrast_p95": [
+          0.8418,
+          0.1108
+        ],
+        "contrast_p5": [
+          0.1289,
+          0.105
+        ],
+        "noise_immerkaer_sigma": [
+          2.1477,
+          1.4843
+        ],
+        "noise_highfreq_residual_std": [
+          0.0269,
+          0.0135
+        ],
+        "noise_median_residual_mad": [
+          0.0036,
+          0.0039
+        ],
+        "noise_flat_region_std": [
+          0.0277,
+          0.0247
+        ],
+        "color_saturation_mean": [
+          0.3384,
+          0.1789
+        ],
+        "color_saturation_std": [
+          0.1956,
+          0.0795
+        ],
+        "color_colourfulness": [
+          44.801,
+          25.7603
+        ],
+        "color_cast": [
+          33.1657,
+          30.0419
+        ],
+        "color_cast_ratio": [
+          0.3152,
+          0.3056
+        ],
+        "color_gray_pixel_ratio": [
+          0.2833,
+          0.2413
+        ],
+        "color_channel_std_mean": [
+          0.2358,
+          0.06
+        ],
+        "texture_spectral_slope": [
+          -2.7612,
+          0.3078
+        ],
+        "texture_glcm_contrast": [
+          0.2385,
+          0.169
+        ],
+        "texture_glcm_homogeneity": [
+          0.9199,
+          0.0413
+        ],
+        "texture_glcm_energy": [
+          0.4196,
+          0.0979
+        ],
+        "texture_lbp_entropy": [
+          3.1483,
+          0.1756
+        ],
+        "compress_blockiness": [
+          1.0326,
+          0.0685
+        ],
+        "compress_blockiness_h": [
+          1.026,
+          0.063
+        ],
+        "compress_blockiness_v": [
+          1.0392,
+          0.1026
+        ]
+      }
+    },
+    "real_blur": {
+      "n": 732,
+      "features": {
+        "sharp_laplacian_var": [
+          162.0257,
+          300.0543
+        ],
+        "sharp_laplacian_var_norm": [
+          0.0211,
+          0.0536
+        ],
+        "sharp_tenengrad": [
+          0.0645,
+          0.0783
+        ],
+        "sharp_grad_mean": [
+          0.1227,
+          0.071
+        ],
+        "sharp_grad_p90": [
+          0.3027,
+          0.2071
+        ],
+        "sharp_modified_laplacian": [
+          0.0288,
+          0.0178
+        ],
+        "sharp_highfreq_ratio": [
+          0.3037,
+          0.0818
+        ],
+        "sharp_edge_density": [
+          0.0271,
+          0.0319
+        ],
+        "expo_luma_mean": [
+          0.4429,
+          0.1323
+        ],
+        "expo_luma_median": [
+          0.4162,
+          0.1827
+        ],
+        "expo_dark_clip_ratio": [
+          0.0182,
+          0.0633
+        ],
+        "expo_bright_clip_ratio": [
+          0.0372,
+          0.0933
+        ],
+        "expo_shadow_ratio": [
+          0.289,
+          0.2191
+        ],
+        "expo_highlight_ratio": [
+          0.1601,
+          0.1522
+        ],
+        "expo_hist_entropy": [
+          7.0282,
+          0.7496
+        ],
+        "expo_skew": [
+          0.2871,
+          0.8794
+        ],
+        "contrast_std": [
+          0.2296,
+          0.0736
+        ],
+        "contrast_dynamic_range": [
+          0.7005,
+          0.1965
+        ],
+        "contrast_michelson": [
+          0.8262,
+          0.1632
+        ],
+        "contrast_rms_coeff_var": [
+          0.576,
+          0.2733
+        ],
+        "contrast_local_std_mean": [
+          0.0468,
+          0.0235
+        ],
+        "contrast_p95": [
+          0.8351,
+          0.1525
+        ],
+        "contrast_p5": [
+          0.1346,
+          0.1236
+        ],
+        "noise_immerkaer_sigma": [
+          1.2603,
+          0.675
+        ],
+        "noise_highfreq_residual_std": [
+          0.0123,
+          0.0085
+        ],
+        "noise_median_residual_mad": [
+          0.0022,
+          0.0025
+        ],
+        "noise_flat_region_std": [
+          0.023,
+          0.0186
+        ],
+        "color_saturation_mean": [
+          0.347,
+          0.1907
+        ],
+        "color_saturation_std": [
+          0.1964,
+          0.0841
+        ],
+        "color_colourfulness": [
+          43.4271,
+          27.274
+        ],
+        "color_cast": [
+          32.361,
+          29.7701
+        ],
+        "color_cast_ratio": [
+          0.3247,
+          0.3196
+        ],
+        "color_gray_pixel_ratio": [
+          0.3101,
+          0.2607
+        ],
+        "color_channel_std_mean": [
+          0.235,
+          0.0734
+        ],
+        "texture_spectral_slope": [
+          -3.0475,
+          0.2809
+        ],
+        "texture_glcm_contrast": [
+          0.1116,
+          0.0828
+        ],
+        "texture_glcm_homogeneity": [
+          0.9523,
+          0.0265
+        ],
+        "texture_glcm_energy": [
+          0.4536,
+          0.1072
+        ],
+        "texture_lbp_entropy": [
+          3.0753,
+          0.2343
+        ],
+        "compress_blockiness": [
+          1.0248,
+          0.0428
+        ],
+        "compress_blockiness_h": [
+          1.0177,
+          0.051
+        ],
+        "compress_blockiness_v": [
+          1.0319,
+          0.0507
+        ]
+      }
+    },
+    "real_overexposure": {
+      "n": 66,
+      "features": {
+        "sharp_laplacian_var": [
+          239.5729,
+          521.2725
+        ],
+        "sharp_laplacian_var_norm": [
+          0.0261,
+          0.0576
+        ],
+        "sharp_tenengrad": [
+          0.0669,
+          0.1239
+        ],
+        "sharp_grad_mean": [
+          0.0976,
+          0.0865
+        ],
+        "sharp_grad_p90": [
+          0.2475,
+          0.2726
+        ],
+        "sharp_modified_laplacian": [
+          0.0251,
+          0.0249
+        ],
+        "sharp_highfreq_ratio": [
+          0.2967,
+          0.1029
+        ],
+        "sharp_edge_density": [
+          0.021,
+          0.0281
+        ],
+        "expo_luma_mean": [
+          0.4999,
+          0.2091
+        ],
+        "expo_luma_median": [
+          0.4434,
+          0.2816
+        ],
+        "expo_dark_clip_ratio": [
+          0.0155,
+          0.0445
+        ],
+        "expo_bright_clip_ratio": [
+          0.2037,
+          0.2453
+        ],
+        "expo_shadow_ratio": [
+          0.3152,
+          0.2249
+        ],
+        "expo_highlight_ratio": [
+          0.3044,
+          0.2711
+        ],
+        "expo_hist_entropy": [
+          6.253,
+          1.6427
+        ],
+        "expo_skew": [
+          0.1766,
+          1.818
+        ],
+        "contrast_std": [
+          0.2597,
+          0.0878
+        ],
+        "contrast_dynamic_range": [
+          0.7545,
+          0.2348
+        ],
+        "contrast_michelson": [
+          0.7686,
+          0.2262
+        ],
+        "contrast_rms_coeff_var": [
+          0.6266,
+          0.3011
+        ],
+        "contrast_local_std_mean": [
+          0.0378,
+          0.0284
+        ],
+        "contrast_p95": [
+          0.9472,
+          0.1077
+        ],
+        "contrast_p5": [
+          0.1927,
+          0.2286
+        ],
+        "noise_immerkaer_sigma": [
+          1.0523,
+          0.8908
+        ],
+        "noise_highfreq_residual_std": [
+          0.0122,
+          0.0129
+        ],
+        "noise_median_residual_mad": [
+          0.0011,
+          0.0019
+        ],
+        "noise_flat_region_std": [
+          0.012,
+          0.0133
+        ],
+        "color_saturation_mean": [
+          0.2239,
+          0.1677
+        ],
+        "color_saturation_std": [
+          0.1568,
+          0.0858
+        ],
+        "color_colourfulness": [
+          29.5899,
+          22.0447
+        ],
+        "color_cast": [
+          17.1379,
+          21.5092
+        ],
+        "color_cast_ratio": [
+          0.158,
+          0.2281
+        ],
+        "color_gray_pixel_ratio": [
+          0.5037,
+          0.2763
+        ],
+        "color_channel_std_mean": [
+          0.2632,
+          0.0857
+        ],
+        "texture_spectral_slope": [
+          -2.9074,
+          0.2467
+        ],
+        "texture_glcm_contrast": [
+          0.1031,
+          0.134
+        ],
+        "texture_glcm_homogeneity": [
+          0.9636,
+          0.0301
+        ],
+        "texture_glcm_energy": [
+          0.5098,
+          0.1565
+        ],
+        "texture_lbp_entropy": [
+          2.7948,
+          0.6273
+        ],
+        "compress_blockiness": [
+          1.0221,
+          0.048
+        ],
+        "compress_blockiness_h": [
+          1.0159,
+          0.0445
+        ],
+        "compress_blockiness_v": [
+          1.0283,
+          0.0684
+        ]
+      }
+    },
+    "real_underexposure": {
+      "n": 69,
+      "features": {
+        "sharp_laplacian_var": [
+          63.8972,
+          150.5735
+        ],
+        "sharp_laplacian_var_norm": [
+          0.3243,
+          0.6429
+        ],
+        "sharp_tenengrad": [
+          0.0177,
+          0.0321
+        ],
+        "sharp_grad_mean": [
+          0.0459,
+          0.0346
+        ],
+        "sharp_grad_p90": [
+          0.0938,
+          0.0756
+        ],
+        "sharp_modified_laplacian": [
+          0.0157,
+          0.012
+        ],
+        "sharp_highfreq_ratio": [
+          0.4637,
+          0.183
+        ],
+        "sharp_edge_density": [
+          0.0053,
+          0.0089
+        ],
+        "expo_luma_mean": [
+          0.1625,
+          0.1549
+        ],
+        "expo_luma_median": [
+          0.1076,
+          0.1147
+        ],
+        "expo_dark_clip_ratio": [
+          0.2254,
+          0.3365
+        ],
+        "expo_bright_clip_ratio": [
+          0.0349,
+          0.066
+        ],
+        "expo_shadow_ratio": [
+          0.793,
+          0.2593
+        ],
+        "expo_highlight_ratio": [
+          0.06,
+          0.0896
+        ],
+        "expo_hist_entropy": [
+          4.661,
+          2.0453
+        ],
+        "expo_skew": [
+          1.7609,
+          2.1961
+        ],
+        "contrast_std": [
+          0.1371,
+          0.1367
+        ],
+        "contrast_dynamic_range": [
+          0.4033,
+          0.3975
+        ],
+        "contrast_michelson": [
+          0.7941,
+          0.205
+        ],
+        "contrast_rms_coeff_var": [
+          0.7662,
+          0.497
+        ],
+        "contrast_local_std_mean": [
+          0.0168,
+          0.0154
+        ],
+        "contrast_p95": [
+          0.4408,
+          0.4175
+        ],
+        "contrast_p5": [
+          0.0375,
+          0.0581
+        ],
+        "noise_immerkaer_sigma": [
+          0.7809,
+          0.6052
+        ],
+        "noise_highfreq_residual_std": [
+          0.0063,
+          0.0058
+        ],
+        "noise_median_residual_mad": [
+          0.0013,
+          0.002
+        ],
+        "noise_flat_region_std": [
+          0.0067,
+          0.0064
+        ],
+        "color_saturation_mean": [
+          0.4076,
+          0.2797
+        ],
+        "color_saturation_std": [
+          0.1789,
+          0.0839
+        ],
+        "color_colourfulness": [
+          12.4647,
+          13.8901
+        ],
+        "color_cast": [
+          8.2626,
+          10.981
+        ],
+        "color_cast_ratio": [
+          0.4954,
+          0.5477
+        ],
+        "color_gray_pixel_ratio": [
+          0.7421,
+          0.2939
+        ],
+        "color_channel_std_mean": [
+          0.1374,
+          0.1363
+        ],
+        "texture_spectral_slope": [
+          -2.4104,
+          0.7107
+        ],
+        "texture_glcm_contrast": [
+          0.0374,
+          0.0497
+        ],
+        "texture_glcm_homogeneity": [
+          0.9841,
+          0.0189
+        ],
+        "texture_glcm_energy": [
+          0.7617,
+          0.2333
+        ],
+        "texture_lbp_entropy": [
+          2.8603,
+          0.4767
+        ],
+        "compress_blockiness": [
+          1.048,
+          0.0619
+        ],
+        "compress_blockiness_h": [
+          1.0439,
+          0.0732
+        ],
+        "compress_blockiness_v": [
+          1.052,
+          0.064
+        ]
+      }
+    }
+  }
+}

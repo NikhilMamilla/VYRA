@@ -1,0 +1,60 @@
+{
+  "note": "Synthetic = Phase 2 held-out synthetic test split. Real = VizWiz val subset, primary vote threshold 3. Macro-F1 comparison restricted to the 4 evaluable labels.",
+  "synthetic_macro_f1_all6": 0.7913,
+  "synthetic_macro_f1_evaluable_labels": 0.7436,
+  "real_macro_f1_evaluable_labels": 0.304,
+  "per_label": [
+    {
+      "label": "blur",
+      "synthetic_f1": 0.9004,
+      "synthetic_precision": 0.9811,
+      "synthetic_recall": 0.832,
+      "synthetic_pr_auc": 0.9646,
+      "real_f1": 0.6108,
+      "real_precision": 0.5077,
+      "real_recall": 0.7664,
+      "real_pr_auc": 0.5695,
+      "real_support": 732,
+      "f1_drop": 0.29
+    },
+    {
+      "label": "overexposure",
+      "synthetic_f1": 0.766,
+      "synthetic_precision": 0.7912,
+      "synthetic_recall": 0.7423,
+      "synthetic_pr_auc": 0.8229,
+      "real_f1": 0.0978,
+      "real_precision": 0.0583,
+      "real_recall": 0.303,
+      "real_pr_auc": 0.1602,
+      "real_support": 66,
+      "f1_drop": 0.668
+    },
+    {
+      "label": "underexposure",
+      "synthetic_f1": 0.8485,
+      "synthetic_precision": 0.9333,
+      "synthetic_recall": 0.7778,
+      "synthetic_pr_auc": 0.9166,
+      "real_f1": 0.4776,
+      "real_precision": 0.4923,
+      "real_recall": 0.4638,
+      "real_pr_auc": 0.3295,
+      "real_support": 69,
+      "f1_drop": 0.371
+    },
+    {
+      "label": "defect",
+      "synthetic_f1": 0.4596,
+      "synthetic_precision": 0.4154,
+      "synthetic_recall": 0.5143,
+      "synthetic_pr_auc": 0.5212,
+      "real_f1": 0.03,
+      "real_precision": 0.0156,
+      "real_recall": 0.3864,
+      "real_pr_auc": 0.016,
+      "real_support": 44,
+      "f1_drop": 0.43
+    }
+  ]
+}

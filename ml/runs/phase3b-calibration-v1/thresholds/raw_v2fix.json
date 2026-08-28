@@ -1,0 +1,53 @@
+{
+  "version": "phase3b-thr-raw-v2fix",
+  "parent": "v2fix",
+  "model_artifact": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase2-baseline-v1_20260828-142415\\model.joblib",
+  "feature_version": "cvfeat-v2",
+  "criterion": "f1",
+  "fitted_on": "VizWiz train sample (real validation)",
+  "seed": 20260828,
+  "thresholds": {
+    "blur": 0.42,
+    "overexposure": 0.66,
+    "underexposure": 0.52,
+    "defect": 0.06
+  },
+  "selection_detail": {
+    "blur": {
+      "threshold": 0.42,
+      "precision": 0.5211,
+      "recall": 0.8515,
+      "f1": 0.6465,
+      "tp": 642,
+      "fp": 590,
+      "fn": 112
+    },
+    "overexposure": {
+      "threshold": 0.66,
+      "precision": 0.1486,
+      "recall": 0.2245,
+      "f1": 0.1789,
+      "tp": 11,
+      "fp": 63,
+      "fn": 38
+    },
+    "underexposure": {
+      "threshold": 0.52,
+      "precision": 0.6377,
+      "recall": 0.6377,
+      "f1": 0.6377,
+      "tp": 44,
+      "fp": 25,
+      "fn": 25
+    },
+    "defect": {
+      "threshold": 0.06,
+      "precision": 0.0204,
+      "recall": 1.0,
+      "f1": 0.04,
+      "tp": 50,
+      "fp": 2399,
+      "fn": 0
+    }
+  }
+}

@@ -1,0 +1,397 @@
+{
+  "steps": {
+    "synthetic_features_v2": {
+      "state": "done",
+      "finished": "2026-08-28T14:12:49Z",
+      "result": {
+        "feature_table": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\data\\processed\\features_phase2-baseline-v1_cvfeat-v2.parquet",
+        "feature_version": "cvfeat-v2"
+      }
+    },
+    "blurnoise_dataset": {
+      "state": "done",
+      "finished": "2026-08-28T14:23:19Z",
+      "result": {
+        "manifest": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\data\\manifests\\manifest_phase3b-dataset-blurnoise-v1.parquet",
+        "feature_table": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\data\\processed_blurnoise\\features_phase3b-dataset-blurnoise-v1_cvfeat-v2.parquet",
+        "n_samples": 3600,
+        "blur_samples_modified": 738
+      }
+    },
+    "retrain_baselines": {
+      "state": "done",
+      "finished": "2026-08-28T14:25:14Z",
+      "result": {
+        "v2fix": {
+          "run_dir": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase2-baseline-v1_20260828-142415",
+          "bundle": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase2-baseline-v1_20260828-142415\\model.joblib",
+          "synthetic_test": {
+            "test_macro_f1": 0.7978,
+            "test_micro_f1": 0.7912,
+            "test_subset_accuracy": 0.6004,
+            "quality_test_mae": 13.311
+          }
+        },
+        "v2blur": {
+          "run_dir": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase3b-dataset-blurnoise-v1_20260828-142511",
+          "bundle": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase3b-dataset-blurnoise-v1_20260828-142511\\model.joblib",
+          "synthetic_test": {
+            "test_macro_f1": 0.7842,
+            "test_micro_f1": 0.7801,
+            "test_subset_accuracy": 0.577,
+            "quality_test_mae": 13.877
+          }
+        }
+      }
+    },
+    "feature_report_v2": {
+      "state": "done",
+      "finished": "2026-08-28T14:25:14Z",
+      "result": {
+        "report": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\reports\\phase3b-calibration-v1\\feature_report_v2\\feature_report.json",
+        "v2_blockiness": {
+          "compress_blockiness": {
+            "min": -0.38024149188142553,
+            "max": 0.9998304321410745,
+            "mean": 0.061131763343648816,
+            "std": 0.14804504780321825
+          },
+          "compress_blockiness_h": {
+            "min": -0.4177657202149282,
+            "max": 0.9998260982866891,
+            "mean": 0.06573212101502322,
+            "std": 0.15594193315078428
+          },
+          "compress_blockiness_v": {
+            "min": -0.3427172635479229,
+            "max": 0.99983476599546,
+            "mean": 0.0565314056722744,
+            "std": 0.1449118624125003
+          }
+        },
+        "v1_blockiness": {
+          "compress_blockiness": {
+            "min": 0.449969820036603,
+            "max": 590019.8826566339,
+            "mean": 165.16849769624366,
+            "std": 9833.643536556201
+          },
+          "compress_blockiness_h": {
+            "min": 0.41055866075308495,
+            "max": 574937.4628067017,
+            "mean": 161.0095058741366,
+            "std": 9582.269405887599
+          },
+          "compress_blockiness_v": {
+            "min": 0.48938097932012103,
+            "max": 605102.302506566,
+            "mean": 169.32748951835063,
+            "std": 10085.017691212272
+          }
+        },
+        "total_nan": 0,
+        "total_inf": 0
+      }
+    },
+    "real_val_features": {
+      "state": "done",
+      "finished": "2026-08-28T15:17:51Z",
+      "result": {
+        "split": "real_val",
+        "feature_version": "cvfeat-v2",
+        "requested": 2500,
+        "usable": 2498,
+        "load_status_counts": {
+          "ok": 2498,
+          "too_small": 2
+        },
+        "non_finite_cells": 0,
+        "seconds": 608.9,
+        "out_path": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\data\\processed\\realval_features.parquet"
+      }
+    },
+    "real_eval_features": {
+      "state": "done",
+      "finished": "2026-08-28T15:25:59Z",
+      "result": {
+        "split": "real_eval",
+        "feature_version": "cvfeat-v2",
+        "requested": 2500,
+        "usable": 2496,
+        "load_status_counts": {
+          "ok": 2496,
+          "too_small": 4
+        },
+        "non_finite_cells": 0,
+        "seconds": 486.9,
+        "out_path": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\data\\processed\\realeval_features.parquet"
+      }
+    },
+    "leakage_check": {
+      "state": "done",
+      "finished": "2026-08-28T15:27:32Z",
+      "result": {
+        "real_val_images": 2489,
+        "real_eval_images": 2496,
+        "validation_rows_dropped_as_cross_split_duplicates": 9,
+        "val_eval_id_overlap": 0,
+        "val_eval_sha_overlap": 0,
+        "val_vs_synthetic_sha_overlap": 0,
+        "eval_vs_synthetic_sha_overlap": 0
+      }
+    },
+    "threshold_and_calibration": {
+      "state": "done",
+      "finished": "2026-08-28T15:27:42Z",
+      "result": {
+        "phase3a_v1": {
+          "raw_thresholds": {
+            "blur": 0.44,
+            "overexposure": 0.7,
+            "underexposure": 0.52,
+            "defect": 0.04
+          },
+          "calibrated_thresholds": {
+            "blur": 0.32,
+            "overexposure": 0.12,
+            "underexposure": 0.32,
+            "defect": 0.02
+          },
+          "calibration_diagnostics": {
+            "blur": {
+              "support": 754,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.1806,
+                "ece": 0.1283
+              },
+              "after": {
+                "brier": 0.1543,
+                "ece": 0.0
+              }
+            },
+            "overexposure": {
+              "support": 49,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.1043,
+                "ece": 0.2462
+              },
+              "after": {
+                "brier": 0.0185,
+                "ece": 0.0
+              }
+            },
+            "underexposure": {
+              "support": 69,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.0219,
+                "ece": 0.0474
+              },
+              "after": {
+                "brier": 0.0154,
+                "ece": 0.0
+              }
+            },
+            "defect": {
+              "support": 50,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.1029,
+                "ece": 0.2581
+              },
+              "after": {
+                "brier": 0.0197,
+                "ece": 0.0
+              }
+            }
+          }
+        },
+        "v2fix": {
+          "raw_thresholds": {
+            "blur": 0.42,
+            "overexposure": 0.66,
+            "underexposure": 0.52,
+            "defect": 0.06
+          },
+          "calibrated_thresholds": {
+            "blur": 0.36,
+            "overexposure": 0.1,
+            "underexposure": 0.5,
+            "defect": 0.02
+          },
+          "calibration_diagnostics": {
+            "blur": {
+              "support": 754,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.181,
+                "ece": 0.1281
+              },
+              "after": {
+                "brier": 0.1543,
+                "ece": 0.0
+              }
+            },
+            "overexposure": {
+              "support": 49,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.106,
+                "ece": 0.2484
+              },
+              "after": {
+                "brier": 0.0186,
+                "ece": 0.0
+              }
+            },
+            "underexposure": {
+              "support": 69,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.0219,
+                "ece": 0.0477
+              },
+              "after": {
+                "brier": 0.0154,
+                "ece": 0.0
+              }
+            },
+            "defect": {
+              "support": 50,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.1041,
+                "ece": 0.26
+              },
+              "after": {
+                "brier": 0.0197,
+                "ece": 0.0
+              }
+            }
+          }
+        },
+        "v2blur": {
+          "raw_thresholds": {
+            "blur": 0.06,
+            "overexposure": 0.66,
+            "underexposure": 0.5,
+            "defect": 0.08
+          },
+          "calibrated_thresholds": {
+            "blur": 0.28,
+            "overexposure": 0.1,
+            "underexposure": 0.32,
+            "defect": 0.02
+          },
+          "calibration_diagnostics": {
+            "blur": {
+              "support": 754,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.2441,
+                "ece": 0.1845
+              },
+              "after": {
+                "brier": 0.1951,
+                "ece": 0.0
+              }
+            },
+            "overexposure": {
+              "support": 49,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.0939,
+                "ece": 0.2278
+              },
+              "after": {
+                "brier": 0.0187,
+                "ece": 0.0
+              }
+            },
+            "underexposure": {
+              "support": 69,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.0195,
+                "ece": 0.0382
+              },
+              "after": {
+                "brier": 0.0153,
+                "ece": 0.0
+              }
+            },
+            "defect": {
+              "support": 50,
+              "calibrated": true,
+              "reason": null,
+              "before": {
+                "brier": 0.0975,
+                "ece": 0.2531
+              },
+              "after": {
+                "brier": 0.0197,
+                "ece": 0.0
+              }
+            }
+          }
+        }
+      }
+    },
+    "final_evaluation": {
+      "state": "done",
+      "finished": "2026-08-28T15:27:57Z",
+      "result": {
+        "A_phase3a_baseline": {
+          "primary_macro_f1": 0.3954,
+          "macro_f1": 0.304
+        },
+        "B_plus_threshold_calibration": {
+          "primary_macro_f1": 0.4366,
+          "macro_f1": 0.3361
+        },
+        "C_plus_probability_calibration": {
+          "primary_macro_f1": 0.4309,
+          "macro_f1": 0.332
+        },
+        "D_plus_feature_fix": {
+          "primary_macro_f1": 0.4305,
+          "macro_f1": 0.3317
+        },
+        "E_plus_blur_realism": {
+          "primary_macro_f1": 0.4033,
+          "macro_f1": 0.3112
+        }
+      }
+    },
+    "write_reports": {
+      "state": "done",
+      "finished": "2026-08-28T15:27:59Z",
+      "result": {
+        "reports": [
+          "ablation.md",
+          "calibration.json",
+          "feature_fix.json",
+          "feature_report_v2",
+          "thresholds.md"
+        ]
+      }
+    }
+  },
+  "started": null,
+  "feature_version": "cvfeat-v2",
+  "state": "complete",
+  "finished": "2026-08-28T15:27:59Z"
+}

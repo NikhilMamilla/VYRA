@@ -1,0 +1,45 @@
+# The full experimentation environment is pinned in requirements*.txt. This
+# [project] table exists so the backend can `pip install ./ml` and import
+# `vyra_ml.inference` with only the runtime deps it actually needs -- no pandas,
+# matplotlib, remotezip, etc. Keep `dependencies` here a strict subset of
+# requirements.txt.
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vyra-ml"
+version = "0.2.0"
+description = "VYRA image-quality CV features, model and inference"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.2,<3",
+    "opencv-python-headless>=4.11,<5",
+    "scikit-image>=0.25,<0.26",
+    "scikit-learn>=1.6,<1.7",
+    "joblib>=1.4,<2",
+]
+
+[tool.setuptools.packages.find]
+include = ["vyra_ml*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["build", "dist", "*.egg-info", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4", "NPY"]
+
+[tool.ruff.lint.per-file-ignores]
+# The feature-description table reads better as one line per feature.
+"vyra_ml/features/extract.py" = ["E501"]
+# Report-string-heavy: prose that reads worse wrapped.
+"vyra_ml/realworld/evaluate.py" = ["E501"]
+"vyra_ml/experiment/phase3b.py" = ["E501"]
+"tests/test_compression_feature.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
