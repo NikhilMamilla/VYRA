@@ -1,3 +1,220 @@
+/* Variable fonts. @font-face rules carry unicode-range, so the browser only
+   downloads the latin subset for this English UI. */
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/sora/wght.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ------------------------------------------------------------------ *\
+   Design tokens. Light is the default; [data-theme="dark"] overrides.
+\* ------------------------------------------------------------------ */
+:root {
+  --c-bg: 246 244 239; /* warm paper */
+  --c-bg-alt: 240 237 230;
+  --c-surface: 255 255 255; /* glass base (used with low alpha) */
+  --c-surface-solid: 253 252 250;
+  --c-clay: 239 235 228;
+  --c-ink: 28 27 34;
+  --c-ink-soft: 85 83 94;
+  --c-ink-faint: 140 137 150;
+  --c-line: 228 223 214;
+  --c-brand: 109 90 230; /* indigo-violet */
+  --c-brand-2: 33 184 196; /* cyan */
+  --c-good: 31 169 113;
+  --c-ok: 201 154 46;
+  --c-degraded: 217 130 43;
+  --c-poor: 218 78 91;
+  --c-tier-real: 31 169 113;
+  --c-tier-synth: 59 130 196;
+  --c-tier-screen: 124 122 136;
+
+  --glass-alpha: 0.72;
+  --glass-border: rgb(255 255 255 / 0.55);
+  --glass-blur: 16px;
+
+  --sh-glass: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 12px 40px -12px rgb(28 27 34 / 0.18);
+  --sh-clay:
+    10px 10px 24px rgb(28 27 34 / 0.1), -8px -8px 20px rgb(255 255 255 / 0.9),
+    inset 0 1px 1px rgb(255 255 255 / 0.6);
+  --sh-clay-sm:
+    6px 6px 14px rgb(28 27 34 / 0.08), -5px -5px 12px rgb(255 255 255 / 0.85),
+    inset 0 1px 1px rgb(255 255 255 / 0.5);
+  --sh-neu:
+    6px 6px 12px rgb(28 27 34 / 0.13), -6px -6px 12px rgb(255 255 255 / 0.92);
+  --sh-neu-sm:
+    4px 4px 8px rgb(28 27 34 / 0.11), -4px -4px 8px rgb(255 255 255 / 0.9);
+  --sh-neu-inset:
+    inset 4px 4px 9px rgb(28 27 34 / 0.14), inset -4px -4px 9px rgb(255 255 255 / 0.9);
+  --sh-glow: 0 0 0 1px rgb(var(--c-brand) / 0.25), 0 8px 30px -6px rgb(var(--c-brand) / 0.4);
+
+  --grain-opacity: 0.4;
+}
+
+:root[data-theme='dark'] {
+  --c-bg: 13 13 18;
+  --c-bg-alt: 17 17 24;
+  --c-surface: 32 32 42;
+  --c-surface-solid: 27 27 36;
+  --c-clay: 32 32 41;
+  --c-ink: 236 235 241;
+  --c-ink-soft: 162 160 174;
+  --c-ink-faint: 116 114 130;
+  --c-line: 42 42 53;
+  --c-brand: 139 122 255;
+  --c-brand-2: 45 208 220;
+  --c-good: 46 197 130;
+  --c-ok: 224 176 62;
+  --c-degraded: 240 150 70;
+  --c-poor: 240 110 122;
+  --c-tier-real: 46 197 130;
+  --c-tier-synth: 96 165 232;
+  --c-tier-screen: 150 148 164;
+
+  --glass-alpha: 0.55;
+  --glass-border: rgb(255 255 255 / 0.08);
+
+  --sh-glass: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 18px 50px -12px rgb(0 0 0 / 0.6);
+  --sh-clay:
+    12px 12px 28px rgb(0 0 0 / 0.5), -8px -8px 22px rgb(255 255 255 / 0.03),
+    inset 0 1px 1px rgb(255 255 255 / 0.05);
+  --sh-clay-sm:
+    7px 7px 16px rgb(0 0 0 / 0.45), -5px -5px 12px rgb(255 255 255 / 0.025),
+    inset 0 1px 1px rgb(255 255 255 / 0.04);
+  --sh-neu:
+    6px 6px 13px rgb(0 0 0 / 0.55), -6px -6px 13px rgb(255 255 255 / 0.035);
+  --sh-neu-sm:
+    4px 4px 9px rgb(0 0 0 / 0.5), -4px -4px 9px rgb(255 255 255 / 0.03);
+  --sh-neu-inset:
+    inset 4px 4px 10px rgb(0 0 0 / 0.6), inset -4px -4px 10px rgb(255 255 255 / 0.04);
+  --sh-glow: 0 0 0 1px rgb(var(--c-brand) / 0.4), 0 10px 36px -6px rgb(var(--c-brand) / 0.5);
+
+  --grain-opacity: 0.28;
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--c-line));
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background-color: rgb(var(--c-bg));
+    color: rgb(var(--c-ink));
+    font-family: theme('fontFamily.sans');
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Paper grain — a data-URI SVG turbulence, faint, fixed. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: theme('fontFamily.display');
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: rgb(var(--c-brand) / 0.24);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-brand));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* --- Glassmorphism ------------------------------------------------- */
+  .glass {
+    background: rgb(var(--c-surface) / var(--glass-alpha));
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--sh-glass);
+  }
+  .glass-panel {
+    @apply glass rounded-2xl;
+  }
+
+  /* --- Claymorphism ------------------------------------------------- */
+  .clay {
+    background: rgb(var(--c-clay));
+    border-radius: theme('borderRadius.clay');
+    box-shadow: var(--sh-clay);
+  }
+  .clay-sm {
+    background: rgb(var(--c-clay));
+    border-radius: theme('borderRadius.clay-sm');
+    box-shadow: var(--sh-clay-sm);
+  }
+
+  /* --- Neumorphism ------------------------------------------------- */
+  .neu {
+    background: rgb(var(--c-bg));
+    box-shadow: var(--sh-neu);
+  }
+  .neu-inset {
+    background: rgb(var(--c-bg));
+    box-shadow: var(--sh-neu-inset);
+  }
+  .neu-pressable {
+    background: rgb(var(--c-bg));
+    box-shadow: var(--sh-neu);
+    transition:
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+  .neu-pressable:active {
+    box-shadow: var(--sh-neu-inset);
+    transform: translateY(1px);
+  }
+
+  /* --- Skeuomorphic drop-tray ------------------------------------- */
+  .tray {
+    background:
+      linear-gradient(rgb(var(--c-bg-alt)), rgb(var(--c-bg)));
+    border-radius: theme('borderRadius.clay');
+    box-shadow:
+      var(--sh-neu-inset),
+      0 1px 0 rgb(255 255 255 / 0.5);
+  }
+
+  .gradient-text {
+    background: theme('backgroundImage.brand');
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--c-line)),
+      transparent
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

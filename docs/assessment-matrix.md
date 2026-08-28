@@ -59,9 +59,10 @@ Full list: `ml/docs/features.md`.
 | Quality score + detected issues | gauge + issue list | `components/QualityScore.tsx`, `IssueList.tsx` |
 | Severity, confidence, statistics | per-issue badges + bar; statistics grid | `IssueList.tsx`, `StatisticsGrid.tsx` |
 | History | list panel, click to re-view | `components/HistoryPanel.tsx`, `hooks/useHistory.ts` |
-| Loading / success / error states | explicit state machine | `App.tsx`, `hooks/useAnalyze.ts` |
-| Responsive & polished | Tailwind, single-column mobile → sidebar desktop | `App.tsx` |
-| Automated tests | 5 vitest tests (loading/result/error/history/API-down) | `src/App.test.tsx` |
+| Loading / success / error states | explicit state machine | `components/analyze/Workspace.tsx`, `hooks/useAnalyze.ts` |
+| Responsive & polished | Tailwind, single-column mobile → sidebar desktop; light/dark themes (light default, persisted); glass/clay/neumorphic/skeuomorphic design system | `src/index.css`, `src/theme/`, `tailwind.config.js` |
+| Explanatory content | hero + "How it works" (pipeline) + "Under the hood" (model card, capability tiers) + "Honest metrics" (synthetic vs real, disclaimers) | `components/layout/`, `components/marketing/` |
+| Automated tests | 6 vitest tests (loading / result / error / history / API-down / theme toggle) | `src/App.test.tsx` |
 
 ## 7. Expected analysis result
 

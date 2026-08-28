@@ -1,4 +1,4 @@
-/** Small presentational helpers shared across the analysis UI. */
+/** Presentational helpers shared across the analysis UI. */
 
 import type { QualityLabel, Severity } from './api/types';
 
@@ -13,32 +13,40 @@ export function formatDateTime(iso: string): string {
   return Number.isNaN(d.getTime()) ? iso : d.toLocaleString();
 }
 
-export const QUALITY_LABEL_STYLES: Record<QualityLabel, string> = {
-  GOOD: 'bg-emerald-100 text-emerald-800 ring-emerald-600/20',
-  ACCEPTABLE: 'bg-lime-100 text-lime-800 ring-lime-600/20',
-  DEGRADED: 'bg-amber-100 text-amber-900 ring-amber-600/20',
-  POOR: 'bg-red-100 text-red-800 ring-red-600/20',
-};
-
-export function scoreColor(score: number): string {
-  if (score >= 85) return 'text-emerald-600';
-  if (score >= 68) return 'text-lime-600';
-  if (score >= 45) return 'text-amber-600';
-  return 'text-red-600';
+export function relativeTime(iso: string): string {
+  const d = new Date(iso).getTime();
+  if (Number.isNaN(d)) return iso;
+  const s = Math.round((Date.now() - d) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`;
+  if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
+  return new Date(iso).toLocaleDateString();
 }
 
-export function scoreTrackColor(score: number): string {
-  if (score >= 85) return 'stroke-emerald-500';
-  if (score >= 68) return 'stroke-lime-500';
-  if (score >= 45) return 'stroke-amber-500';
-  return 'stroke-red-500';
+export const QUALITY_TONE: Record<QualityLabel, 'good' | 'ok' | 'degraded' | 'poor'> = {
+  GOOD: 'good',
+  ACCEPTABLE: 'ok',
+  DEGRADED: 'degraded',
+  POOR: 'poor',
+};
+
+/** CSS colour var for a 0–100 score. */
+export function scoreVar(score: number): string {
+  if (score >= 85) return 'rgb(var(--c-good))';
+  if (score >= 68) return 'rgb(var(--c-ok))';
+  if (score >= 45) return 'rgb(var(--c-degraded))';
+  return 'rgb(var(--c-poor))';
 }
 
-export const SEVERITY_STYLES: Record<Severity, string> = {
-  low: 'bg-slate-100 text-slate-700',
-  medium: 'bg-amber-100 text-amber-800',
-  high: 'bg-red-100 text-red-800',
+export const SEVERITY_LABEL: Record<Severity, string> = {
+  low: 'low impact',
+  medium: 'medium impact',
+  high: 'high impact',
 };
+
+export function severityTone(s: Severity): 'neutral' | 'ok' | 'poor' {
+  return s === 'high' ? 'poor' : s === 'medium' ? 'ok' : 'neutral';
+}
 
 export const ISSUE_LABELS: Record<string, string> = {
   blur: 'Blur',
@@ -49,23 +57,35 @@ export const ISSUE_LABELS: Record<string, string> = {
   defect: 'Potential visual defect',
 };
 
+export const VALIDATION_TONE: Record<string, 'real' | 'synth' | 'screen'> = {
+  'real-world': 'real',
+  'synthetic-only': 'synth',
+  screening: 'screen',
+};
+
+export const VALIDATION_LABEL: Record<string, string> = {
+  'real-world': 'real-world validated',
+  'synthetic-only': 'synthetic only',
+  screening: 'screening',
+};
+
 export const VALIDATION_NOTE: Record<string, string> = {
-  'real-world': 'Validated on real-world images (VizWiz).',
-  'synthetic-only': 'Validated on synthetic degradations only — no real-world evaluation.',
+  'real-world': 'Evaluated on real-world images (VizWiz-QualityIssues).',
+  'synthetic-only': 'Validated on synthetic degradations only — no real-world evaluation exists.',
   screening: 'Screening signal only — not a confirmed defect.',
 };
 
 export const STATISTIC_LABELS: Record<string, string> = {
-  sharpness: 'Sharpness (Laplacian var.)',
-  brightness: 'Brightness (mean luma)',
-  contrast: 'Contrast (RMS)',
-  noise_sigma: 'Noise estimate (σ)',
+  sharpness: 'Sharpness',
+  brightness: 'Brightness',
+  contrast: 'Contrast',
+  noise_sigma: 'Noise (σ)',
   saturation: 'Saturation',
   colourfulness: 'Colourfulness',
   blockiness: 'Blockiness',
   edge_density: 'Edge density',
-  dark_clip_ratio: 'Crushed-shadow ratio',
-  bright_clip_ratio: 'Blown-highlight ratio',
+  dark_clip_ratio: 'Crushed shadows',
+  bright_clip_ratio: 'Blown highlights',
 };
 
 export function humaniseFeature(name: string): string {

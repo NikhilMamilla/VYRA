@@ -3,8 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AI-powered image quality and defect detection." />
-    <title>VYRA</title>
+    <meta
+      name="description"
+      content="VYRA — AI-powered image quality and defect detection. Blur, exposure, noise, corruption and potential defects, with calibrated confidence and honest validation tiers."
+    />
+    <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d0d12" media="(prefers-color-scheme: dark)" />
+    <title>VYRA — Image Quality & Defect Detection</title>
+    <script>
+      // Set the theme before first paint. Default is light; a stored choice wins.
+      try {
+        var t = localStorage.getItem('vyra-theme');
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -8,6 +8,8 @@ type State =
   | { status: 'success'; health: Health; error: null }
   | { status: 'error'; health: null; error: Error };
 
+export type HealthState = State & { retry: () => void };
+
 const INITIAL: State = { status: 'loading', health: null, error: null };
 
 /** Polls the backend `/health` endpoint once, with a manual retry. */

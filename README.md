@@ -29,11 +29,15 @@ end-to-end with `docker compose up --build`.
 > them); the defect signal is advisory. There is a real synthetic→real domain
 > gap (macro-F1 0.79 synthetic → 0.43 real). See §5–§7.
 
-Frontend features: drag/drop upload with client pre-checks, image preview with
-defect-region overlay, quality-score gauge, issue list (severity + confidence +
-validation-tier badge), image statistics grid, explanation panel, analysis
-history (click to re-view), and explicit loading / success / error states. The
-layout is responsive (single column on mobile, sidebar history on desktop).
+Frontend: a single responsive page — a hero, the **analysis workspace**
+(drag/drop upload with client pre-checks, image preview with defect-region
+overlay, quality-score dial, issue list with severity + confidence +
+validation-tier badge, image-statistics grid, explanation panel, clickable
+history, and explicit loading / success / error states), then explanatory
+sections — *How it works* (the pipeline), *Under the hood* (model card +
+capability tiers) and *Honest metrics* (synthetic vs real-world + disclaimers).
+**Light and dark themes** (light default, choice persisted); the design system
+uses glass / clay / neumorphic / skeuomorphic surfaces each in a defined role.
 
 ## 2. Tech stack
 

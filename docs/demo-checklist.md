@@ -15,8 +15,8 @@ Wait for `curl -s localhost:8000/health` to return `"status": "ok"` with
 
 ## Sequence
 
-1. **Open** http://localhost:5173 — the header badge shows `model vyra-quality-model-v1` (analyzer loaded).
-2. **Upload `demo/02_blur.jpg`** (drag onto the dropzone), click **Analyze image**.
+1. **Open** http://localhost:5173 — hero loads; the nav status pill shows `vyra-quality-model-v1` (analyzer loaded). Flip the **theme toggle** (light ⇄ dark) once — it persists.
+2. **Scroll to the Workspace** (or hit "Analyze an image"). **Upload `demo/02_blur.jpg`** (drag onto the drop-tray), click **Analyze image**.
 3. **Quality score** — gauge shows ~68 / 100, label **ACCEPTABLE**.
 4. **Detected issues** — `Blur`, `medium severity`, `~67% confidence`, badge **real-world**.
 5. **Confidence vs severity** — point out these are different: confidence is the calibrated probability, severity is the estimated impact bucket.
@@ -24,8 +24,9 @@ Wait for `curl -s localhost:8000/health` to return `"status": "ok"` with
 7. **Explanation** — "why flagged": `sharp_highfreq_ratio`, `sharp_laplacian_var`, `texture_spectral_slope` with values.
 8. **Defect region** — upload `demo/08_defect_blotch.jpg`; if the patch detector fires, a red box highlights the region. Note it is *screening only* and misses ~2/3 of defects by design.
 9. **Capability tiers** — upload `demo/05_noisy.jpg`; `noise` is flagged with a **synthetic-only** badge (no real-world validation), unlike `blur`.
-10. **History** — the sidebar lists every analysis (score chip, filename, time, issue summary); click one to re-view its full result.
+10. **History** — the sidebar lists every analysis (score chip, filename, time, label); click one to re-view its full result.
 11. **Invalid uploads** — try a `.txt` renamed to `.jpg` → **422** with a friendly message; a `.pdf` → **415**; an empty file → **422**. Confirm none of them appear in history (invalid files are never persisted).
+12. **Scroll on** — *How it works* (the 8-step pipeline), *Under the hood* (model card + the three capability tiers), *Honest metrics* (synthetic vs real-world table + the domain-gap / operational-score / defect-advisory disclaimers).
 
 ## Talking points
 

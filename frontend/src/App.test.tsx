@@ -1,10 +1,11 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from './App';
 import { ApiError } from './lib/api/client';
 import * as endpoints from './lib/api/endpoints';
+import { ThemeProvider } from './theme/ThemeProvider';
 import type { Analysis, Health } from './lib/api/types';
 
 vi.mock('./lib/api/endpoints');
@@ -15,14 +16,24 @@ const health: Health = {
   environment: 'test',
   uptime_seconds: 12,
   analyzer_model_version: 'vyra-quality-model-v1',
-  components: { analyzer: { status: 'ok', detail: 'model vyra-quality-model-v1', latency_ms: null } },
+  components: {
+    database: { status: 'ok', detail: null, latency_ms: 1 },
+    storage: { status: 'ok', detail: null, latency_ms: null },
+    analyzer: { status: 'ok', detail: 'model vyra-quality-model-v1', latency_ms: null },
+  },
 };
 
 const analysis: Analysis = {
   id: 'abc-123',
-  created_at: '2026-08-28T10:00:00Z',
+  created_at: new Date().toISOString(),
   status: 'completed',
-  image: { filename: 'photo.jpg', content_type: 'image/jpeg', size_bytes: 2048, width: 640, height: 480 },
+  image: {
+    filename: 'photo.jpg',
+    content_type: 'image/jpeg',
+    size_bytes: 2048,
+    width: 640,
+    height: 480,
+  },
   quality_score: 62,
   quality_label: 'DEGRADED',
   model_version: 'vyra-quality-model-v1',
@@ -34,7 +45,16 @@ const analysis: Analysis = {
   error_message: null,
 };
 
+function renderApp() {
+  return render(
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>,
+  );
+}
+
 beforeEach(() => {
+  localStorage.clear();
   vi.mocked(endpoints.getHealth).mockResolvedValue(health);
   vi.mocked(endpoints.listAnalyses).mockResolvedValue({ items: [], total: 0, limit: 20, offset: 0 });
   vi.mocked(endpoints.createAnalysis).mockResolvedValue(analysis);
@@ -43,35 +63,36 @@ beforeEach(() => {
 afterEach(() => vi.clearAllMocks());
 
 describe('App', () => {
-  it('shows a loading state then the model badge (success state)', async () => {
-    render(<App />);
-    expect(screen.getByText(/checking server/i)).toBeInTheDocument();
+  it('shows a loading then a ready state with the model version', async () => {
+    renderApp();
+    expect(screen.getByText(/connecting/i)).toBeInTheDocument();
     await waitFor(() =>
-      expect(screen.getByText(/model vyra-quality-model-v1/i)).toBeInTheDocument(),
+      expect(screen.getAllByText(/vyra-quality-model-v1/i).length).toBeGreaterThan(0),
     );
     expect(screen.getByText(/Drop an image or click to browse/i)).toBeInTheDocument();
   });
 
   it('renders the analysis result after uploading (result state)', async () => {
-    render(<App />);
-    await screen.findByText(/model vyra-quality-model-v1/i);
+    renderApp();
+    await screen.findAllByText(/vyra-quality-model-v1/i);
 
     const file = new File(['x'], 'photo.jpg', { type: 'image/jpeg' });
     await userEvent.upload(document.querySelector('input[type=file]')!, file);
     await userEvent.click(screen.getByRole('button', { name: /analyze image/i }));
 
-    expect(await screen.findByText('62')).toBeInTheDocument();
-    expect(screen.getByText('DEGRADED')).toBeInTheDocument();
-    expect(screen.getByText('Blur')).toBeInTheDocument();
-    expect(screen.getByText(/71% confidence/i)).toBeInTheDocument();
+    const workspace = document.querySelector('#analyze')!;
+    expect(await within(workspace as HTMLElement).findByText('62')).toBeInTheDocument();
+    const ws = within(workspace as HTMLElement);
+    expect(ws.getByText('DEGRADED')).toBeInTheDocument();
+    expect(ws.getByText('Blur')).toBeInTheDocument();
+    expect(ws.getByText('71%')).toBeInTheDocument();
+    expect(ws.getByText(/Detected issues/i)).toBeInTheDocument();
   });
 
   it('shows a friendly message when analysis fails (error state)', async () => {
-    vi.mocked(endpoints.createAnalysis).mockRejectedValue(
-      new ApiError(422, 'invalid_image', 'bad'),
-    );
-    render(<App />);
-    await screen.findByText(/model vyra-quality-model-v1/i);
+    vi.mocked(endpoints.createAnalysis).mockRejectedValue(new ApiError(422, 'invalid_image', 'bad'));
+    renderApp();
+    await screen.findAllByText(/vyra-quality-model-v1/i);
 
     const file = new File(['x'], 'photo.jpg', { type: 'image/jpeg' });
     await userEvent.upload(document.querySelector('input[type=file]')!, file);
@@ -87,14 +108,24 @@ describe('App', () => {
       limit: 20,
       offset: 0,
     });
-    render(<App />);
-    expect(await screen.findByText('photo.jpg')).toBeInTheDocument();
-    expect(screen.getByText('1 total')).toBeInTheDocument();
+    renderApp();
+    const historyHeading = await screen.findByRole('heading', { name: /history/i });
+    const panel = historyHeading.closest('section')!;
+    expect(await within(panel).findByText('photo.jpg')).toBeInTheDocument();
   });
 
   it('degrades when the API is unreachable', async () => {
     vi.mocked(endpoints.getHealth).mockRejectedValue(new Error('boom'));
-    render(<App />);
-    expect(await screen.findByText(/API unreachable/i)).toBeInTheDocument();
+    renderApp();
+    expect(await screen.findByText(/API offline/i)).toBeInTheDocument();
+  });
+
+  it('toggles the theme and persists the choice', async () => {
+    renderApp();
+    await screen.findAllByText(/vyra-quality-model-v1/i);
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    await userEvent.click(screen.getByRole('switch', { name: /dark theme/i }));
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(localStorage.getItem('vyra-theme')).toBe('dark');
   });
 });
