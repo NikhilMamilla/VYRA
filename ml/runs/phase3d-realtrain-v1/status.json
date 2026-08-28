@@ -1,0 +1,147 @@
+{
+  "steps": {
+    "data_audit": {
+      "state": "done",
+      "finished": "2026-08-28T21:54:11Z",
+      "result": {
+        "uniform_n": 2489,
+        "extra_n": 2500,
+        "eval_n": 2496,
+        "support_vote_ge_3": {
+          "blur": {
+            "uniform": 754,
+            "extra": 891,
+            "eval": 732
+          },
+          "overexposure": {
+            "uniform": 49,
+            "extra": 291,
+            "eval": 66
+          },
+          "underexposure": {
+            "uniform": 69,
+            "extra": 325,
+            "eval": 69
+          },
+          "defect": {
+            "uniform": 50,
+            "extra": 194,
+            "eval": 44
+          }
+        },
+        "leakage": {
+          "uniform_vs_eval_sha": 0,
+          "extra_vs_eval_sha": 0,
+          "extra_vs_uniform_sha": 0
+        },
+        "synthetic_augmentation": {
+          "issues": [
+            "blur"
+          ],
+          "weight": 0.3,
+          "source": "features_phase2-baseline-v1_cvfeat-v2.parquet",
+          "positives": {
+            "blur": 738
+          },
+          "clean_negatives": 400,
+          "rationale": "real VizWiz blur is almost all mild defocus; synthetic rows restore coverage of strong motion / zoom blur. blur only -- synthetic exposure degradations are too mild and hurt the real exposure heads. Weighted 0.3, never used for threshold or calibration."
+        }
+      }
+    },
+    "cv_and_thresholds": {
+      "state": "done",
+      "finished": "2026-08-28T21:54:52Z",
+      "result": {
+        "blur": {
+          "cv_threshold": 0.44,
+          "cv_f1_oof": 0.6839,
+          "cv_f1_fold_mean": 0.6842,
+          "cv_f1_fold_std": 0.0189,
+          "cv_roc_auc": 0.8507,
+          "uniform_support": 754,
+          "train_pool_support": 1645,
+          "synth_aug_weight": 0.3
+        },
+        "underexposure": {
+          "cv_threshold": 0.56,
+          "cv_f1_oof": 0.7705,
+          "cv_f1_fold_mean": 0.7618,
+          "cv_f1_fold_std": 0.0914,
+          "cv_roc_auc": 0.9754,
+          "uniform_support": 69,
+          "train_pool_support": 394,
+          "synth_aug_weight": 0.3
+        },
+        "overexposure": {
+          "cv_threshold": 0.32,
+          "cv_f1_oof": 0.3579,
+          "cv_f1_fold_mean": 0.3279,
+          "cv_f1_fold_std": 0.2217,
+          "cv_roc_auc": 0.9343,
+          "uniform_support": 49,
+          "train_pool_support": 340,
+          "synth_aug_weight": 0.3
+        }
+      }
+    },
+    "fit_final_models": {
+      "state": "done",
+      "finished": "2026-08-28T21:55:05Z",
+      "result": {
+        "model": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase3d-realtrain-v1\\model.joblib",
+        "calibrators": "C:\\Users\\INS 3515\\OneDrive\\Desktop\\VYRA\\ml\\runs\\phase3d-realtrain-v1\\calibrators.joblib",
+        "thresholds": {
+          "blur": 0.44,
+          "underexposure": 0.56,
+          "overexposure": 0.32,
+          "noise": 0.44999999999999996,
+          "corruption": 0.35,
+          "defect": 0.3
+        },
+        "calibrated": {
+          "blur": true,
+          "underexposure": true,
+          "overexposure": true,
+          "noise": false,
+          "corruption": false,
+          "defect": true
+        }
+      }
+    },
+    "final_evaluation": {
+      "state": "done",
+      "finished": "2026-08-28T21:55:11Z",
+      "result": {
+        "phase3c_primary_macro_f1": 0.4305,
+        "phase3d_primary_macro_f1": 0.5383,
+        "delta": 0.1078,
+        "phase3d_per_issue_f1": {
+          "blur": 0.6315,
+          "underexposure": 0.6271,
+          "overexposure": 0.3564
+        },
+        "phase3c_per_issue_f1": {
+          "blur": 0.6114,
+          "underexposure": 0.4889,
+          "overexposure": 0.1912
+        }
+      }
+    },
+    "write_reports": {
+      "state": "done",
+      "finished": "2026-08-28T21:55:11Z",
+      "result": {
+        "reports": [
+          "cv_summary.json",
+          "phase3d.md"
+        ]
+      }
+    }
+  },
+  "started": null,
+  "feature_version": "cvfeat-v2",
+  "package_version": "0.2.0",
+  "python": "3.11.4",
+  "state": "complete",
+  "finished": "2026-08-28T21:55:11Z"
+}

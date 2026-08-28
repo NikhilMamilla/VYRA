@@ -6,13 +6,21 @@ dataset from clean real images, extracts interpretable CV features, trains a
 classical multi-label baseline, validates it on real images, calibrates it, and
 bundles the result for the backend.
 
+**Phase 3D (shipped).** The blur / underexposure / overexposure heads are
+**trained on real VizWiz-QualityIssues photos with real crowd labels** — real
+primary macro-F1 **0.43 → 0.54**, evaluated once on the frozen eval set.
+noise / corruption keep synthetic-trained heads (VizWiz has no such label).
+Orchestrator `python -m vyra_ml.experiment.phase3d`; rationale + protocol in
+[`docs/phase3d-realtrain.md`](docs/phase3d-realtrain.md); artefacts in
+`runs/phase3d-realtrain-v1/` and `reports/phase3d-realtrain-v1/`.
+
 **Phase 3C (shipped).** `vyra_ml.inference.VyraQualityModel` is the single
 inference entry point; the backend `QualityAnalyzer` wraps it. Everything needed
 for inference is in the self-describing bundle
 [`artifacts/vyra-quality-model-v1/`](artifacts/vyra-quality-model-v1/) (`model.joblib`,
 `calibrators.joblib`, `defect_detector.json`, `bundle.json`), rebuilt by
-`python scripts/export_inference_bundle.py`. The `potential_visual_defect`
-signal is a self-referential patch-anomaly detector
+`python scripts/export_inference_bundle.py` (reads the Phase 3D run). The
+`potential_visual_defect` signal is a self-referential patch-anomaly detector
 ([`vyra_ml/defect/`](vyra_ml/defect/), see [`docs/defect.md`](docs/defect.md)),
 calibrated by `python scripts/build_defect_detector.py`. Quality-score
 definition: [`docs/quality-score.md`](docs/quality-score.md).
@@ -80,10 +88,12 @@ Same source images + same config + same seed ⇒ same dataset and same metrics.
 | `vyra_ml/realworld/` | **Phase 3A/3B** — VizWiz ingestion, label mapping, partial-zip fetch, feature tables, evaluation |
 | `vyra_ml/calibration/` | **Phase 3B** — real-val threshold selection + isotonic probability calibration |
 | `vyra_ml/experiment/phase3b.py` | **Phase 3B** orchestrator (resumable, status.json per step) |
+| `vyra_ml/experiment/phase3d.py` | **Phase 3D** orchestrator — real-data training of the blur/under/over heads, CV threshold + calibration, eval once |
+| `scripts/phase3d_fetch_extra.py` | **Phase 3D** — fetch + feature-extract the rare-class-enriched real training images |
 | `vyra_ml/inference.py` | **Phase 3C** — `VyraQualityModel`: image bytes → structured quality analysis |
 | `vyra_ml/defect/` | **Phase 3C** — self-referential patch-anomaly `potential_visual_defect` detector |
 | `artifacts/vyra-quality-model-v1/` | **Phase 3C** — the shipped inference bundle (committed) |
-| `docs/` | [`dataset.md`](docs/dataset.md), [`features.md`](docs/features.md), [`evaluation-protocol.md`](docs/evaluation-protocol.md), [`real-world-validation.md`](docs/real-world-validation.md), [`phase3b-calibration.md`](docs/phase3b-calibration.md) |
+| `docs/` | [`dataset.md`](docs/dataset.md), [`features.md`](docs/features.md), [`evaluation-protocol.md`](docs/evaluation-protocol.md), [`real-world-validation.md`](docs/real-world-validation.md), [`phase3b-calibration.md`](docs/phase3b-calibration.md), [`phase3d-realtrain.md`](docs/phase3d-realtrain.md) |
 | `reports/<version>/` | committed: dataset + feature reports, plots |
 | `runs/<version>_<ts>/` | committed: `experiment.json`, `metrics.json` (model `.joblib` git-ignored) |
 | `data/` | git-ignored: raw datasets, generated images, feature cache, manifests |
@@ -111,17 +121,21 @@ MAE 13.3 / R² 0.66 on a **provisional** target — not the shipped score
 
 ## Real-world results (the shipped model, `vyra-quality-model-v1`)
 
-VizWiz-QualityIssues `val` sample, ≥3/5 votes (Phase 3B row D). Primary macro-F1
-**0.43** (blur / underexposure / overexposure). Full story:
-[`docs/phase3b-calibration.md`](docs/phase3b-calibration.md).
+VizWiz-QualityIssues `val` sample, ≥3/5 votes, read once. Phase 3D trains the
+three heads on real VizWiz data: primary macro-F1 **0.43 → 0.54**. Full story:
+[`docs/phase3d-realtrain.md`](docs/phase3d-realtrain.md).
 
-| Issue | real F1 | tier |
-|---|---|---|
-| blur | 0.61 | real-world validated |
-| underexposure | 0.49 | real-world validated |
-| overexposure | 0.19 | real-world validated but weak |
-| noise / corruption | — | synthetic-validated only (no VizWiz mapping) |
-| potential visual defect | — | screening only (synthetic ROC-AUC 0.60) |
+| Issue | real F1 (3C → 3D) | real ROC-AUC (3D) | tier |
+|---|---|---|---|
+| blur | 0.61 → **0.63** | 0.82 | real-world **trained** & validated (+ synthetic ballast for motion blur) |
+| underexposure | 0.49 → **0.63** | 0.97 | real-world **trained** & validated |
+| overexposure | 0.19 → **0.36** | 0.92 | real-world trained, still weak (recall 0.27) + bright-clip floor |
+| noise / corruption | — | — | synthetic-validated only (no VizWiz mapping) |
+| potential visual defect | — | — | screening only (synthetic ROC-AUC 0.60) |
+
+Out-of-distribution stress test (`scripts/phase3d_stress_test.py`, held-out
+BSDS500): motion-blur recall 0.98, severe-underexposure 1.00, gross-overexposure
+0.90 (via the floor); zoom/radial blur 0.60 is a known residual gap.
 
 ## Contract with `backend/`
 

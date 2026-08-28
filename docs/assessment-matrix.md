@@ -7,9 +7,9 @@ evidence. `✅` met, `⚠️` met with documented limitations, `➖` optional/bo
 
 | Requirement | Implementation | Location | Evidence |
 |---|---|---|---|
-| Blur / insufficient sharpness | RF over 8 sharpness + texture features | `ml/vyra_ml/features/sharpness.py`, model `blur` head | ✅ synthetic F1 0.90, **real F1 0.61** (`ml/reports/phase3b-calibration-v1/ablation.md`) |
-| Underexposure | RF over exposure/contrast features | `features/exposure.py`, `underexposure` head | ✅ synthetic 0.84, **real 0.49** |
-| Overexposure | RF over exposure/contrast features | `features/exposure.py`, `overexposure` head | ⚠️ synthetic 0.74, **real 0.19** (weak — documented) |
+| Blur / insufficient sharpness | RF **trained on real VizWiz photos**, 8 sharpness + texture features | `ml/vyra_ml/features/sharpness.py`, model `blur` head | ✅ synthetic F1 0.90, **real F1 0.63** (`ml/reports/phase3d-realtrain-v1/phase3d.md`); motion-blur stress recall 0.98 |
+| Underexposure | RF **trained on real VizWiz photos**, exposure/contrast features | `features/exposure.py`, `underexposure` head | ✅ synthetic 0.84, **real 0.63** (ROC-AUC 0.97) |
+| Overexposure | RF **trained on real VizWiz photos**, exposure/contrast features | `features/exposure.py`, `overexposure` head | ⚠️ synthetic 0.74, **real 0.34** (ROC-AUC 0.92; recall 0.23, 49 tuning positives — directional) |
 | Image noise | RF over 4 no-reference noise estimators | `features/noise.py`, `noise` head | ⚠️ synthetic 0.84; **no real-world validation** (VizWiz has no noise label) |
 | Corruption / severe degradation | RF over blockiness + resolution-loss features | `features/compression.py`, `corruption` head | ⚠️ synthetic 0.97; **no real-world validation** |
 | Potential visual defect | self-referential patch-anomaly detector | `ml/vyra_ml/defect/patch_anomaly.py` | ⚠️ screening only, synthetic ROC-AUC 0.60, region hit-rate 0.32 (`ml/docs/defect.md`) |
@@ -18,11 +18,11 @@ evidence. `✅` met, `⚠️` met with documented limitations, `➖` optional/bo
 
 | Requirement | Implementation | Location | Evidence |
 |---|---|---|---|
-| Genuine learned decision component | 6× one-vs-rest RandomForest + isotonic calibration + patch-anomaly model | `ml/vyra_ml/experiment/baseline.py`, `calibration/`, `defect/` | `ml/artifacts/vyra-quality-model-v1/model.joblib` (300-tree forests), `bundle.json` |
-| Model selection explanation | classical over CNN; anomaly detection for defect | README §4, `ml/docs/phase3b-calibration.md` §7 | ✅ |
-| Data preparation | leakage-safe synthetic dataset from clean images | `ml/vyra_ml/dataset_build.py`, `splitting.py`, `degradations/` | `ml/docs/dataset.md`; `ml/reports/phase2-baseline-v1/dataset_report.json` |
-| Training methodology | per-issue RF, `class_weight="balanced"`, F1-tuned thresholds on `val`, seeded | `baseline.py` | `ml/runs/phase2-baseline-v1_*/experiment.json` |
-| Evaluation | 3-level protocol: synthetic test, real-world, failure analysis | `ml/vyra_ml/evaluation/`, `realworld/evaluate.py` | `ml/reports/phase3a-real-world-v1/`, `ml/runs/phase3b-calibration-v1/final_evaluation.json` |
+| Genuine learned decision component | 6× one-vs-rest RandomForest (blur/under/over trained on real VizWiz data) + isotonic calibration + patch-anomaly model | `ml/vyra_ml/experiment/{baseline,phase3d}.py`, `calibration/`, `defect/` | `ml/artifacts/vyra-quality-model-v1/model.joblib` (300-tree forests), `bundle.json` |
+| Model selection explanation | classical over CNN; real-data training for the VizWiz-evaluable heads; anomaly detection for defect | README §4, `ml/docs/phase3d-realtrain.md`, `ml/docs/phase3b-calibration.md` §7 | ✅ |
+| Data preparation | leakage-safe synthetic dataset from clean images; real VizWiz training set (uniform + rare-enriched, leakage-audited) | `ml/vyra_ml/dataset_build.py`, `splitting.py`, `degradations/`, `ml/scripts/phase3d_fetch_extra.py` | `ml/docs/dataset.md`, `ml/docs/phase3d-realtrain.md`; `ml/reports/phase2-baseline-v1/dataset_report.json` |
+| Training methodology | per-issue RF, `class_weight="balanced"`, seeded; synthetic heads F1-tuned on `val`; real heads CV-tuned on a disjoint real sample (OOF threshold + isotonic) | `baseline.py`, `phase3d.py` | `ml/runs/phase2-baseline-v1_*/experiment.json`, `ml/runs/phase3d-realtrain-v1/status.json` |
+| Evaluation | 3-level protocol: synthetic test, real-world (read once per model generation), failure analysis | `ml/vyra_ml/evaluation/`, `realworld/evaluate.py`, `experiment/phase3d.py` | `ml/reports/phase3a-real-world-v1/`, `ml/runs/{phase3b-calibration-v1,phase3d-realtrain-v1}/final_evaluation.json` |
 
 ## 4. Image analysis
 
@@ -73,10 +73,10 @@ Full list: `ml/docs/features.md`.
 
 | Requirement | Implementation | Evidence |
 |---|---|---|
-| Public dataset / synthetic degradation | BSDS500 clean images + controlled synthetic degradations | `ml/docs/dataset.md` |
-| Describe how train/eval data were generated | per-degradation classes, ranged severity params, seeded | `ml/docs/dataset.md`, `ml/vyra_ml/degradations/` |
-| Evaluation on unseen images + generalization evidence | untouched synthetic `test` split + real VizWiz `val` (read once) | `ml/reports/phase3a-real-world-v1/`, `ml/docs/real-world-validation.md` |
-| Leakage prevention | hash-based split on original `source_id` before degradation; `assert_no_leakage` | `ml/vyra_ml/splitting.py`, `ml/tests/test_splitting.py` |
+| Public dataset / synthetic degradation | BSDS500 clean images + controlled synthetic degradations (noise/corruption heads); VizWiz-QualityIssues real photos + crowd labels (blur/under/over heads) | `ml/docs/dataset.md`, `ml/docs/phase3d-realtrain.md` |
+| Describe how train/eval data were generated | per-degradation classes, ranged severity params, seeded; real split = seeded uniform + rare-enriched VizWiz-train samples | `ml/docs/dataset.md`, `ml/docs/phase3d-realtrain.md`, `ml/vyra_ml/degradations/` |
+| Evaluation on unseen images + generalization evidence | untouched synthetic `test` split + real VizWiz `val` (read once per model generation) | `ml/reports/phase3a-real-world-v1/`, `ml/reports/phase3d-realtrain-v1/`, `ml/docs/real-world-validation.md` |
+| Leakage prevention | hash-based split on original `source_id` before degradation; `assert_no_leakage`; Phase 3D `data_audit` asserts 0 id/SHA-1 overlap of real train pools vs the frozen eval set | `ml/vyra_ml/splitting.py`, `ml/vyra_ml/experiment/phase3d.py`, `ml/tests/test_splitting.py` |
 
 ## 9. Evaluation
 

@@ -18,7 +18,7 @@ export function UnderTheHood() {
           id="model"
           eyebrow="Under the hood"
           title="One self-describing model bundle"
-          lead="No CNN — a calibrated RandomForest over 42 interpretable features was the strongest defensible result the evidence supported. The bundle pins every threshold, the calibration and the training run, so the backend hard-codes nothing."
+          lead="No CNN — a calibrated RandomForest over 42 interpretable features. The three real-world issues are trained on real VizWiz photos; the bundle pins every threshold, the calibration and the training run, so the backend hard-codes nothing."
         />
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">

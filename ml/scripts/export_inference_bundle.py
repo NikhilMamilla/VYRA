@@ -1,15 +1,19 @@
 """Assemble the self-describing VYRA inference bundle.
 
-Bundles the Phase 3B decision (row D) plus the Phase 3C patch defect detector
-into ``artifacts/vyra-quality-model-v1/``:
+Bundles the Phase 3D real-trained issue heads plus the Phase 3C patch defect
+detector into ``artifacts/vyra-quality-model-v1/``:
 
-    model.joblib          per-issue RandomForest (cvfeat-v2, phase2-baseline-v1)
-    calibrators.joblib    isotonic per-issue calibrators (phase3b real-val)
+    model.joblib          per-issue classifiers -- blur/underexposure/overexposure
+                          trained on real VizWiz data (phase3d-realtrain-v1),
+                          noise/corruption kept from the synthetic baseline
+    calibrators.joblib    isotonic per-issue calibrators (phase3d real OOF)
     defect_detector.json  patch-anomaly params (phase3c-defect-v1)
     bundle.json           the manifest that ties it all together
 
-Then sanity-checks the quality-score distribution on the synthetic test split
-and the real evaluation split. Run: ``python scripts/export_inference_bundle.py``
+Threshold, per-issue real-world F1 and the headline macro-F1 are read straight
+from the Phase 3D run so this script never hard-codes a metric. Then it
+sanity-checks the quality-score distribution on the synthetic test split and the
+real evaluation split. Run: ``python scripts/export_inference_bundle.py``
 """
 
 from __future__ import annotations
@@ -31,18 +35,17 @@ from vyra_ml.inference import VyraQualityModel  # noqa: E402
 
 ML_ROOT = Path(__file__).resolve().parents[1]
 OUT = ML_ROOT / "artifacts" / "vyra-quality-model-v1"
-MODEL_RUN = ML_ROOT / "runs" / "phase2-baseline-v1_20260828-142415"
-CALIB = ML_ROOT / "runs" / "phase3b-calibration-v1" / "calibrators" / "v2fix.joblib"
+PHASE3D_RUN = ML_ROOT / "runs" / "phase3d-realtrain-v1"
+MODEL_RUN = PHASE3D_RUN
+CALIB = PHASE3D_RUN / "calibrators.joblib"
 DEFECT = ML_ROOT / "runs" / "phase3c-defect-v1" / "defect_detector.json"
+# Synthetic baseline -- kept only for the noise/corruption synthetic F1 numbers.
+SYNTH_RUN = ML_ROOT / "runs" / "phase2-baseline-v1_20260828-142415"
 
-# Phase 3B row D: thresholds on calibrated probability (cal_v2fix.json) for the
-# VizWiz-evaluable issues; v2fix synthetic-val thresholds for the rest.
-ISSUES = {
+# Static per-issue metadata. Thresholds, calibrated flags and real-world F1 for
+# the real-trained heads are filled in from the Phase 3D run at build time.
+_ISSUE_META = {
     "blur": {
-        "threshold": 0.36,
-        "calibrated": True,
-        "validation": "real-world",
-        "real_world_f1": 0.6114,
         "synthetic_f1": 0.9004,
         "evidence_features": [
             "sharp_highfreq_ratio",
@@ -51,34 +54,18 @@ ISSUES = {
         ],
     },
     "underexposure": {
-        "threshold": 0.50,
-        "calibrated": True,
-        "validation": "real-world",
-        "real_world_f1": 0.4889,
         "synthetic_f1": 0.8434,
         "evidence_features": ["expo_luma_mean", "expo_shadow_ratio", "contrast_p95"],
     },
     "overexposure": {
-        "threshold": 0.10,
-        "calibrated": True,
-        "validation": "real-world",
-        "real_world_f1": 0.1912,
         "synthetic_f1": 0.7411,
         "evidence_features": ["expo_bright_clip_ratio", "expo_luma_mean", "contrast_p95"],
     },
     "noise": {
-        "threshold": 0.45,
-        "calibrated": False,
-        "validation": "synthetic-only",
-        "real_world_f1": None,
         "synthetic_f1": 0.8434,
         "evidence_features": ["noise_immerkaer_sigma", "noise_median_residual_mad"],
     },
     "corruption": {
-        "threshold": 0.35,
-        "calibrated": False,
-        "validation": "synthetic-only",
-        "real_world_f1": None,
         "synthetic_f1": 0.9730,
         "evidence_features": [
             "compress_blockiness",
@@ -87,6 +74,39 @@ ISSUES = {
         ],
     },
 }
+_REAL_TRAINED = ("blur", "underexposure", "overexposure")
+
+
+def _synth_aug_weight(audit: dict) -> float:
+    return audit.get("synthetic_augmentation", {}).get("weight", 0.3)
+
+
+def _build_issues(cv: dict, fit: dict, row: dict, floors: dict) -> dict:
+    issues: dict = {}
+    for name, meta in _ISSUE_META.items():
+        if name in _REAL_TRAINED:
+            issues[name] = {
+                "threshold": round(float(cv[name]["cv_threshold"]), 4),
+                "calibrated": bool(fit["calibrated"][name]),
+                "validation": "real-world",
+                "real_world_f1": round(float(row["per_class"][name]["f1"]), 4),
+                "synthetic_f1": meta["synthetic_f1"],
+                "evidence_features": meta["evidence_features"],
+            }
+            # Deterministic physical floor OR'd into the learned prediction (see
+            # phase3d.ISSUE_FLOORS): a feature past a hard bound forces the flag.
+            if name in floors:
+                issues[name]["floor"] = floors[name]
+        else:
+            issues[name] = {
+                "threshold": 0.45 if name == "noise" else 0.35,
+                "calibrated": False,
+                "validation": "synthetic-only",
+                "real_world_f1": None,
+                "synthetic_f1": meta["synthetic_f1"],
+                "evidence_features": meta["evidence_features"],
+            }
+    return issues
 
 QUALITY_SCORE = {
     "formula": "100 * product_i (1 - w_i * clip((p_i - t_i) / (severe - t_i), 0, 1))",
@@ -146,19 +166,35 @@ def _dist(model: VyraQualityModel, feat_parquet: Path, label: str, is_synth: boo
 
 
 def main() -> None:
-    for src in (MODEL_RUN / "model.joblib", CALIB, DEFECT):
+    for src in (
+        MODEL_RUN / "model.joblib",
+        CALIB,
+        DEFECT,
+        PHASE3D_RUN / "final_evaluation.json",
+        PHASE3D_RUN / "status.json",
+    ):
         if not src.is_file():
-            raise SystemExit(f"missing input: {src}")
+            raise SystemExit(f"missing input: {src} (run the Phase 3D orchestrator first)")
+
+    phase3d_final = json.loads((PHASE3D_RUN / "final_evaluation.json").read_text(encoding="utf-8"))
+    phase3d_status = json.loads((PHASE3D_RUN / "status.json").read_text(encoding="utf-8"))
+    row = phase3d_final["rows"]["D_phase3d_realtrain"]
+    prev_row = phase3d_final["rows"]["C_phase3c_shipped"]
+    floors = phase3d_final.get("floors", {})
+    cv = phase3d_status["steps"]["cv_and_thresholds"]["result"]
+    fit = phase3d_status["steps"]["fit_final_models"]["result"]
+    audit = phase3d_status["steps"]["data_audit"]["result"]
+    issues = _build_issues(cv, fit, row, floors)
 
     OUT.mkdir(parents=True, exist_ok=True)
     # Re-dump the model compressed: a 300-tree RF x 6 issues is ~39 MB raw but
     # compresses to a few MB, which is all that ships in the backend image.
-    joblib.dump(joblib.load(MODEL_RUN / "model.joblib"), OUT / "model.joblib", compress=("xz", 3))
+    joblib.dump(joblib.load(MODEL_RUN / "model.joblib"), OUT / "model.joblib", compress=("xz", 6))
     joblib.dump(joblib.load(CALIB), OUT / "calibrators.joblib", compress=("xz", 3))
     shutil.copy2(DEFECT, OUT / "defect_detector.json")
 
     defect_meta = json.loads((DEFECT).read_text(encoding="utf-8"))
-    model_record = json.loads((MODEL_RUN / "experiment.json").read_text(encoding="utf-8"))
+    synth_record = json.loads((SYNTH_RUN / "experiment.json").read_text(encoding="utf-8"))
 
     bundle = {
         "model_version": "vyra-quality-model-v1",
@@ -171,20 +207,33 @@ def main() -> None:
             "defect_detector": "defect_detector.json",
         },
         "training": {
-            "experiment": "phase2-baseline-v1",
+            "experiment": "phase3d-realtrain-v1",
             "run": MODEL_RUN.name,
-            "seed": model_record.get("seed"),
+            "seed": phase3d_status.get("seed", 20260828),
             "model_type": "RandomForest one-vs-rest, 6 issues, 42 CV features",
-            "dataset": "BSDS500 clean images + calibrated synthetic degradations",
-            "split_counts": model_record.get("split_counts"),
+            "real_trained_heads": ["blur", "underexposure", "overexposure"],
+            "real_training_data": (
+                f"VizWiz-QualityIssues train: {audit['uniform_n']} uniform-sample images "
+                f"+ {audit['extra_n']} rare-class-enriched images, real crowd labels "
+                f"(≥3/5 votes); synthetic-degradation rows added at weight "
+                f"{_synth_aug_weight(audit)} for out-of-distribution coverage "
+                "(strong motion blur, extreme exposure)"
+            ),
+            "synthetic_heads": ["noise", "corruption"],
+            "synthetic_dataset": "BSDS500 clean images + calibrated synthetic degradations",
+            "synthetic_run": SYNTH_RUN.name,
+            "synthetic_split_counts": synth_record.get("split_counts"),
         },
         "calibration": {
             "method": "isotonic regression, per issue",
-            "fitted_on": "VizWiz train real-validation sample (n=2489, ≥3/5 votes)",
-            "experiment": "phase3b-calibration-v1",
+            "fitted_on": (
+                "Phase 3D out-of-fold predictions on the uniform real-val sample "
+                f"(n={audit['uniform_n']}, natural prevalence, ≥3/5 votes)"
+            ),
+            "experiment": "phase3d-realtrain-v1",
             "note": "identity for noise/corruption (no real labels in VizWiz)",
         },
-        "issues": ISSUES,
+        "issues": issues,
         "defect": {
             "exposed_as": "potential_visual_defect",
             "method": "patch-anomaly, self-referential local outlier",
@@ -199,10 +248,18 @@ def main() -> None:
         },
         "quality_score": QUALITY_SCORE,
         "real_world_evaluation": {
-            "dataset": "VizWiz-QualityIssues val sample (n=2496, ≥3/5 votes)",
-            "experiment": "phase3b-calibration-v1 row D",
-            "primary_macro_f1": 0.4305,
-            "per_issue_f1": {"blur": 0.6114, "underexposure": 0.4889, "overexposure": 0.1912},
+            "dataset": f"VizWiz-QualityIssues val sample (n={audit['eval_n']}, ≥3/5 votes)",
+            "experiment": "phase3d-realtrain-v1",
+            "protocol": (
+                "frozen eval set read once; thresholds + calibrators fitted on "
+                "cross-validated out-of-fold predictions of the disjoint real-val sample"
+            ),
+            "primary_macro_f1": round(float(row["primary_macro_f1"]), 4),
+            "per_issue_f1": {
+                k: round(float(row["per_class"][k]["f1"]), 4)
+                for k in ("blur", "underexposure", "overexposure")
+            },
+            "previous_primary_macro_f1": round(float(prev_row["primary_macro_f1"]), 4),
             "not_validated": ["noise", "corruption", "potential_visual_defect"],
         },
         "capabilities": {

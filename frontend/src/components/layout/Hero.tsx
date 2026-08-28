@@ -3,7 +3,7 @@ import { Icon } from '../ui/Icon';
 import { Container } from '../ui/primitives';
 
 const CHIPS = [
-  ['real-world F1', '0.61 blur'],
+  ['real macro-F1', '0.54'],
   ['features', `${MODEL.features} CV`],
   ['calibration', 'isotonic'],
   ['deploy', 'Docker'],

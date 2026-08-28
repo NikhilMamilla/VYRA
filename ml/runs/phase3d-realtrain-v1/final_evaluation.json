@@ -1,0 +1,224 @@
+{
+  "vote_min": 3,
+  "floors": {
+    "overexposure": {
+      "feature": "expo_bright_clip_ratio",
+      "value": 0.32
+    }
+  },
+  "rows": {
+    "C_phase3c_shipped": {
+      "per_class": {
+        "blur": {
+          "precision": 0.4983,
+          "recall": 0.791,
+          "f1": 0.6114,
+          "support": 732,
+          "confusion": {
+            "tp": 579,
+            "fp": 583,
+            "fn": 153,
+            "tn": 1181
+          },
+          "roc_auc": 0.7872,
+          "pr_auc": 0.5506
+        },
+        "overexposure": {
+          "precision": 0.1857,
+          "recall": 0.197,
+          "f1": 0.1912,
+          "support": 66,
+          "confusion": {
+            "tp": 13,
+            "fp": 57,
+            "fn": 53,
+            "tn": 2373
+          },
+          "roc_auc": 0.653,
+          "pr_auc": 0.1131
+        },
+        "underexposure": {
+          "precision": 0.5,
+          "recall": 0.4783,
+          "f1": 0.4889,
+          "support": 69,
+          "confusion": {
+            "tp": 33,
+            "fp": 33,
+            "fn": 36,
+            "tn": 2394
+          },
+          "roc_auc": 0.8853,
+          "pr_auc": 0.3237
+        },
+        "defect": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 44,
+          "confusion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 44,
+            "tn": 2452
+          },
+          "roc_auc": 0.5116,
+          "pr_auc": 0.0181
+        }
+      },
+      "macro_f1": 0.3229,
+      "micro_f1": 0.5659,
+      "samples_f1": 0.2316,
+      "subset_accuracy": 0.651,
+      "hamming_loss": 0.0961,
+      "primary_macro_f1": 0.4305,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    },
+    "D_phase3d_realtrain": {
+      "per_class": {
+        "blur": {
+          "precision": 0.6175,
+          "recall": 0.6462,
+          "f1": 0.6315,
+          "support": 732,
+          "confusion": {
+            "tp": 473,
+            "fp": 293,
+            "fn": 259,
+            "tn": 1471
+          },
+          "roc_auc": 0.8173,
+          "pr_auc": 0.6245
+        },
+        "overexposure": {
+          "precision": 0.5143,
+          "recall": 0.2727,
+          "f1": 0.3564,
+          "support": 66,
+          "confusion": {
+            "tp": 18,
+            "fp": 17,
+            "fn": 48,
+            "tn": 2413
+          },
+          "roc_auc": 0.918,
+          "pr_auc": 0.3089
+        },
+        "underexposure": {
+          "precision": 0.7551,
+          "recall": 0.5362,
+          "f1": 0.6271,
+          "support": 69,
+          "confusion": {
+            "tp": 37,
+            "fp": 12,
+            "fn": 32,
+            "tn": 2415
+          },
+          "roc_auc": 0.9655,
+          "pr_auc": 0.6159
+        },
+        "defect": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 44,
+          "confusion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 44,
+            "tn": 2452
+          },
+          "roc_auc": 0.5116,
+          "pr_auc": 0.0181
+        }
+      },
+      "macro_f1": 0.4038,
+      "micro_f1": 0.5997,
+      "samples_f1": 0.1985,
+      "subset_accuracy": 0.74,
+      "hamming_loss": 0.0706,
+      "primary_macro_f1": 0.5383,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    },
+    "D_phase3d_model_only_no_floor": {
+      "per_class": {
+        "blur": {
+          "precision": 0.6175,
+          "recall": 0.6462,
+          "f1": 0.6315,
+          "support": 732,
+          "confusion": {
+            "tp": 473,
+            "fp": 293,
+            "fn": 259,
+            "tn": 1471
+          },
+          "roc_auc": 0.8173,
+          "pr_auc": 0.6245
+        },
+        "overexposure": {
+          "precision": 0.6818,
+          "recall": 0.2273,
+          "f1": 0.3409,
+          "support": 66,
+          "confusion": {
+            "tp": 15,
+            "fp": 7,
+            "fn": 51,
+            "tn": 2423
+          },
+          "roc_auc": 0.918,
+          "pr_auc": 0.3089
+        },
+        "underexposure": {
+          "precision": 0.7551,
+          "recall": 0.5362,
+          "f1": 0.6271,
+          "support": 69,
+          "confusion": {
+            "tp": 37,
+            "fp": 12,
+            "fn": 32,
+            "tn": 2415
+          },
+          "roc_auc": 0.9655,
+          "pr_auc": 0.6159
+        },
+        "defect": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 44,
+          "confusion": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 44,
+            "tn": 2452
+          },
+          "roc_auc": 0.5116,
+          "pr_auc": 0.0181
+        }
+      },
+      "macro_f1": 0.3999,
+      "micro_f1": 0.6007,
+      "samples_f1": 0.1983,
+      "subset_accuracy": 0.7428,
+      "hamming_loss": 0.0699,
+      "primary_macro_f1": 0.5332,
+      "primary_labels": [
+        "blur",
+        "underexposure",
+        "overexposure"
+      ]
+    }
+  }
+}

@@ -105,7 +105,7 @@ If no model is loaded (`MODEL_PATH` unset), a validated upload returns `501`.
       "severity": "medium",
       "confidence": 0.6723,
       "validation": "real-world",
-      "detail": "Validated on real images (VizWiz F1 0.6114)."
+      "detail": "Validated on real images (VizWiz F1 0.6314)."
     }
   ],
   "metrics": {

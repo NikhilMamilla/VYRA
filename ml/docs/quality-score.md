@@ -37,7 +37,7 @@ score      = 100 * Π_i (1 - impact_i)
 | blur | 0.55 | most destructive to usability; real-world validated |
 | corruption | 0.45 | heavy compression / block corruption destroys detail; synthetic-validated |
 | underexposure | 0.45 | real-world validated; recoverable but often severe |
-| overexposure | 0.35 | real-world validated but weak detector (F1 0.19) — capped lower |
+| overexposure | 0.35 | real-world validated, still the weakest head (F1 0.34, recall 0.23) — capped lower |
 | noise | 0.30 | synthetic-validated only; usually less destructive than blur |
 | potential_defect | 0.20 | screening signal only, ROC-AUC 0.60, not real-world validated — deliberately small |
 

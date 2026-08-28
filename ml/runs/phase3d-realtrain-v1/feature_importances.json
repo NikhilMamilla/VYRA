@@ -1,0 +1,32 @@
+{
+  "blur": {
+    "noise_highfreq_residual_std": 0.0789,
+    "sharp_laplacian_var": 0.0696,
+    "sharp_laplacian_var_norm": 0.0617,
+    "sharp_highfreq_ratio": 0.0477,
+    "texture_glcm_contrast": 0.0426,
+    "texture_spectral_slope": 0.0395,
+    "sharp_tenengrad": 0.0359,
+    "sharp_modified_laplacian": 0.0337
+  },
+  "underexposure": {
+    "expo_luma_mean": 0.1002,
+    "expo_shadow_ratio": 0.0997,
+    "expo_luma_median": 0.086,
+    "expo_hist_entropy": 0.0584,
+    "texture_glcm_energy": 0.0513,
+    "contrast_p95": 0.0502,
+    "color_colourfulness": 0.0386,
+    "expo_highlight_ratio": 0.0385
+  },
+  "overexposure": {
+    "expo_bright_clip_ratio": 0.1535,
+    "contrast_p95": 0.0946,
+    "expo_skew": 0.0475,
+    "noise_flat_region_std": 0.0444,
+    "sharp_laplacian_var_norm": 0.036,
+    "noise_immerkaer_sigma": 0.0272,
+    "expo_highlight_ratio": 0.0241,
+    "expo_luma_median": 0.0236
+  }
+}

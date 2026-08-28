@@ -172,6 +172,16 @@ class VyraQualityModel:
                 prob = float(self._calibrators.transform(issue, np.array([raw]))[0])
             threshold = float(cfg["threshold"])
             flagged = prob >= threshold
+            # Deterministic physical floor: a feature past a hard bound forces the
+            # flag even if the learned head stays quiet. Used for overexposure --
+            # a frame with a third of its pixels clipped to pure white is
+            # overexposed by definition, and the 49-real-positive head under-fires
+            # on uniformly blown frames. Bumps the probability to the threshold so
+            # severity/score treat it as a borderline positive, not a strong one.
+            floor = cfg.get("floor")
+            if floor and float(feats.get(floor["feature"], 0.0)) >= float(floor["value"]):
+                flagged = True
+                prob = max(prob, threshold)
             probs[issue] = prob
             issues.append(
                 IssuePrediction(

@@ -40,8 +40,9 @@ controls whether a load failure aborts startup (true in Docker) or degrades to a
 no-analysis API (`/health` says so, POSTs get 501).
 
 Inference per request (~1.5 s, synchronous, on a thread): resize to 384 px long
-edge → 42 `cvfeat-v2` features → 6 one-vs-rest RandomForests → isotonic
-calibration (blur / under / over exposure) → per-issue real-validation
+edge → 42 `cvfeat-v2` features → 6 one-vs-rest RandomForests (blur / under / over
+exposure trained on real VizWiz photos, noise / corruption on synthetic data) →
+isotonic calibration (blur / under / over exposure) → per-issue real-validation
 thresholds → operational quality score → patch-anomaly defect pass. The bundle
 (`bundle.json`) pins every threshold, the calibration, the feature version, the
 score formula and the training/eval provenance, so nothing is hard-coded in the

@@ -13,9 +13,9 @@ end-to-end with `docker compose up --build`.
 
 | Capability | How | Tier |
 |---|---|---|
-| **Blur / insufficient sharpness** | RF over sharpness/texture features | real-world validated (VizWiz F1 **0.61**) |
-| **Underexposure** | RF over exposure/contrast features | real-world validated (F1 **0.49**) |
-| **Overexposure** | RF over exposure/contrast features | real-world validated but **weak** (F1 **0.19**) |
+| **Blur / insufficient sharpness** | RF trained on real VizWiz photos, sharpness/texture features | real-world validated (VizWiz F1 **0.63**) |
+| **Underexposure** | RF trained on real VizWiz photos, exposure/contrast features | real-world validated (F1 **0.63**) |
+| **Overexposure** | RF trained on real VizWiz photos, exposure/contrast features | real-world validated, still **weak** (F1 **0.34**, ROC-AUC 0.92) |
 | **Image noise** | RF over 4 no-reference noise estimators | **synthetic-validated only** — no real-world evaluation exists (synthetic F1 0.84) |
 | **Corruption / severe degradation** | RF over blockiness + resolution features | **synthetic-validated only** (synthetic F1 0.97) |
 | **Potential visual defect** | self-referential patch-anomaly detector | **screening only** — ROC-AUC 0.60 on synthetic, not real-world validated |
@@ -24,10 +24,11 @@ end-to-end with `docker compose up --build`.
 | **History** | `GET /api/v1/analyses` + UI panel | persisted in PostgreSQL |
 
 > **Honest metrics.** Synthetic F1 is **not** real-world performance. blur /
-> under / overexposure were evaluated on real images (VizWiz-QualityIssues);
-> noise / corruption have **no** real-world evaluation (VizWiz doesn't annotate
-> them); the defect signal is advisory. There is a real synthetic→real domain
-> gap (macro-F1 0.79 synthetic → 0.43 real). See §5–§7.
+> under / overexposure are **trained on real VizWiz photos** and evaluated once
+> on a held-out real sample — real primary macro-F1 **0.43 → 0.54** (Phase 3D).
+> noise / corruption have **no** real-world evaluation and no way to train on
+> real data (VizWiz doesn't annotate them); the defect signal is advisory. The
+> synthetic→real gap remains for those two. See §5–§7.
 
 Frontend: a single responsive page — a hero, the **analysis workspace**
 (drag/drop upload with client pre-checks, image preview with defect-region
@@ -60,8 +61,8 @@ Browser ──▶ nginx (SPA + /api proxy) ──▶ FastAPI
    POST /api/v1/analyses:                 │
      validate (magic bytes, size, type)   │  413 / 415 / 422
         └─▶ analyze  (vyra_ml.inference, on a worker thread)   422 on undecodable, else 500
-              features → 6× RandomForest → isotonic calibration
-              → real-val thresholds → quality score → patch-anomaly defect
+              features → 6× RandomForest (blur/under/over real-trained) → isotonic
+              calibration → real-val thresholds → quality score → patch-anomaly defect
         └─▶ store image  (ObjectStorage: <analysis_id>/original.<ext>)
         └─▶ persist row  (AnalysisRepository → PostgreSQL)
               on insert failure: delete the blob, re-raise
@@ -80,14 +81,17 @@ database. Details: [`docs/architecture.md`](docs/architecture.md).
 option. A per-issue one-vs-rest **RandomForest** (`class_weight="balanced"`,
 300 trees) over **42 interpretable CV features** (`cvfeat-v2`), with **isotonic
 probability calibration** and **decision thresholds fitted on a real-image
-validation split**.
+validation split**. The blur / underexposure / overexposure heads are **trained
+on real VizWiz-QualityIssues photos with real crowd labels** (Phase 3D); noise /
+corruption keep synthetic-trained heads because VizWiz has no matching label.
 
-**Why not a CNN.** The evidence (Phase 3A/3B, §5) showed the only intervention
-that improved *real-world* F1 was re-selecting thresholds on real data; a
-synthetic-realism experiment made things worse. A CNN would need real labelled
-training data we do not have, and would not be an honest, defensible result.
-An anomaly-detection formulation *is* used for the one issue where global
-features provably fail — the defect signal (§ Defect methodology).
+**Why not a CNN.** Even with real training data, ~5 000 labelled VizWiz images
+(heavily imbalanced on the rare issues) is thin for a CNN that would still have
+to justify itself against an interpretable 42-feature RandomForest. The classical
+model, once trained on real data, reaches real primary macro-F1 0.54 with full
+per-feature explainability. An anomaly-detection formulation *is* used for the
+one issue where global features provably fail — the defect signal
+(§ Defect methodology).
 
 **Model selection, in order:**
 1. Phase 2: RF baseline over 42 features → synthetic test macro-F1 **0.79**.
@@ -97,6 +101,11 @@ features provably fail — the defect signal (§ Defect methodology).
    blur-noise augmentation (made blur worse).
 4. Phase 3C: retired the untrustworthy global defect head, replaced it with a
    patch-anomaly detector, bundled everything, integrated.
+5. Phase 3D: **trained the blur / underexposure / overexposure heads on real
+   VizWiz data** (2 489 uniform + 2 500 rare-enriched training images), CV-tuned
+   thresholds + calibration on a disjoint real sample, evaluated once on the
+   frozen eval set → real primary macro-F1 **0.43 → 0.54**. See
+   [`ml/docs/phase3d-realtrain.md`](ml/docs/phase3d-realtrain.md).
 
 The 42 features cover **sharpness** (Laplacian variance, Tenengrad, gradient
 stats, FFT high-freq ratio, edge density), **exposure** (luma mean/median, clip
@@ -145,13 +154,15 @@ order-independent and reproducible from the seed alone.
 
 - **Synthetic:** 400 originals → 286 / 57 / 57 → **2,574 / 513 / 513** samples.
   `val` selects per-issue thresholds; `test` is untouched until final reporting.
-- **Real validation** (Phase 3B): a seeded 2,489-image sample of VizWiz **train**
-  — used *only* to fit thresholds and calibrators.
-- **Real evaluation** (Phase 3A/3B): a seeded 2,496-image sample of VizWiz
-  **val** — read **once**, at the end. `leakage_check` asserts 0 image-id and
-  0 SHA-1 overlap between the two real splits and against the synthetic set
-  (9 VizWiz images that appear in both its own train and val splits were dropped
-  from the *validation* side).
+  Still the training source for the **noise / corruption** heads.
+- **Real training + validation** (Phase 3D): a seeded 2,489-image uniform sample
+  of VizWiz **train** (natural prevalence — CV threshold + calibration) plus a
+  2,500-image rare-class-enriched sample (extra training rows only). The
+  **blur / underexposure / overexposure** heads are trained on these.
+- **Real evaluation** (Phase 3A/3B/3D): a seeded 2,496-image sample of VizWiz
+  **val** — read **once per model generation**, at the end, never iterated
+  against. `leakage_check` / `data_audit` assert 0 image-id and 0 SHA-1 overlap
+  between the real splits and against the synthetic set.
 
 ### Evaluation results
 
@@ -160,27 +171,43 @@ order-independent and reproducible from the seed alone.
 | **Synthetic test** (`vyra-quality-model-v1`, unseen split) | macro-F1 | **0.80** |
 | | blur / underexp / overexp / noise / corruption F1 | 0.90 / 0.84 / 0.74 / 0.84 / 0.97 |
 | | defect F1 (retired global head) | 0.49 |
-| **Real-world** (VizWiz-QualityIssues `val`, ≥3/5 votes, read once) | primary macro-F1 | **0.43** |
-| | blur / underexposure / overexposure F1 | 0.61 / 0.49 / 0.19 |
-| | blur / underexposure ROC-AUC | 0.79 / 0.89 |
+| **Real-world** (VizWiz-QualityIssues `val`, ≥3/5 votes, read once) — **Phase 3D real-trained heads** | primary macro-F1 | **0.54** (was 0.43) |
+| | blur / underexposure / overexposure F1 | 0.63 / 0.63 / 0.36 |
+| | blur / underexposure / overexposure ROC-AUC | 0.82 / 0.97 / 0.92 |
+| | 4-label macro-F1 · Hamming loss | 0.40 (was 0.32) · 0.069 (was 0.096) |
+| | OOD stress recall (motion blur / severe dark / gross overexp) | 0.98 / 1.00 / 0.90 |
 | **Patch defect detector** (synthetic test) | ROC-AUC / precision / recall | 0.60 / 0.33 / 0.32 |
 | | region localisation hit-rate | 0.32 |
 | Provisional quality regressor (synthetic, not shipped) | MAE / R² | 13.3 / 0.66 |
 
-Committed evidence: [`ml/reports/`](ml/reports/) (Phase 2 / 3A / 3B reports +
+Committed evidence: [`ml/reports/`](ml/reports/) (Phase 2 / 3A / 3B / 3D reports +
 failure-example images), [`ml/runs/`](ml/runs/) (per-run `experiment.json` +
-`metrics.json`), [`ml/docs/real-world-validation.md`](ml/docs/real-world-validation.md),
+`metrics.json` + `final_evaluation.json`),
+[`ml/docs/phase3d-realtrain.md`](ml/docs/phase3d-realtrain.md),
+[`ml/docs/real-world-validation.md`](ml/docs/real-world-validation.md),
 [`ml/docs/phase3b-calibration.md`](ml/docs/phase3b-calibration.md).
 
 ## 6. Failure analysis
 
-From Phase 3A's failure examples (`ml/reports/phase3a-real-world-v1/failure_examples/`):
+Phase 3A (synthetic-trained) failure modes and how Phase 3D's real training
+addressed each (`ml/reports/phase3a-real-world-v1/failure_examples/`,
+`ml/docs/phase3d-realtrain.md`):
 
-- **Blur false negatives:** slightly-soft phone photos where a textured
-  background (counter speckle, fabric) keeps the sharpness features high.
-- **Overexposure:** real "too bright" is often local glare / reflections, not
-  global overexposure — global exposure features miss it (F1 0.19, ROC-AUC 0.63).
-- **Underexposure false positives:** low-key but correctly-exposed scenes.
+- **Blur false positives (was the biggest error).** The synthetic model fired on
+  sharp-but-low-texture real scenes (plain walls, fabric). Real training cut
+  those at similar recall. A separate OOD risk — real VizWiz blur is almost all
+  mild defocus, so a real-only head under-ranked strong linear motion blur — is
+  handled by mixing weighted synthetic blur back into training: motion-blur
+  stress-set recall 0.88 → 0.98 for ~0.02 VizWiz F1.
+- **Overexposure:** real "too bright" is large blown-out regions (windows, sky,
+  glare), not a high mean. The real-trained head keys on highlight-clipping ratio
+  — ROC-AUC 0.65 → 0.92 — but recall is still only 0.23 (F1 0.34); 49 tuning
+  positives keep its threshold conservative, and it under-fires on uniformly
+  blown frames (VizWiz itself is inconsistent there). Tracked by
+  `ml/scripts/phase3d_stress_test.py`; not yet fixed.
+- **Underexposure:** real "too dark" images have encoded luma near 0.04. The
+  real-trained head keys on that + shadow clipping — ROC-AUC 0.89 → 0.97,
+  severe-underexposure stress recall 1.00.
 - **Defect:** the retired global head predicted near-randomly on real images
   (ROC-AUC 0.42); the patch detector still misses ~2/3 of synthetic defects and
   fires on legitimately high-contrast regions ~17% of the time.
@@ -189,9 +216,20 @@ From Phase 3A's failure examples (`ml/reports/phase3a-real-world-v1/failure_exam
 
 ## 7. Limitations (honest)
 
-- **Synthetic → real gap.** Synthetic macro-F1 0.79 vs real 0.43. Only real
-  labelled training data or a domain-adaptation step would close it.
-- **overexposure** is weak on real photos (F1 0.19).
+- **Synthetic → real gap — closed for the trained heads, open for the rest.**
+  Training blur / underexposure / overexposure on real VizWiz labels took real
+  primary macro-F1 0.43 → 0.54. noise / corruption are still synthetic-only —
+  VizWiz has no such labels, so the gap there is unmeasured and unclosable with
+  this dataset.
+- **overexposure** is still the weakest head (real F1 0.34, recall 0.23), its
+  49-positive tuning support makes the number directional, and it under-fires on
+  uniformly blown-out frames — an out-of-distribution gap the
+  `phase3d_stress_test.py` regression guard reports but does not yet close
+  (synthetic augmentation there hurt the VizWiz metric; VizWiz labels blown
+  frames inconsistently, so there is no clean supervised fix).
+- **zoom / radial blur** (sharp centre, blurred periphery) is not in the
+  synthetic blur set — a smaller residual blur gap, also tracked by the stress
+  test.
 - **noise and corruption have zero real-world validation** — VizWiz has no such
   categories. Their strong numbers are synthetic-only and are labelled
   `synthetic-only` in every API response.
@@ -265,7 +303,7 @@ Full reference: [`docs/api.md`](docs/api.md). Interactive: `/docs`.
   "model_version": "vyra-quality-model-v1",
   "issues": [
     { "type": "blur", "severity": "medium", "confidence": 0.6723, "validation": "real-world",
-      "detail": "Validated on real images (VizWiz F1 0.6114)." }
+      "detail": "Validated on real images (VizWiz F1 0.6314)." }
   ],
   "metrics": { "sharpness": 56.42, "brightness": 0.365, "contrast": 0.151, "noise_sigma": 0.827,
                "saturation": 0.184, "colourfulness": 23.19, "blockiness": 0.0007, "edge_density": 0.0216 },
@@ -307,7 +345,8 @@ future adapter; `STORAGE_BACKEND=supabase` fails fast at startup until it exists
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `DATABASE_URL` | `postgresql+asyncpg://<user>:<password>@localhost:5432/vyra` | async SQLAlchemy URL |
+| `DB_HOST` / `DB_USER` / `DB_PASSWORD` / `DB_NAME` | `localhost` / `vyra` / `change-me-local-only` / `vyra` | parts the backend assembles into the async SQLAlchemy URL (compose sets `DB_HOST=db`) |
+| `DATABASE_URL` | *(unset — built from `DB_*`)* | set to a full `postgresql+asyncpg://…` URL to override (e.g. Supabase) |
 | `DATABASE_AUTO_CREATE` | `true` | create tables at startup |
 | `STORAGE_BACKEND` | `local` | `local` or `supabase` |
 | `STORAGE_LOCAL_DIR` | `backend/data/uploads` | local image directory |
@@ -360,7 +399,7 @@ cd backend
 python -m venv .venv && .venv/Scripts/activate      # or: source .venv/bin/activate
 pip install -r requirements.txt -r requirements-dev.txt
 pip install --no-deps ../ml                          # the vyra_ml inference package
-export DATABASE_URL="postgresql+asyncpg://<user>:<password>@localhost:5432/vyra"
+export DB_HOST=localhost DB_USER=vyra DB_PASSWORD=... DB_NAME=vyra   # or set DATABASE_URL
 uvicorn app.main:app --reload --port 8000            # MODEL_PATH defaults to ../ml/artifacts/...
 
 # frontend (separate terminal)

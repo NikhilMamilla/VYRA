@@ -1,6 +1,6 @@
 {
   "model_version": "vyra-quality-model-v1",
-  "created_utc": "2026-08-28T11:33:04Z",
+  "created_utc": "2026-08-28T16:26:37Z",
   "feature_version": "cvfeat-v2",
   "work_long_edge": 384,
   "artifacts": {
@@ -9,12 +9,23 @@
     "defect_detector": "defect_detector.json"
   },
   "training": {
-    "experiment": "phase2-baseline-v1",
-    "run": "phase2-baseline-v1_20260828-142415",
+    "experiment": "phase3d-realtrain-v1",
+    "run": "phase3d-realtrain-v1",
     "seed": 20260828,
     "model_type": "RandomForest one-vs-rest, 6 issues, 42 CV features",
-    "dataset": "BSDS500 clean images + calibrated synthetic degradations",
-    "split_counts": {
+    "real_trained_heads": [
+      "blur",
+      "underexposure",
+      "overexposure"
+    ],
+    "real_training_data": "VizWiz-QualityIssues train: 2489 uniform-sample images + 2500 rare-class-enriched images, real crowd labels (\u22653/5 votes); synthetic-degradation rows added at weight 0.3 for out-of-distribution coverage (strong motion blur, extreme exposure)",
+    "synthetic_heads": [
+      "noise",
+      "corruption"
+    ],
+    "synthetic_dataset": "BSDS500 clean images + calibrated synthetic degradations",
+    "synthetic_run": "phase2-baseline-v1_20260828-142415",
+    "synthetic_split_counts": {
       "train": 2574,
       "val": 513,
       "test": 513
@@ -22,16 +33,16 @@
   },
   "calibration": {
     "method": "isotonic regression, per issue",
-    "fitted_on": "VizWiz train real-validation sample (n=2489, \u22653/5 votes)",
-    "experiment": "phase3b-calibration-v1",
+    "fitted_on": "Phase 3D out-of-fold predictions on the uniform real-val sample (n=2489, natural prevalence, \u22653/5 votes)",
+    "experiment": "phase3d-realtrain-v1",
     "note": "identity for noise/corruption (no real labels in VizWiz)"
   },
   "issues": {
     "blur": {
-      "threshold": 0.36,
+      "threshold": 0.44,
       "calibrated": true,
       "validation": "real-world",
-      "real_world_f1": 0.6114,
+      "real_world_f1": 0.6315,
       "synthetic_f1": 0.9004,
       "evidence_features": [
         "sharp_highfreq_ratio",
@@ -40,10 +51,10 @@
       ]
     },
     "underexposure": {
-      "threshold": 0.5,
+      "threshold": 0.56,
       "calibrated": true,
       "validation": "real-world",
-      "real_world_f1": 0.4889,
+      "real_world_f1": 0.6271,
       "synthetic_f1": 0.8434,
       "evidence_features": [
         "expo_luma_mean",
@@ -52,16 +63,20 @@
       ]
     },
     "overexposure": {
-      "threshold": 0.1,
+      "threshold": 0.32,
       "calibrated": true,
       "validation": "real-world",
-      "real_world_f1": 0.1912,
+      "real_world_f1": 0.3564,
       "synthetic_f1": 0.7411,
       "evidence_features": [
         "expo_bright_clip_ratio",
         "expo_luma_mean",
         "contrast_p95"
-      ]
+      ],
+      "floor": {
+        "feature": "expo_bright_clip_ratio",
+        "value": 0.32
+      }
     },
     "noise": {
       "threshold": 0.45,
@@ -184,13 +199,15 @@
   },
   "real_world_evaluation": {
     "dataset": "VizWiz-QualityIssues val sample (n=2496, \u22653/5 votes)",
-    "experiment": "phase3b-calibration-v1 row D",
-    "primary_macro_f1": 0.4305,
+    "experiment": "phase3d-realtrain-v1",
+    "protocol": "frozen eval set read once; thresholds + calibrators fitted on cross-validated out-of-fold predictions of the disjoint real-val sample",
+    "primary_macro_f1": 0.5383,
     "per_issue_f1": {
-      "blur": 0.6114,
-      "underexposure": 0.4889,
-      "overexposure": 0.1912
+      "blur": 0.6315,
+      "underexposure": 0.6271,
+      "overexposure": 0.3564
     },
+    "previous_primary_macro_f1": 0.4305,
     "not_validated": [
       "noise",
       "corruption",

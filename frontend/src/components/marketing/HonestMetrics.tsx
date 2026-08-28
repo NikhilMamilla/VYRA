@@ -11,7 +11,7 @@ export function HonestMetrics() {
           id="metrics"
           eyebrow="Honest metrics"
           title="Synthetic performance is not real-world performance"
-          lead="The model was trained on synthetic degradations, then evaluated once on real images. The gap is real and it is stated everywhere — in the API response, on every issue badge, and here."
+          lead="blur, underexposure and overexposure are now trained on real VizWiz photos and evaluated once on a held-out real sample — that lifted real macro-F1 from 0.43 to 0.54. noise and corruption are still synthetic-only. Every number, and which tier each issue is in, is stated in the API response, on every issue badge, and here."
         />
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
@@ -40,11 +40,15 @@ export function HonestMetrics() {
             <div className="grid grid-cols-[1fr_auto_auto] gap-x-4 bg-brand/[0.05] px-5 py-3 text-sm font-semibold">
               <span className="text-ink">macro-F1</span>
               <span className="text-right tabular-nums text-ink-soft">{METRICS.headline.synthetic}</span>
-              <span className="text-right tabular-nums text-brand">{METRICS.headline.real}</span>
+              <span className="text-right tabular-nums text-brand">
+                {METRICS.headline.real}
+                <span className="ml-1.5 font-normal text-ink-faint">(was {METRICS.previousReal})</span>
+              </span>
             </div>
             <p className="px-5 py-3 text-xs text-ink-faint">
               “—” = no real-world evaluation exists (VizWiz-QualityIssues has no noise or
-              corruption labels). Real-world macro-F1 is over blur / underexposure / overexposure.
+              corruption labels). Real-world macro-F1 is over blur / underexposure / overexposure,
+              read once on a held-out sample. “was 0.43” = the earlier synthetic-trained model.
             </p>
           </Card>
 

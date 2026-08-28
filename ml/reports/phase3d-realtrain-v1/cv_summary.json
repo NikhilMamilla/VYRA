@@ -1,0 +1,32 @@
+{
+  "blur": {
+    "cv_threshold": 0.44,
+    "cv_f1_oof": 0.6839,
+    "cv_f1_fold_mean": 0.6842,
+    "cv_f1_fold_std": 0.0189,
+    "cv_roc_auc": 0.8507,
+    "uniform_support": 754,
+    "train_pool_support": 1645,
+    "synth_aug_weight": 0.3
+  },
+  "underexposure": {
+    "cv_threshold": 0.56,
+    "cv_f1_oof": 0.7705,
+    "cv_f1_fold_mean": 0.7618,
+    "cv_f1_fold_std": 0.0914,
+    "cv_roc_auc": 0.9754,
+    "uniform_support": 69,
+    "train_pool_support": 394,
+    "synth_aug_weight": 0.3
+  },
+  "overexposure": {
+    "cv_threshold": 0.32,
+    "cv_f1_oof": 0.3579,
+    "cv_f1_fold_mean": 0.3279,
+    "cv_f1_fold_std": 0.2217,
+    "cv_roc_auc": 0.9343,
+    "uniform_support": 49,
+    "train_pool_support": 340,
+    "synth_aug_weight": 0.3
+  }
+}
