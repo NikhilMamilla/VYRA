@@ -320,9 +320,11 @@ def step_cv_and_thresholds() -> dict:
             "train_pool_support": int(yu.sum() + yx.sum()),
             "synth_aug_weight": SYNTH_AUG_WEIGHT,
         }
-        print(f"[phase3d] {lbl}: thr={thr:.3f} oof-F1={out[lbl]['cv_f1_oof']:.3f} "
-              f"(fold {out[lbl]['cv_f1_fold_mean']:.3f}+/-{out[lbl]['cv_f1_fold_std']:.3f})",
-              flush=True)
+        print(
+            f"[phase3d] {lbl}: thr={thr:.3f} oof-F1={out[lbl]['cv_f1_oof']:.3f} "
+            f"(fold {out[lbl]['cv_f1_fold_mean']:.3f}+/-{out[lbl]['cv_f1_fold_std']:.3f})",
+            flush=True,
+        )
 
     (RUN_DIR / "oof_predictions.json").write_text(json.dumps(oof_store), encoding="utf-8")
     return out
@@ -370,18 +372,24 @@ def step_fit_final_models(st: dict) -> dict:
         # isotonic calibration fitted on the natural-prevalence OOF predictions
         oof = np.asarray(oof_store[lbl]["oof"], dtype=float)
         y = np.asarray(oof_store[lbl]["y"], dtype=int)
-        before = {"brier": round(brier_score(y, oof), 4),
-                  "ece": round(expected_calibration_error(y, oof), 4)}
+        before = {
+            "brier": round(brier_score(y, oof), 4),
+            "ece": round(expected_calibration_error(y, oof), 4),
+        }
         iso = IsotonicRegression(out_of_bounds="clip", y_min=0.0, y_max=1.0).fit(oof, y)
         after_p = np.clip(iso.predict(oof), 0.0, 1.0)
-        after = {"brier": round(brier_score(y, after_p), 4),
-                 "ece": round(expected_calibration_error(y, after_p), 4)}
+        after = {
+            "brier": round(brier_score(y, after_p), 4),
+            "ece": round(expected_calibration_error(y, after_p), 4),
+        }
         keep = after["brier"] <= before["brier"] + 1e-4
         calib_models[lbl] = iso if keep else None
         calib_diag[lbl] = {
-            "support": int(y.sum()), "calibrated": bool(keep),
+            "support": int(y.sum()),
+            "calibrated": bool(keep),
             "fitted_on": "phase3d OOF predictions on the uniform real-val sample",
-            "before": before, "after": after,
+            "before": before,
+            "after": after,
             "reliability_after": reliability_curve(y, after_p),
         }
 
@@ -391,7 +399,8 @@ def step_fit_final_models(st: dict) -> dict:
         thresholds[lbl] = synth_blob["thresholds"][lbl]
         calib_models[lbl] = synth_calib.models.get(lbl)  # identity (None) for noise/corruption
         calib_diag[lbl] = {
-            "support": None, "calibrated": calib_models[lbl] is not None,
+            "support": None,
+            "calibrated": calib_models[lbl] is not None,
             "note": "synthetic head unchanged from phase3c; VizWiz has no matching label",
         }
 
@@ -447,9 +456,7 @@ def _eval_primary(model_blob, calib, thresholds, ev_df, *, floors: dict | None =
     y_pred = np.column_stack(pred_cols)
     y_score = np.column_stack(score_cols)
     rep = multilabel_report(y_true, y_pred, labels, y_score)
-    rep["primary_macro_f1"] = round(
-        float(np.mean([rep["per_class"][x]["f1"] for x in PRIMARY])), 4
-    )
+    rep["primary_macro_f1"] = round(float(np.mean([rep["per_class"][x]["f1"] for x in PRIMARY])), 4)
     rep["primary_labels"] = PRIMARY
     return rep
 
@@ -468,8 +475,12 @@ def step_final_evaluation(st: dict) -> dict:
     # --- Phase 3C shipped model (synthetic heads + phase3b iso + row-D thresholds) ---
     c_blob = joblib.load(SYNTH_RUN / "model.joblib")
     c_calib = joblib.load(SYNTH_CALIB)
-    c_thr = {"blur": 0.36, "underexposure": 0.50, "overexposure": 0.10,
-             "defect": c_blob["thresholds"]["defect"]}
+    c_thr = {
+        "blur": 0.36,
+        "underexposure": 0.50,
+        "overexposure": 0.10,
+        "defect": c_blob["thresholds"]["defect"],
+    }
     phase3c = _eval_primary(c_blob, c_calib, c_thr, ev)
 
     rows = {
@@ -482,8 +493,11 @@ def step_final_evaluation(st: dict) -> dict:
         encoding="utf-8",
     )
     delta = round(phase3d["primary_macro_f1"] - phase3c["primary_macro_f1"], 4)
-    print(f"[phase3d] primary macro-F1: 3C {phase3c['primary_macro_f1']} -> "
-          f"3D {phase3d['primary_macro_f1']}  (delta {delta:+.4f})", flush=True)
+    print(
+        f"[phase3d] primary macro-F1: 3C {phase3c['primary_macro_f1']} -> "
+        f"3D {phase3d['primary_macro_f1']}  (delta {delta:+.4f})",
+        flush=True,
+    )
     return {
         "phase3c_primary_macro_f1": phase3c["primary_macro_f1"],
         "phase3d_primary_macro_f1": phase3d["primary_macro_f1"],
@@ -518,8 +532,7 @@ def step_write_reports(st: dict) -> dict:
             f"{cv[lbl]['cv_f1_oof']} |"
         )
     lines += [
-        f"| **primary macro-F1** | **{c['primary_macro_f1']}** | "
-        f"**{d['primary_macro_f1']}** | — |",
+        f"| **primary macro-F1** | **{c['primary_macro_f1']}** | **{d['primary_macro_f1']}** | — |",
         "",
         "Per-issue precision / recall / ROC-AUC / PR-AUC and confusion counts: "
         "`runs/phase3d-realtrain-v1/final_evaluation.json`.",

@@ -19,7 +19,7 @@ export const PIPELINE = [
   { icon: 'file', title: 'Image', text: 'JPEG / PNG / WebP / BMP / TIFF, up to 10 MB' },
   { icon: 'shield', title: 'Validation', text: 'magic-byte sniff, size, decodability' },
   { icon: 'scan', title: '42 CV features', text: 'sharpness · exposure · contrast · noise · texture · colour · blockiness' },
-  { icon: 'cpu', title: 'RandomForest ×6', text: 'one calibrated classifier per issue' },
+  { icon: 'cpu', title: 'RandomForest ×6', text: 'one classifier per issue (isotonic-calibrated where real labels exist)' },
   { icon: 'activity', title: 'Calibration + thresholds', text: 'isotonic probabilities, real-validation decision points' },
   { icon: 'gauge', title: 'Quality score', text: 'operational 0–100, deterministic' },
   { icon: 'target', title: 'Defect scan', text: 'self-referential patch anomaly, region-localised' },
@@ -32,7 +32,7 @@ export const TIERS = [
     tone: 'real' as const,
     title: 'Real-world trained & validated',
     issues: ['blur', 'underexposure', 'overexposure'],
-    body: 'Trained on real VizWiz-QualityIssues photos and evaluated once on a held-out real sample. blur F1 0.63, underexposure 0.63, overexposure 0.34 (ROC-AUC 0.82 / 0.97 / 0.92). blur also keeps synthetic coverage so it stays robust to strong motion blur.',
+    body: 'Trained on real VizWiz-QualityIssues photos and evaluated once on a held-out real sample. blur F1 0.63, underexposure 0.63, overexposure 0.36 (ROC-AUC 0.82 / 0.97 / 0.92). blur also keeps synthetic coverage so it stays robust to strong motion blur.',
   },
   {
     key: 'synth',
@@ -61,7 +61,7 @@ export const METRICS = {
   real: [
     ['blur', '0.63'],
     ['underexposure', '0.63'],
-    ['overexposure', '0.34'],
+    ['overexposure', '0.36'],
     ['noise', '—'],
     ['corruption', '—'],
   ],
@@ -80,7 +80,7 @@ export const DISCLAIMERS = [
   },
   {
     title: 'overexposure is still the weakest head',
-    body: 'Real F1 0.34, low recall (0.23) — precise but conservative, and it under-fires on uniformly blown-out frames. Ranking signal is strong now (ROC-AUC 0.92, up from 0.65); only 49 real positives in the tuning sample, so the number is directional. A stress test (ml/scripts/phase3d_stress_test.py) tracks the gap.',
+    body: 'Real F1 0.36, low recall (0.27) — precise but conservative, and it under-fires on uniformly blown-out frames. Ranking signal is strong now (ROC-AUC 0.92, up from 0.65); only 49 real positives in the tuning sample, so the number is directional. A deterministic bright-clip floor and a stress test (ml/scripts/phase3d_stress_test.py) backstop the gap.',
   },
   {
     title: 'Defect is advisory',

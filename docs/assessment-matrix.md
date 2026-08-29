@@ -9,7 +9,7 @@ evidence. `✅` met, `⚠️` met with documented limitations, `➖` optional/bo
 |---|---|---|---|
 | Blur / insufficient sharpness | RF **trained on real VizWiz photos**, 8 sharpness + texture features | `ml/vyra_ml/features/sharpness.py`, model `blur` head | ✅ synthetic F1 0.90, **real F1 0.63** (`ml/reports/phase3d-realtrain-v1/phase3d.md`); motion-blur stress recall 0.98 |
 | Underexposure | RF **trained on real VizWiz photos**, exposure/contrast features | `features/exposure.py`, `underexposure` head | ✅ synthetic 0.84, **real 0.63** (ROC-AUC 0.97) |
-| Overexposure | RF **trained on real VizWiz photos**, exposure/contrast features | `features/exposure.py`, `overexposure` head | ⚠️ synthetic 0.74, **real 0.34** (ROC-AUC 0.92; recall 0.23, 49 tuning positives — directional) |
+| Overexposure | RF **trained on real VizWiz photos**, exposure/contrast features | `features/exposure.py`, `overexposure` head | ⚠️ synthetic 0.74, **real 0.36** (ROC-AUC 0.92; recall 0.27, 49 tuning positives — directional; bright-clip floor) |
 | Image noise | RF over 4 no-reference noise estimators | `features/noise.py`, `noise` head | ⚠️ synthetic 0.84; **no real-world validation** (VizWiz has no noise label) |
 | Corruption / severe degradation | RF over blockiness + resolution-loss features | `features/compression.py`, `corruption` head | ⚠️ synthetic 0.97; **no real-world validation** |
 | Potential visual defect | self-referential patch-anomaly detector | `ml/vyra_ml/defect/patch_anomaly.py` | ⚠️ screening only, synthetic ROC-AUC 0.60, region hit-rate 0.32 (`ml/docs/defect.md`) |
@@ -121,7 +121,7 @@ Full list: `ml/docs/features.md`.
 | Evaluation results + technical explanation | README §5, `ml/reports/`, `ml/docs/` |
 | Sample images (different quality conditions) | `demo/` (+ `demo/README.md`) |
 | Docker configuration | `docker-compose.yml`, `*/Dockerfile`, `.dockerignore` |
-| Deployed URL | not deployed online (local Docker Compose is acceptable per §11) |
+| Deployed URL | https://vyra-frontend.onrender.com (frontend) · https://vyra-backend-gaig.onrender.com/docs (API) — Render.com free tier, blueprint in `render.yaml` |
 
 ## 13. Optional / bonus
 
@@ -131,7 +131,7 @@ Full list: `ml/docs/features.md`.
 | Quality heatmaps / localization of problematic regions | ➖ done — patch-anomaly defect region + UI overlay |
 | Confidence calibration / uncertainty estimation | ➖ done — isotonic per-issue calibration on a real validation split, Brier/ECE reported |
 | Model versioning | ➖ done — `model_version` in every response and `/health`; self-describing `bundle.json` |
-| Automated backend/frontend tests | ➖ done — 38 backend + 118 ML + 7 frontend |
+| Automated backend/frontend tests | ➖ done — 43 backend + 118 ML + 7 frontend |
 | CI/CD workflow | ➖ done — GitHub Actions ([`.github/workflows/ci.yml`](../.github/workflows/ci.yml)): ml + backend + frontend lint/type/test + `docker compose build`, on every push and PR |
 | Monitoring / logging for the deployed application | ➖ done — per-request structured logs (JSON in Docker) + `GET /metrics` (request counts, error rate, p50/p95/p99 latency) |
 | Performance optimization for simultaneous requests | ➖ partial — CPU-bound CV/inference runs on a worker thread (`anyio.to_thread`) so it never blocks the event loop; scale out via `uvicorn --workers` / multiple containers (README §13) |

@@ -2,6 +2,12 @@
 
 [![CI](https://github.com/NikhilMamilla/VYRA/actions/workflows/ci.yml/badge.svg)](https://github.com/NikhilMamilla/VYRA/actions/workflows/ci.yml)
 
+**Live demo:** https://vyra-frontend.onrender.com &nbsp;·&nbsp; API docs: https://vyra-backend-gaig.onrender.com/docs
+&nbsp;·&nbsp; health: https://vyra-backend-gaig.onrender.com/health
+
+> Hosted on Render's free tier — the first request after an idle period takes
+> ~30–60 s while the backend wakes up, then it's fast.
+
 VYRA accepts an image, evaluates its visual quality with computer-vision features
 plus a calibrated machine-learning model, and returns an operational quality
 score (0–100), a quality label, the specific issues it found with per-issue
@@ -17,7 +23,7 @@ end-to-end with `docker compose up --build`.
 |---|---|---|
 | **Blur / insufficient sharpness** | RF trained on real VizWiz photos, sharpness/texture features | real-world validated (VizWiz F1 **0.63**) |
 | **Underexposure** | RF trained on real VizWiz photos, exposure/contrast features | real-world validated (F1 **0.63**) |
-| **Overexposure** | RF trained on real VizWiz photos, exposure/contrast features | real-world validated, still **weak** (F1 **0.34**, ROC-AUC 0.92) |
+| **Overexposure** | RF trained on real VizWiz photos, exposure/contrast features | real-world validated, still **weak** (F1 **0.36**, ROC-AUC 0.92) |
 | **Image noise** | RF over 4 no-reference noise estimators | **synthetic-validated only** — no real-world evaluation exists (synthetic F1 0.84) |
 | **Corruption / severe degradation** | RF over blockiness + resolution features | **synthetic-validated only** (synthetic F1 0.97) |
 | **Potential visual defect** | self-referential patch-anomaly detector | **screening only** — ROC-AUC 0.60 on synthetic, not real-world validated |
@@ -205,10 +211,10 @@ addressed each (`ml/reports/phase3a-real-world-v1/failure_examples/`,
   stress-set recall 0.88 → 0.98 for ~0.02 VizWiz F1.
 - **Overexposure:** real "too bright" is large blown-out regions (windows, sky,
   glare), not a high mean. The real-trained head keys on highlight-clipping ratio
-  — ROC-AUC 0.65 → 0.92 — but recall is still only 0.23 (F1 0.34); 49 tuning
-  positives keep its threshold conservative, and it under-fires on uniformly
-  blown frames (VizWiz itself is inconsistent there). Tracked by
-  `ml/scripts/phase3d_stress_test.py`; not yet fixed.
+  — ROC-AUC 0.65 → 0.92 — and with a deterministic bright-clip floor reaches
+  recall 0.27 (F1 0.36); 49 tuning positives keep its threshold conservative, and
+  it under-fires on uniformly blown frames (VizWiz itself is inconsistent there).
+  Tracked by `ml/scripts/phase3d_stress_test.py`.
 - **Underexposure:** real "too dark" images have encoded luma near 0.04. The
   real-trained head keys on that + shadow clipping — ROC-AUC 0.89 → 0.97,
   severe-underexposure stress recall 1.00.
@@ -225,7 +231,7 @@ addressed each (`ml/reports/phase3a-real-world-v1/failure_examples/`,
   primary macro-F1 0.43 → 0.54. noise / corruption are still synthetic-only —
   VizWiz has no such labels, so the gap there is unmeasured and unclosable with
   this dataset.
-- **overexposure** is still the weakest head (real F1 0.34, recall 0.23), its
+- **overexposure** is still the weakest head (real F1 0.36, recall 0.27), its
   49-positive tuning support makes the number directional, and it under-fires on
   uniformly blown-out frames — an out-of-distribution gap the
   `phase3d_stress_test.py` regression guard reports but does not yet close
@@ -457,6 +463,9 @@ See [`ml/README.md`](ml/README.md) for the full pipeline and phase history.
 
 ## 16. Demo
 
+**Live:** https://vyra-frontend.onrender.com — upload an image, try the Batch
+tab. (Render free tier: first hit after idle takes ~30–60 s to wake.)
+
 Sample images spanning the quality conditions are in [`demo/`](demo/) with a
 documented `README.md` (source degradation + observed model behaviour for each).
 A 2–3 minute demonstration script is in
@@ -465,7 +474,7 @@ A 2–3 minute demonstration script is in
 ## 17. Tests
 
 ```bash
-cd backend  && pytest && ruff check . && ruff format --check .      # 38 tests
+cd backend  && pytest && ruff check . && ruff format --check .      # 43 tests
 cd ml       && pytest && ruff check . && ruff format --check .      # 118 tests
 cd frontend && npm run lint && npm run typecheck && npm test && npm run build   # 7 tests
 docker compose config

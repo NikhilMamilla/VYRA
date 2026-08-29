@@ -11,7 +11,7 @@ export function HowItWorks() {
           id="how"
           eyebrow="Pipeline"
           title="How an image becomes a verdict"
-          lead="Every request runs the same deterministic path. Inference is synchronous — about 1.5 seconds — and runs on a worker thread so the API stays responsive."
+          lead="Every request runs the same deterministic path. Inference is synchronous — roughly two seconds on a normal host, longer on a small cloud instance — and runs on a worker thread so the API stays responsive."
         />
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PIPELINE.map((step, i) => (

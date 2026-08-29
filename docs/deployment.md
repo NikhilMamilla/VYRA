@@ -39,6 +39,15 @@ Render is a good fit: it runs the backend `Dockerfile` unchanged, gives a free
 managed Postgres, and hosts the SPA as a static site. Everything is described in
 [`render.yaml`](../render.yaml) at the repo root.
 
+**This project is deployed at:**
+
+| | URL |
+|---|---|
+| Frontend | https://vyra-frontend.onrender.com |
+| API docs | https://vyra-backend-gaig.onrender.com/docs |
+| Health | https://vyra-backend-gaig.onrender.com/health |
+| Metrics | https://vyra-backend-gaig.onrender.com/metrics |
+
 ### Prerequisites
 
 - A [Render](https://render.com) account (free, GitHub sign-in).
@@ -79,8 +88,8 @@ managed Postgres, and hosts the SPA as a static site. Everything is described in
 
 ### Submission
 
-Put the **frontend URL** in the submission as the deployed URL, and note the API
-is at `<backend-url>/docs`.
+Deployed URL for the submission: **https://vyra-frontend.onrender.com**
+(API + Swagger docs at https://vyra-backend-gaig.onrender.com/docs).
 
 ---
 

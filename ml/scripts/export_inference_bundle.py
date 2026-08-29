@@ -108,6 +108,7 @@ def _build_issues(cv: dict, fit: dict, row: dict, floors: dict) -> dict:
             }
     return issues
 
+
 QUALITY_SCORE = {
     "formula": "100 * product_i (1 - w_i * clip((p_i - t_i) / (severe - t_i), 0, 1))",
     "explanation": (

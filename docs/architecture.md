@@ -150,7 +150,7 @@ portable types (`Uuid`, `JSON` with a `JSONB` variant) to make that possible
 without diverging from production behaviour. Tests drive the ASGI app through
 `httpx`, including the lifespan, so dependency wiring is covered too. The
 analyzer-pipeline tests load the real model bundle and skip cleanly if it is
-absent. 38 backend tests, 118 ML tests, 7 frontend tests. All three suites plus
+absent. 43 backend tests, 118 ML tests, 7 frontend tests. All three suites plus
 `docker compose build` run in CI ([`.github/workflows/ci.yml`](../.github/workflows/ci.yml))
 on every push and pull request.
 

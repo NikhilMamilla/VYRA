@@ -14,6 +14,16 @@ export function Footer() {
             classical computer vision, a calibrated learned model, and an honest account of what it
             can and cannot do.
           </p>
+          <p className="text-xs text-ink-faint">
+            <a
+              href="https://github.com/NikhilMamilla/VYRA"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-ink-soft underline decoration-line underline-offset-2 hover:text-ink"
+            >
+              Source on GitHub
+            </a>
+          </p>
         </div>
         <ul className="flex flex-wrap gap-1.5">
           {STACK.map((t) => (

@@ -60,8 +60,11 @@ def main() -> None:
         flush=True,
     )
     for code in ("BLR", "DRK", "BRT", "OBS"):
-        print(f"  {code}: >=2 {sum(a.votes(code) >= 2 for a in subset)}  "
-              f">=3 {sum(a.votes(code) >= 3 for a in subset)}", flush=True)
+        print(
+            f"  {code}: >=2 {sum(a.votes(code) >= 2 for a in subset)}  "
+            f">=3 {sum(a.votes(code) >= 3 for a in subset)}",
+            flush=True,
+        )
 
     members = [f"train/{a.image}" for a in subset]
     fetch_from_remote_zip(
