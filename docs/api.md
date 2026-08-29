@@ -63,6 +63,30 @@ does not affect the overall status.
 
 ---
 
+## `GET /metrics`
+
+Process-level runtime metrics as JSON. Unversioned, no database dependency (it
+answers during an outage). Counters are per worker process and reset on restart.
+
+```json
+{
+  "service": "VYRA",
+  "version": "0.1.0",
+  "environment": "production",
+  "uptime_seconds": 812.4,
+  "requests_total": 143,
+  "requests_in_flight": 1,
+  "requests_by_status_class": { "2xx": 130, "4xx": 11, "5xx": 2 },
+  "error_rate": 0.014,
+  "latency_ms": { "window": 143, "p50": 34.1, "p95": 890.2, "p99": 1503.7, "max": 1902.0 }
+}
+```
+
+`error_rate` is `5xx / requests_total`. `latency_ms` percentiles are over a
+rolling window of the last 2048 requests.
+
+---
+
 ## `POST /api/v1/analyses`
 
 Uploads an image, analyzes it, stores it and persists the result.
@@ -142,6 +166,41 @@ impact, not the certainty.
 evaluated on VizWiz), `synthetic-only` (noise, corruption — no real evaluation
 exists), `screening` (the defect signal). Training/synthetic F1 is **not**
 real-world performance.
+
+---
+
+## `POST /api/v1/analyses/batch`
+
+Analyse several images in one request. `multipart/form-data` with a repeated
+`files` part (up to `MAX_BATCH_SIZE`, default 10). Each image runs the same
+**validate → analyze → store → persist** pipeline independently.
+
+```bash
+curl -s -X POST http://localhost:8000/api/v1/analyses/batch \
+  -F "files=@a.jpg" -F "files=@b.png" -F "files=@broken.jpg"
+```
+
+Always returns `200` — a per-image failure is reported in `items`, not raised.
+`413` (`payload_too_large`) if more than `MAX_BATCH_SIZE` files are sent; `501`
+(`not_implemented`) if no model is loaded.
+
+```json
+{
+  "total": 3,
+  "succeeded": 2,
+  "failed": 1,
+  "items": [
+    { "filename": "a.jpg", "ok": true, "analysis": { /* Analysis object */ }, "error": null },
+    { "filename": "b.png", "ok": true, "analysis": { /* Analysis object */ }, "error": null },
+    { "filename": "broken.jpg", "ok": false, "analysis": null,
+      "error": { "code": "invalid_image", "message": "The uploaded file could not be decoded." } }
+  ]
+}
+```
+
+Successful items are persisted and appear in the history endpoints like any
+single upload. `error.code` is the same vocabulary as the error envelope
+(`invalid_image`, `unsupported_media_type`, `payload_too_large`, …).
 
 ---
 

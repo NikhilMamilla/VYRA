@@ -12,8 +12,13 @@ from typing import Annotated
 from fastapi import APIRouter, File, Query, UploadFile, status
 
 from app.api.deps import AnalysisServiceDep, SettingsDep
-from app.core.errors import PayloadTooLargeError
-from app.schemas.analysis import AnalysisRead
+from app.core.errors import FeatureNotAvailableError, PayloadTooLargeError, VyraError
+from app.schemas.analysis import (
+    AnalysisRead,
+    BatchAnalysisItem,
+    BatchAnalysisResponse,
+    BatchItemError,
+)
 from app.schemas.common import ErrorResponse, Page
 
 router = APIRouter(prefix="/analyses", tags=["analyses"])
@@ -53,8 +58,9 @@ async def _read_bounded(upload: UploadFile, max_bytes: int) -> bytes:
     summary="Analyze an image",
     description=(
         "Uploads an image, analyzes its visual quality and stores the result.\n\n"
-        "**Not yet available.** The upload is fully validated, but no analysis "
-        "model is loaded in this build, so a validated request returns 501."
+        "Returns the persisted analysis (`201`). If the deployment has no "
+        "inference bundle loaded (`MODEL_PATH` unset), the upload is still "
+        "validated but analysis is unavailable and the request returns `501`."
     ),
     responses=_ERROR_RESPONSES,
 )
@@ -68,6 +74,64 @@ async def create_analysis(
         data,
         filename=file.filename or "upload",
         declared_media_type=file.content_type,
+    )
+
+
+@router.post(
+    "/batch",
+    response_model=BatchAnalysisResponse,
+    summary="Analyze up to N images in one request",
+    description=(
+        "Uploads several images as `multipart/form-data` (repeat the `files` "
+        "part). Each image is validated, analysed and persisted independently: "
+        "the response is always `200` and reports per-image success or failure "
+        "in `items`. Returns `413` only if the number of files exceeds "
+        "`MAX_BATCH_SIZE`, or `501` if no analysis model is loaded."
+    ),
+    responses={
+        413: {"model": ErrorResponse, "description": "Too many files in one request"},
+        501: {"model": ErrorResponse, "description": "Analysis engine not available"},
+    },
+)
+async def create_analyses_batch(
+    service: AnalysisServiceDep,
+    settings: SettingsDep,
+    files: Annotated[list[UploadFile], File(description="The images to analyze.")],
+) -> BatchAnalysisResponse:
+    if not service.analyzer_available:
+        raise FeatureNotAvailableError(
+            "Image analysis is not available in this build. No analysis model is loaded."
+        )
+    if len(files) > settings.max_batch_size:
+        raise PayloadTooLargeError(
+            f"A batch may contain at most {settings.max_batch_size} images.",
+            details={"max_batch_size": settings.max_batch_size, "received": len(files)},
+        )
+
+    items: list[BatchAnalysisItem] = []
+    for upload in files:
+        name = upload.filename or "upload"
+        try:
+            data = await _read_bounded(upload, settings.max_upload_bytes)
+            analysis = await service.create_analysis(
+                data, filename=name, declared_media_type=upload.content_type
+            )
+            items.append(BatchAnalysisItem(filename=name, ok=True, analysis=analysis))
+        except VyraError as exc:
+            items.append(
+                BatchAnalysisItem(
+                    filename=name,
+                    ok=False,
+                    error=BatchItemError(code=exc.code, message=exc.message),
+                )
+            )
+
+    succeeded = sum(1 for item in items if item.ok)
+    return BatchAnalysisResponse(
+        total=len(items),
+        succeeded=succeeded,
+        failed=len(items) - succeeded,
+        items=items,
     )
 
 

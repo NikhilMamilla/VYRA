@@ -1,7 +1,7 @@
 /** Typed wrappers for every VYRA API route. */
 
 import { request } from './client';
-import type { Analysis, Health, Page } from './types';
+import type { Analysis, BatchAnalysisResponse, Health, Page } from './types';
 
 const V1 = '/api/v1';
 
@@ -21,13 +21,23 @@ export function getAnalysis(id: string, signal?: AbortSignal): Promise<Analysis>
 }
 
 /**
- * Uploads an image for analysis.
+ * Uploads an image for analysis. Resolves with the persisted `Analysis`.
  *
- * The backend validates the file today but has no analysis model loaded, so
- * this currently rejects with an `ApiError` where `isNotImplemented` is true.
+ * If the server has no model loaded (`MODEL_PATH` unset) this rejects with an
+ * `ApiError` where `isNotImplemented` is true.
  */
 export function createAnalysis(file: File, signal?: AbortSignal): Promise<Analysis> {
   const body = new FormData();
   body.append('file', file);
   return request<Analysis>(`${V1}/analyses`, { method: 'POST', body, signal });
+}
+
+/** Uploads several images in one request; each succeeds or fails independently. */
+export function createAnalysesBatch(
+  files: File[],
+  signal?: AbortSignal,
+): Promise<BatchAnalysisResponse> {
+  const body = new FormData();
+  for (const file of files) body.append('files', file);
+  return request<BatchAnalysisResponse>(`${V1}/analyses/batch`, { method: 'POST', body, signal });
 }

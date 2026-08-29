@@ -39,6 +39,16 @@ async def test_valid_image_is_accepted_but_analysis_is_unavailable(client: Async
     assert response.json()["error"]["code"] == "not_implemented"
 
 
+async def test_batch_without_a_model_returns_501(client: AsyncClient) -> None:
+    response = await client.post(
+        "/api/v1/analyses/batch",
+        files=[("files", ("a.png", PNG_1X1, "image/png"))],
+    )
+
+    assert response.status_code == 501
+    assert response.json()["error"]["code"] == "not_implemented"
+
+
 async def test_non_image_upload_is_rejected(client: AsyncClient) -> None:
     response = await client.post(
         "/api/v1/analyses", files={"file": ("notes.png", b"this is not a png", "image/png")}

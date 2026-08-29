@@ -87,6 +87,20 @@ export interface Page<T> {
   offset: number;
 }
 
+export interface BatchAnalysisItem {
+  filename: string;
+  ok: boolean;
+  analysis: Analysis | null;
+  error: { code: string; message: string } | null;
+}
+
+export interface BatchAnalysisResponse {
+  total: number;
+  succeeded: number;
+  failed: number;
+  items: BatchAnalysisItem[];
+}
+
 export type ComponentStatus = 'ok' | 'unavailable' | 'not_configured';
 
 export interface ComponentHealth {

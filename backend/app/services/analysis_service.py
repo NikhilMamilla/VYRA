@@ -64,6 +64,10 @@ class AnalysisService:
         self._settings = settings
         self._analyzer = analyzer
 
+    @property
+    def analyzer_available(self) -> bool:
+        return self._analyzer is not None
+
     def validate(self, data: bytes, *, declared_media_type: str | None) -> ValidatedImage:
         return validate_upload(
             data,

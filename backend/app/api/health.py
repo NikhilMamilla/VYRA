@@ -13,6 +13,7 @@ from fastapi import APIRouter, Response, status
 from sqlalchemy import text
 
 from app.api.deps import AnalyzerDep, SessionDep, SettingsDep, StorageDep
+from app.core.metrics import METRICS
 from app.schemas.health import ComponentHealth, HealthResponse
 
 router = APIRouter(tags=["health"])
@@ -73,3 +74,22 @@ async def health(
         analyzer_model_version=model_version,
         components=components,
     )
+
+
+@router.get(
+    "/metrics",
+    summary="Process-level runtime metrics",
+    description=(
+        "Request counts, error rate and latency percentiles for this worker "
+        "process, as JSON. Dependency-free: it answers even when the database "
+        "is down. Counters reset on restart."
+    ),
+    tags=["health"],
+)
+async def metrics(settings: SettingsDep) -> dict[str, object]:
+    return {
+        "service": settings.project_name,
+        "version": settings.version,
+        "environment": settings.environment,
+        **METRICS.snapshot(),
+    }

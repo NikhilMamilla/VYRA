@@ -43,7 +43,7 @@ Full list: `ml/docs/features.md`.
 
 | Requirement | Implementation | Location | Test |
 |---|---|---|---|
-| REST API for upload + analysis | `POST /api/v1/analyses` | `backend/app/api/v1/routes/analyses.py` | `test_analyzer.py::test_upload_analyze_persist_retrieve` |
+| REST API for upload + analysis | `POST /api/v1/analyses` (+ `POST /api/v1/analyses/batch` for many) | `backend/app/api/v1/routes/analyses.py` | `test_analyzer.py::test_upload_analyze_persist_retrieve`, `::test_batch_analyzes_each_image_independently` |
 | Validate files, handle invalid/unreadable gracefully | magic-byte sniff + size + declared-type check; analyzer raises `InvalidImageError` | `app/services/image_validation.py`, `app/analysis/vyra_analyzer.py` | `test_image_validation.py`, `test_analyses_api.py`, `test_analyzer.py::test_garbage_upload...` |
 | Structured JSON result | `AnalysisRead` / `AnalysisOutcome` Pydantic models | `app/schemas/analysis.py` | ✅ |
 | Persist results in a database | PostgreSQL via async SQLAlchemy; SQLite in tests | `app/db/`, `app/repositories/analysis_repository.py` | `test_analyzer.py`, `test_analyses_api.py` |
@@ -62,7 +62,8 @@ Full list: `ml/docs/features.md`.
 | Loading / success / error states | explicit state machine | `components/analyze/Workspace.tsx`, `hooks/useAnalyze.ts` |
 | Responsive & polished | Tailwind, single-column mobile → sidebar desktop; light/dark themes (light default, persisted); glass/clay/neumorphic/skeuomorphic design system | `src/index.css`, `src/theme/`, `tailwind.config.js` |
 | Explanatory content | hero + "How it works" (pipeline) + "Under the hood" (model card, capability tiers) + "Honest metrics" (synthetic vs real, disclaimers) | `components/layout/`, `components/marketing/` |
-| Automated tests | 6 vitest tests (loading / result / error / history / API-down / theme toggle) | `src/App.test.tsx` |
+| Batch mode | Single/Batch toggle; multi-file drop → results table → open any result | `components/analyze/BatchPanel.tsx`, `hooks/useBatchAnalyze.ts` |
+| Automated tests | 7 vitest tests (loading / result / error / history / API-down / theme toggle / batch) | `src/App.test.tsx` |
 
 ## 7. Expected analysis result
 
@@ -104,7 +105,8 @@ Full list: `ml/docs/features.md`.
 | Containerization (preferred) | 3 services (db, backend, frontend) | `docker compose up --build` verified |
 | Frontend/backend communicate in deployment | nginx serves SPA + proxies `/api` same-origin | `frontend/nginx.conf` |
 | Environment variables for config | 14 documented vars | `.env.example`, README §12 |
-| Health/status endpoint | `GET /health` (service + db + storage + analyzer + model version) | `app/api/health.py`, `test_health.py` |
+| Health/status endpoint | `GET /health` (service + db + storage + analyzer + model version); `GET /metrics` (request counts, error rate, latency percentiles) | `app/api/health.py`, `app/core/metrics.py`, `test_health.py` |
+| CI / reproducible build check | GitHub Actions runs all suites + `docker compose build` on push/PR | `.github/workflows/ci.yml` |
 | Document model loading + inference after deployment | README §13 "Model loading", `docs/architecture.md` | ✅ |
 
 ## 12. Submission
@@ -125,8 +127,11 @@ Full list: `ml/docs/features.md`.
 
 | Bonus item | Status |
 |---|---|
+| Batch image analysis | ➖ done — `POST /api/v1/analyses/batch` (per-image result, independent persistence) + frontend batch mode with a results table |
 | Quality heatmaps / localization of problematic regions | ➖ done — patch-anomaly defect region + UI overlay |
 | Confidence calibration / uncertainty estimation | ➖ done — isotonic per-issue calibration on a real validation split, Brier/ECE reported |
 | Model versioning | ➖ done — `model_version` in every response and `/health`; self-describing `bundle.json` |
-| Automated backend/frontend tests | ➖ done — 34 backend + 118 ML + 5 frontend |
-| Batch analysis, CI/CD, monitoring, perf-opt for concurrency | not done (out of scope for the release) |
+| Automated backend/frontend tests | ➖ done — 38 backend + 118 ML + 7 frontend |
+| CI/CD workflow | ➖ done — GitHub Actions ([`.github/workflows/ci.yml`](../.github/workflows/ci.yml)): ml + backend + frontend lint/type/test + `docker compose build`, on every push and PR |
+| Monitoring / logging for the deployed application | ➖ done — per-request structured logs (JSON in Docker) + `GET /metrics` (request counts, error rate, p50/p95/p99 latency) |
+| Performance optimization for simultaneous requests | ➖ partial — CPU-bound CV/inference runs on a worker thread (`anyio.to_thread`) so it never blocks the event loop; scale out via `uvicorn --workers` / multiple containers (README §13) |

@@ -6,13 +6,17 @@ import type { Analysis } from '../../lib/api/types';
 import { Icon } from '../ui/Icon';
 import { Button, Card, Container } from '../ui/primitives';
 import { AnalysisResult } from './AnalysisResult';
+import { BatchPanel } from './BatchPanel';
 import { HistoryPanel } from './HistoryPanel';
 import { UploadDropzone } from './UploadDropzone';
+
+type Mode = 'single' | 'batch';
 
 export function Workspace({ analyzerReady }: { analyzerReady: boolean | null }) {
   const { state, analyze, reset } = useAnalyze();
   const history = useHistory();
 
+  const [mode, setMode] = useState<Mode>('single');
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [selected, setSelected] = useState<Analysis | null>(null);
@@ -67,20 +71,50 @@ export function Workspace({ analyzerReady }: { analyzerReady: boolean | null }) 
           <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand">Workspace</p>
           <h2 className="font-display text-3xl font-bold text-ink">Analyze an image</h2>
         </div>
-        {analyzerReady === false && (
-          <span className="flex items-center gap-1.5 text-sm text-degraded">
-            <Icon name="alert" size={15} /> model not loaded on the server
-          </span>
-        )}
+        <div className="flex items-center gap-3">
+          {analyzerReady === false && (
+            <span className="flex items-center gap-1.5 text-sm text-degraded">
+              <Icon name="alert" size={15} /> model not loaded on the server
+            </span>
+          )}
+          <div className="neu-inset flex rounded-xl p-1 text-xs font-semibold">
+            {(['single', 'batch'] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => {
+                  setMode(m);
+                  startOver();
+                }}
+                className={`rounded-lg px-3 py-1.5 capitalize transition-colors ${
+                  mode === m ? 'bg-brand text-white' : 'text-ink-soft hover:text-ink'
+                }`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <Card surface="glass" className="p-5 sm:p-7">
-          {!file && !selected && (
+          {mode === 'batch' && !selected && (
+            <BatchPanel
+              disabled={analyzerReady === false}
+              onOpen={(a) => {
+                setSelected(a);
+                setFile(null);
+              }}
+              onDone={history.refresh}
+            />
+          )}
+
+          {mode === 'single' && !file && !selected && (
             <UploadDropzone disabled={analyzerReady === false} onFile={chooseFile} />
           )}
 
-          {file && !shownAnalysis && (
+          {mode === 'single' && file && !shownAnalysis && (
             <div className="space-y-5">
               {previewUrl && (
                 <figure className="clay-sm overflow-hidden p-2.5">

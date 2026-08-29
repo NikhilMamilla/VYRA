@@ -83,6 +83,48 @@ async def test_upload_analyze_persist_retrieve(analyzer_client: AsyncClient) -> 
     assert listed.json()["items"][0]["id"] == analysis_id
 
 
+async def test_batch_analyzes_each_image_independently(analyzer_client: AsyncClient) -> None:
+    good = make_test_jpeg("clean")
+    dark = make_test_jpeg("dark")
+    resp = await analyzer_client.post(
+        "/api/v1/analyses/batch",
+        files=[
+            ("files", ("clean.jpg", good, "image/jpeg")),
+            ("files", ("dark.jpg", dark, "image/jpeg")),
+            ("files", ("broken.jpg", b"\xff\xd8\xffnope", "image/jpeg")),
+        ],
+    )
+    assert resp.status_code == 200, resp.text
+    body = resp.json()
+    assert (body["total"], body["succeeded"], body["failed"]) == (3, 2, 1)
+
+    by_name = {item["filename"]: item for item in body["items"]}
+    assert by_name["clean.jpg"]["ok"] and by_name["clean.jpg"]["analysis"]["status"] == "completed"
+    assert by_name["broken.jpg"]["ok"] is False
+    assert by_name["broken.jpg"]["error"]["code"] == "invalid_image"
+
+    # Only the two decodable images were persisted.
+    assert (await analyzer_client.get("/api/v1/analyses")).json()["total"] == 2
+
+
+async def test_batch_rejects_more_than_the_limit(analyzer_settings, monkeypatch) -> None:
+    from app.main import create_app
+
+    small = analyzer_settings.model_copy(update={"max_batch_size": 2})
+    app = create_app(small)
+    async with (
+        app.router.lifespan_context(app),
+        AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c,
+    ):
+        one = make_test_jpeg("clean")
+        resp = await c.post(
+            "/api/v1/analyses/batch",
+            files=[("files", (f"{i}.jpg", one, "image/jpeg")) for i in range(3)],
+        )
+    assert resp.status_code == 413
+    assert resp.json()["error"]["code"] == "payload_too_large"
+
+
 async def test_garbage_upload_is_rejected_and_not_persisted(analyzer_client: AsyncClient) -> None:
     resp = await analyzer_client.post(
         "/api/v1/analyses", files={"file": ("x.jpg", b"\xff\xd8\xffnope", "image/jpeg")}

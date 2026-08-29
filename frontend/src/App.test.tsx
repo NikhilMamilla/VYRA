@@ -58,6 +58,15 @@ beforeEach(() => {
   vi.mocked(endpoints.getHealth).mockResolvedValue(health);
   vi.mocked(endpoints.listAnalyses).mockResolvedValue({ items: [], total: 0, limit: 20, offset: 0 });
   vi.mocked(endpoints.createAnalysis).mockResolvedValue(analysis);
+  vi.mocked(endpoints.createAnalysesBatch).mockResolvedValue({
+    total: 2,
+    succeeded: 1,
+    failed: 1,
+    items: [
+      { filename: 'photo.jpg', ok: true, analysis, error: null },
+      { filename: 'broken.jpg', ok: false, analysis: null, error: { code: 'invalid_image', message: 'bad image' } },
+    ],
+  });
 });
 
 afterEach(() => vi.clearAllMocks());
@@ -112,6 +121,25 @@ describe('App', () => {
     const historyHeading = await screen.findByRole('heading', { name: /history/i });
     const panel = historyHeading.closest('section')!;
     expect(await within(panel).findByText('photo.jpg')).toBeInTheDocument();
+  });
+
+  it('analyzes several images in batch mode and shows a results table', async () => {
+    renderApp();
+    await screen.findAllByText(/vyra-quality-model-v1/i);
+
+    await userEvent.click(screen.getByRole('button', { name: /^batch$/i }));
+
+    const files = [
+      new File(['x'], 'photo.jpg', { type: 'image/jpeg' }),
+      new File(['y'], 'broken.jpg', { type: 'image/jpeg' }),
+    ];
+    await userEvent.upload(document.querySelector('input[type=file][multiple]')!, files);
+    await userEvent.click(screen.getByRole('button', { name: /analyze 2 images/i }));
+
+    expect(await screen.findByText(/1 analysed, 1 failed of 2/i)).toBeInTheDocument();
+    const workspace = within(document.querySelector('#analyze') as HTMLElement);
+    expect(workspace.getByText('bad image')).toBeInTheDocument();
+    expect(workspace.getByRole('button', { name: /view/i })).toBeInTheDocument();
   });
 
   it('degrades when the API is unreachable', async () => {

@@ -1,5 +1,7 @@
 # VYRA — AI-Powered Image Quality & Defect Detection
 
+[![CI](https://github.com/NikhilMamilla/VYRA/actions/workflows/ci.yml/badge.svg)](https://github.com/NikhilMamilla/VYRA/actions/workflows/ci.yml)
+
 VYRA accepts an image, evaluates its visual quality with computer-vision features
 plus a calibrated machine-learning model, and returns an operational quality
 score (0–100), a quality label, the specific issues it found with per-issue
@@ -22,6 +24,7 @@ end-to-end with `docker compose up --build`.
 | Overall **quality score + label** | operational formula over calibrated probabilities | deterministic, 0–100, `GOOD/ACCEPTABLE/DEGRADED/POOR` |
 | **Explainability** | image statistics, per-issue feature evidence, confidence, defect region | on every response |
 | **History** | `GET /api/v1/analyses` + UI panel | persisted in PostgreSQL |
+| **Batch analysis** | `POST /api/v1/analyses/batch` + UI batch mode | up to `MAX_BATCH_SIZE` images, per-image result table |
 
 > **Honest metrics.** Synthetic F1 is **not** real-world performance. blur /
 > under / overexposure are **trained on real VizWiz photos** and evaluated once
@@ -34,7 +37,8 @@ Frontend: a single responsive page — a hero, the **analysis workspace**
 (drag/drop upload with client pre-checks, image preview with defect-region
 overlay, quality-score dial, issue list with severity + confidence +
 validation-tier badge, image-statistics grid, explanation panel, clickable
-history, and explicit loading / success / error states), then explanatory
+history, a **batch mode** for analysing several images at once, and explicit
+loading / success / error states), then explanatory
 sections — *How it works* (the pipeline), *Under the hood* (model card +
 capability tiers) and *Honest metrics* (synthetic vs real-world + disclaimers).
 **Light and dark themes** (light default, choice persisted); the design system
@@ -282,13 +286,16 @@ quality-score weight only 0.20. Full write-up:
 | Method | Path | Behaviour |
 |---|---|---|
 | `GET` | `/health` | service + DB + storage + analyzer status, `analyzer_model_version` |
+| `GET` | `/metrics` | process-level request counts, error rate and latency percentiles (JSON) |
 | `POST` | `/api/v1/analyses` | upload → validate → analyze → store → persist → **201** with the full result |
+| `POST` | `/api/v1/analyses/batch` | up to `MAX_BATCH_SIZE` images in one request; always **200**, per-image success/failure in `items` |
 | `GET` | `/api/v1/analyses?limit=&offset=` | paginated history, newest first |
 | `GET` | `/api/v1/analyses/{id}` | one analysis, `404` if unknown |
 
-Status codes: `413` too large, `415` unsupported type, `422` empty / not a
-readable image, `500` analyzer failure (nothing stored or persisted), `501` no
-model loaded. Every error: `{"error": {"code": "...", "message": "..."}, "request_id": "..."}`.
+Status codes: `413` too large (or too many files in a batch), `415` unsupported
+type, `422` empty / not a readable image, `500` analyzer failure (nothing stored
+or persisted), `501` no model loaded. Every error:
+`{"error": {"code": "...", "message": "..."}, "request_id": "..."}`.
 Full reference: [`docs/api.md`](docs/api.md). Interactive: `/docs`.
 
 ### Example `201` response (abridged)
@@ -350,7 +357,8 @@ future adapter; `STORAGE_BACKEND=supabase` fails fast at startup until it exists
 | `DATABASE_AUTO_CREATE` | `true` | create tables at startup |
 | `STORAGE_BACKEND` | `local` | `local` or `supabase` |
 | `STORAGE_LOCAL_DIR` | `backend/data/uploads` | local image directory |
-| `MAX_UPLOAD_BYTES` | `10485760` | upload size limit (10 MiB) |
+| `MAX_UPLOAD_BYTES` | `10485760` | per-image upload size limit (10 MiB) |
+| `MAX_BATCH_SIZE` | `10` | max images per `POST /analyses/batch` request |
 | `MODEL_PATH` | `ml/artifacts/vyra-quality-model-v1` | inference bundle directory |
 | `REQUIRE_ANALYZER` | `false` (local) / `true` (Docker) | fail startup if the model can't load |
 | `CORS_ORIGINS` | `http://localhost:5173,http://127.0.0.1:5173` | allowed browser origins |
@@ -388,6 +396,20 @@ on a worker thread). `/health` reports `analyzer.status` and
 startup. The production image contains only application code, inference
 dependencies and the ~6 MB bundle — **not** the datasets, runs or reports (see
 [`.dockerignore`](.dockerignore)).
+
+**Monitoring & concurrency.** Every request is logged as one line (`request
+completed` / `request failed`) with a request id, method, path, status and
+duration; `LOG_JSON=true` (the Compose default) makes those lines single-object
+JSON for a log shipper. `GET /metrics` exposes per-process counters — total
+requests, status-class breakdown, error rate, in-flight count and p50/p95/p99
+latency over a rolling window — as JSON, with no database dependency so it
+answers even during an outage. Concurrency: FastAPI/uvicorn serves requests on
+the async event loop, and the CPU-bound CV+inference step is pushed to a worker
+thread (`anyio.to_thread`), so slow analyses do not block health checks, history
+reads or other uploads; scale out with `uvicorn --workers N` or multiple
+containers behind the nginx proxy. Batch requests are processed image-by-image
+within one request (bounded by `MAX_BATCH_SIZE`) and each image is persisted
+independently.
 
 ## 14. Running locally without Docker
 
@@ -436,11 +458,15 @@ A 2–3 minute demonstration script is in
 ## 17. Tests
 
 ```bash
-cd backend  && pytest && ruff check . && ruff format --check .      # 34 tests
+cd backend  && pytest && ruff check . && ruff format --check .      # 38 tests
 cd ml       && pytest && ruff check . && ruff format --check .      # 118 tests
-cd frontend && npm run lint && npm run typecheck && npm test && npm run build   # 5 tests
+cd frontend && npm run lint && npm run typecheck && npm test && npm run build   # 7 tests
 docker compose config
 ```
+
+All four run on every push and pull request via GitHub Actions
+([`.github/workflows/ci.yml`](.github/workflows/ci.yml)), plus a `docker compose
+build` of all three images.
 
 Requirement → implementation → evidence mapping:
 [`docs/assessment-matrix.md`](docs/assessment-matrix.md).

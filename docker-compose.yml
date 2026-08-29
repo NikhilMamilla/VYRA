@@ -50,6 +50,7 @@ services:
       STORAGE_BACKEND: ${STORAGE_BACKEND:-local}
       STORAGE_LOCAL_DIR: /app/data/uploads
       MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-10485760}
+      MAX_BATCH_SIZE: ${MAX_BATCH_SIZE:-10}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173}
       # The bundle is baked into the image at /app/model (see backend/Dockerfile).
       MODEL_PATH: ${MODEL_PATH:-/app/model}

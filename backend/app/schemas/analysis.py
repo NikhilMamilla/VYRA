@@ -57,6 +57,13 @@ class AnalysisOutcome(BaseModel):
     image_height: int | None = None
 
 
+class BatchItemError(BaseModel):
+    """Why one image in a batch could not be analysed."""
+
+    code: str
+    message: str
+
+
 class ImageInfo(BaseModel):
     filename: str
     content_type: str
@@ -83,3 +90,25 @@ class AnalysisRead(BaseModel):
     metrics: dict[str, float] = Field(default_factory=dict)
     explanation: dict[str, Any] = Field(default_factory=dict)
     error_message: str | None = None
+
+
+class BatchAnalysisItem(BaseModel):
+    """One image's outcome within a batch request."""
+
+    filename: str
+    ok: bool
+    analysis: AnalysisRead | None = None
+    error: BatchItemError | None = None
+
+
+class BatchAnalysisResponse(BaseModel):
+    """Result of ``POST /analyses/batch``.
+
+    Always ``200``: per-image failures are reported in ``items`` rather than
+    aborting the request. Successful images are persisted like a single upload.
+    """
+
+    total: int
+    succeeded: int
+    failed: int
+    items: list[BatchAnalysisItem]

@@ -71,6 +71,9 @@ class Settings(BaseSettings):
 
     # --- Uploads -------------------------------------------------------------
     max_upload_bytes: int = Field(default=10 * 1024 * 1024, ge=1024)
+    # Cap on images accepted by POST /analyses/batch in one request. Each image is
+    # still validated and analysed independently; a batch never fails as a whole.
+    max_batch_size: int = Field(default=10, ge=1, le=50)
 
     # --- ML ------------------------------------------------------------------
     # Directory of the VYRA inference bundle (model.joblib + calibrators.joblib +
