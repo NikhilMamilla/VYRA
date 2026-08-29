@@ -44,9 +44,10 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
 
     # --- Database ------------------------------------------------------------
-    # Set DATABASE_URL to any async SQLAlchemy URL to use it verbatim (Supabase
-    # Postgres works unchanged, e.g.
-    # postgresql+asyncpg://postgres:<pw>@db.<ref>.supabase.co:5432/postgres).
+    # Set DATABASE_URL to a Postgres URL to use it verbatim. A bare
+    # postgres:// or postgresql:// scheme (what Render, Railway, Heroku,
+    # Supabase, Neon etc. hand out) is rewritten to postgresql+asyncpg:// so the
+    # async engine can use it -- no manual editing needed.
     # When it is unset the URL is assembled from the DB_* parts below, whose
     # defaults target the local docker-compose Postgres container (which has no
     # published port -- it is only reachable inside the compose network).
@@ -97,12 +98,18 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def _assemble_database_url(self) -> Settings:
-        """Build DATABASE_URL from the DB_* parts when it is not given explicitly."""
+        """Build DATABASE_URL from the DB_* parts when unset, and normalise the
+        driver so a platform-provided ``postgres://`` / ``postgresql://`` URL
+        works with the async engine."""
         if not self.database_url:
             self.database_url = (
                 f"postgresql+asyncpg://{self.db_user}:{self.db_password}"
                 f"@{self.db_host}:{self.db_port}/{self.db_name}"
             )
+        else:
+            scheme, sep, rest = self.database_url.partition("://")
+            if sep and scheme in ("postgres", "postgresql"):
+                self.database_url = f"postgresql+asyncpg://{rest}"
         return self
 
     @model_validator(mode="after")

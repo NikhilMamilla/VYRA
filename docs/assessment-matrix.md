@@ -100,8 +100,8 @@ Full list: `ml/docs/features.md`.
 
 | Requirement | Implementation | Evidence |
 |---|---|---|
-| Runnable outside dev environment | Docker Compose | `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile` |
-| Clear setup instructions | README §13–15 | ✅ |
+| Runnable outside dev environment | Docker Compose (local) + Render.com blueprint (cloud) | `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `render.yaml` |
+| Clear setup instructions | README §13–15, `docs/deployment.md` (local + Render + Fly.io/Neon fallback) | ✅ |
 | Containerization (preferred) | 3 services (db, backend, frontend) | `docker compose up --build` verified |
 | Frontend/backend communicate in deployment | nginx serves SPA + proxies `/api` same-origin | `frontend/nginx.conf` |
 | Environment variables for config | 14 documented vars | `.env.example`, README §12 |

@@ -353,7 +353,7 @@ future adapter; `STORAGE_BACKEND=supabase` fails fast at startup until it exists
 | Variable | Default | Purpose |
 |---|---|---|
 | `DB_HOST` / `DB_USER` / `DB_PASSWORD` / `DB_NAME` | `localhost` / `vyra` / `change-me-local-only` / `vyra` | parts the backend assembles into the async SQLAlchemy URL (compose sets `DB_HOST=db`) |
-| `DATABASE_URL` | *(unset — built from `DB_*`)* | set to a full `postgresql+asyncpg://…` URL to override (e.g. Supabase) |
+| `DATABASE_URL` | *(unset — built from `DB_*`)* | full Postgres URL to override (e.g. Supabase, Neon, Render); `postgres://` / `postgresql://` is auto-normalised to `postgresql+asyncpg://` |
 | `DATABASE_AUTO_CREATE` | `true` | create tables at startup |
 | `STORAGE_BACKEND` | `local` | `local` or `supabase` |
 | `STORAGE_LOCAL_DIR` | `backend/data/uploads` | local image directory |
@@ -385,6 +385,13 @@ Starts PostgreSQL, the backend (with the model baked in), and nginx serving the
 SPA and proxying `/api`. Ports 8000/5173 already in use? Override:
 `BACKEND_PORT=8010 FRONTEND_PORT=5183 CORS_ORIGINS=http://localhost:5183 docker compose up --build`.
 Stop and wipe volumes: `docker compose down -v`.
+
+**Cloud (optional).** A one-file Render.com blueprint ([`render.yaml`](render.yaml))
+deploys the backend (Docker), a free managed Postgres, and the SPA as a static
+site. Full walkthrough — plus a Fly.io + Neon fallback — in
+[`docs/deployment.md`](docs/deployment.md). Any platform's `postgres://` /
+`postgresql://` `DATABASE_URL` is accepted (the driver is normalised to
+`asyncpg` automatically).
 
 **Model loading.** `backend/Dockerfile` (built from the repo root) installs
 `vyra_ml` (`pip install --no-deps ./ml`) and copies
